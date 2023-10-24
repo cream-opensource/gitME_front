@@ -46,11 +46,24 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(
               context,
+              LoginScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              '로그인',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
               ProfileScreen.route,
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              'Profile',
+              '명함지갑',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -63,7 +76,7 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              'flutter',
+              '명함목록',
               style: TextStyle(
                 fontSize: 20,
               ),
