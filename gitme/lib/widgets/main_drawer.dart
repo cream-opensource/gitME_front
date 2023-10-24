@@ -46,6 +46,19 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(
               context,
+              LoginScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              '로그인',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
               ProfileScreen.route,
             ),
             leading: Icon(Icons.account_circle),
