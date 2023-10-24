@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: FlutterScreen(),
+        home: MainScreen(),
         routes: {
           MainScreen.route: (_) => MainScreen(),
           FlutterScreen.route: (_) => FlutterScreen(),

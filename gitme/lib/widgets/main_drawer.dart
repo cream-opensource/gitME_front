@@ -50,7 +50,7 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              'Profile',
+              '명함지갑',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -63,7 +63,7 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              'flutter',
+              '명함목록',
               style: TextStyle(
                 fontSize: 20,
               ),
