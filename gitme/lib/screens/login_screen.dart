@@ -20,15 +20,21 @@ class LoginScreen extends StatelessWidget {
         ),
         SizedBox(height: 40,),
         ButtonTheme(
-            child: ElevatedButton(onPressed: () =>
-              Navigator.pushReplacementNamed(context, MainScreen.route)
-            ,
-              child: Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-                size: 35.0,
+            child: ElevatedButton(
+              onPressed: () =>
+                  Navigator.pushReplacementNamed(context, MainScreen.route),
+              child: Text("Kakao Login"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.yellowAccent,
+                foregroundColor: Colors.black,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                textStyle: TextStyle(fontSize: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-            ))
+            )
+        )
       ]),
       drawer: MainDrawer(),
     );
