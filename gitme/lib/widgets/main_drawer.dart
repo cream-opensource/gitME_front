@@ -8,23 +8,17 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 200,
       child: ListView(
         children: <Widget>[
           Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
               Container(
-                width: double.infinity,
-                height: 300,
-                child: Image.asset(
-                  'assets/profile_bg_01.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Container(
+                alignment: Alignment.topLeft,
                 padding: EdgeInsets.only(bottom: 10),
-                width: 100,
-                height: 100,
+                width: 50,
+                height: 50,
                 child: Image.asset('assets/default-user.png'),
               )
             ],
