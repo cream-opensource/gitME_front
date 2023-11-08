@@ -6,7 +6,7 @@ class CustomDrawerBtn extends StatelessWidget {
     return Align(
       alignment: Alignment.topLeft, // 왼쪽 상단으로 정렬
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 35), // 왼쪽 여백과 상단 여백 추가
+        padding: const EdgeInsets.only(left: 10, top: 45), // 왼쪽 여백과 상단 여백 추가
         child: IconButton(
           icon: Icon(
             Icons.menu,
