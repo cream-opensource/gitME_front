@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gitme/screens/flutter_screen.dart';
+import 'package:gitme/screens/cardList_screen.dart';
+import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
@@ -66,11 +67,24 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(
               context,
-              FlutterScreen.route,
+              CardListScreen.route,
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
               '명함목록',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              CustomScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              '커스텀스크린(임시)',
               style: TextStyle(
                 fontSize: 20,
               ),
