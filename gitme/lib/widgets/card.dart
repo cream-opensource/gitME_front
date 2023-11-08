@@ -7,8 +7,12 @@ class BusinessCardData {
   final String techStack;
   final String call;
   final String introduce;
+  final String followers;
+  final String stared;
+  final String commit;
 
-  BusinessCardData({required this.name, required this.jobTitle, required this.contactInfo, required this.call, required this.techStack, required this.introduce});
+  BusinessCardData({required this.name, required this.jobTitle, required this.contactInfo, required this.call,
+    required this.techStack, required this.introduce, required this.followers, required this.stared, required this.commit});
 }
 
 List<BusinessCardData> dummyData = [
@@ -18,7 +22,10 @@ List<BusinessCardData> dummyData = [
     contactInfo: "johndoe@example.com",
     call: "010-0000-0000",
     techStack: "java",
-    introduce: "hi"
+    introduce: "hi",
+    followers: "0",
+    stared: "0",
+    commit: "0"
   ),
   // 다른 더미 데이터 추가
 ];
