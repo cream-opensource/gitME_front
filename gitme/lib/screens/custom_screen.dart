@@ -14,7 +14,7 @@ class CustomScreen extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.center,
               child: DraggableText(text: 'drag'),
             ),
           ],
