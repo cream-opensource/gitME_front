@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class LoginScreen extends StatelessWidget {
   Future<void> simulateLogin() async {
     final response = await http
-        .get(Uri.parse('https://0b22-210-206-182-220.ngrok-free.app/login'));
+        .get(Uri.parse('https://4fa3-210-206-182-220.ngrok-free.app/login'));
 
     if (response.statusCode == 200) {
       print('데이터: ${response.body}');
@@ -22,13 +22,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: null, // AppBar를 제거
-      backgroundColor: const Color(0xff000E1B),
+      backgroundColor: const Color(0xffFFFFFF),
       body: Column(children: [
         Padding(padding: EdgeInsets.only(top: 150)),
         Center(
           child: Image(
             image: AssetImage('assets/gitme_logo.png'),
-            width: 170.0,
+            width: 500.0,
           ),
         ),
         SizedBox(
