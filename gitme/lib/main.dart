@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gitme/provider/pixabay_photos.dart';
 import 'package:gitme/screens/cardList_screen.dart';
+import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
           LoginScreen.route: (_) => LoginScreen(),
           CardListScreen.route: (_) => CardListScreen(),
           ProfileScreen.route: (_) => ProfileScreen(),
+          CardWalletScreen.route: (_) => CardWalletScreen(),
           CustomScreen.route: (_) => CustomScreen(),
           JoinScreen.route: (_) => JoinScreen()
         },
