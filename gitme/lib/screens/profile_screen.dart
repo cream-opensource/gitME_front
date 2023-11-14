@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 height: 250,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                image: AssetImage('assets/profile_bg_02.jpg'),
+                image: AssetImage('assets/cream.png'),
               ),
               Positioned(
                 bottom: 10,
@@ -46,6 +46,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 Card(
                   child: ListTile(
+                    leading: Icon(Icons.person_outline),
+                    title: Text('Hoon'),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
                     leading: Icon(Icons.email),
                     title: Text('your@email.com'),
                   ),
@@ -53,19 +59,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.phone),
-                    title: Text('000-000-0000'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.location_city),
-                    title: Text('Seoul'),
+                    title: Text('000-0000-0000'),
                   ),
                 ),
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.favorite),
-                    title: Text('React, JavaScript'),
+                    title: Text('1998.12.11'),
                   ),
                 ),
               ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gitme/widgets/textFormFieldComponent.dart';
 import 'package:http/http.dart' as http;
 
+import '../widgets/githubLoginWebView.dart';
+
 class JoinScreen extends StatelessWidget {
   static final route = 'join-screen';
 
@@ -61,6 +63,25 @@ class JoinScreen extends StatelessWidget {
                     "생년월일을 입력하세요",
                   ),
                   SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      String clientId = '76ec284b2793bee252a3';
+
+                      String githubLoginUrl =
+                          'https://github.com/login/oauth/authorize?client_id=$clientId';
+
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => GitHubLoginWebView(
+                            githubLoginUrl: githubLoginUrl,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text("GitHub 연동"),
+                  ),
+
+                  SizedBox(height: 16.0,),
                   ElevatedButton(
                     onPressed: () async {
                       if (formKey.currentState?.validate() ?? false) {

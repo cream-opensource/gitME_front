@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/cardList_screen.dart';
+import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
@@ -59,7 +60,7 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              '명함지갑',
+              '내정보',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -72,7 +73,20 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              '명함목록',
+              '내명함',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              CardWalletScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              '명함지갑',
               style: TextStyle(
                 fontSize: 20,
               ),
