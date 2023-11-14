@@ -1,46 +1,39 @@
-import 'package:gitme/screens/main_screen.dart';
-import 'package:gitme/widgets/custom_drawer_btn.dart';
-import 'package:gitme/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
-  Future<void> simulateLogin() async {
-    final response = await http
-        .get(Uri.parse('https://4fa3-210-206-182-220.ngrok-free.app/login'));
-
-    if (response.statusCode == 200) {
-      print('데이터: ${response.body}');
-    } else {
-      print('요청 실패: ${response.reasonPhrase}');
-    }
-  }
-
   static final route = 'login-screen';
+
+  Future<void> openWebView(BuildContext context) async {
+    String webViewUrl = 'https://d750-210-206-182-220.ngrok-free.app/kakao/login';
+
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => WebViewPage(webViewUrl: webViewUrl),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null, // AppBar를 제거
+      appBar: null,
       backgroundColor: const Color(0xffFFFFFF),
-      body: Column(children: [
-        Padding(padding: EdgeInsets.only(top: 150)),
-        Center(
-          child: Image(
-            image: AssetImage('assets/gitme_logo.png'),
-            width: 500.0,
+      body: Column(
+        children: [
+          Padding(padding: EdgeInsets.only(top: 150)),
+          Center(
+            child: Image(
+              image: AssetImage('assets/gitme_logo.png'),
+              width: 500.0,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        ButtonTheme(
+          SizedBox(
+            height: 40,
+          ),
+          ButtonTheme(
             child: ElevatedButton(
-              onPressed: () =>
-              {
-                simulateLogin(),
-                Navigator.pushReplacementNamed(context, MainScreen.route),
-              },
+              onPressed: () => openWebView(context),
               child: Text("Kakao Login"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.yellowAccent,
@@ -51,9 +44,29 @@ class LoginScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-            ))
-      ]),
-      drawer: MainDrawer(),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class WebViewPage extends StatelessWidget {
+  final String webViewUrl;
+
+  WebViewPage({required this.webViewUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Kakao Login"),
+      ),
+      body: WebView(
+        initialUrl: webViewUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+      ),
     );
   }
 }

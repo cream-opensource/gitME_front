@@ -39,6 +39,7 @@ dependencies:
   flutter_native_splash: ^2.3.5
   webview_flutter: ^3.0.4
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
