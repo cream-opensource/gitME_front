@@ -42,7 +42,7 @@ class VerticalBusinessCard extends StatelessWidget {
           Align(
             alignment: Alignment.center, // 이미지를 가로 방향으로 중앙에 배치
             child: Container(
-              width: 200, // 이미지의 너비
+              width: 250, // 이미지의 너비
               height: 100, // 이미지의 높이
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
@@ -176,29 +176,122 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 40,
+            bottom: 20,
             left: 0,
             right: 0,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 버튼 간 간격 설정
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-
+                InkWell(
+                  onTap: () {
+                    // 버튼 클릭 시 동작할 내용을 추가하세요.
                   },
-                  child: Text("QR코드"),
+                  child: Tooltip(
+                    message: 'QR', // 마우스를 올렸을 때 표시될 텍스트
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 25, // 툴팁의 높이 조절
+                    padding: EdgeInsets.symmetric(horizontal: 8), // 툴팁 내부의 여백 설정
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(220, 220, 220, 1), // 툴팁 배경색 설정
+                      borderRadius: BorderRadius.circular(8), // 툴팁 테두리 모양 설정
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    textStyle: TextStyle(
+                      color: Colors.black, // 툴팁 텍스트 색상 설정
+                      fontSize: 12, // 툴팁 텍스트 크기 설정
+                    ),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/QR.png'), // 버튼 이미지 경로 설정
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-
+                InkWell(
+                  onTap: () {
+                    // 버튼 클릭 시 동작할 내용을 추가하세요.
                   },
-                  child: Text("Img저장"),
+                  child: Tooltip(
+                      message: '이미지 저장', // 마우스를 올렸을 때 표시될 텍스트
+                      margin: EdgeInsets.only(bottom: 10),
+                      height: 25, // 툴팁의 높이 조절
+                      padding: EdgeInsets.symmetric(horizontal: 8), // 툴팁 내부의 여백 설정
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(220, 220, 220, 1), // 툴팁 배경색 설정
+                        borderRadius: BorderRadius.circular(8), // 툴팁 테두리 모양 설정
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      textStyle: TextStyle(
+                        color: Colors.black, // 툴팁 텍스트 색상 설정
+                        fontSize: 12, // 툴팁 텍스트 크기 설정
+                      ),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/img_save.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-
+                InkWell(
+                  onTap: () {
+                    // 버튼 클릭 시 동작할 내용을 추가하세요.
                   },
-                  child: Text("kakao공유"),
+                  child: Tooltip(
+                    message: '카카오톡 공유', // 마우스를 올렸을 때 표시될 텍스트
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 25, // 툴팁의 높이 조절
+                    padding: EdgeInsets.symmetric(horizontal: 8), // 툴팁 내부의 여백 설정
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(220, 220, 220, 1), // 툴팁 배경색 설정
+                      borderRadius: BorderRadius.circular(8), // 툴팁 테두리 모양 설정
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    textStyle: TextStyle(
+                      color: Colors.black, // 툴팁 텍스트 색상 설정
+                      fontSize: 12, // 툴팁 텍스트 크기 설정
+                    ),
+                    child: Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/kakao.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),
