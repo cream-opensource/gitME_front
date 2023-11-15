@@ -1,22 +1,79 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class GitHubLoginWebView extends StatelessWidget {
+import '../provider/userData.dart';
+
+class GitHubLoginWebView extends StatefulWidget {
   final String githubLoginUrl;
 
   GitHubLoginWebView({required this.githubLoginUrl});
 
   @override
+  _GitHubLoginWebViewState createState() => _GitHubLoginWebViewState();
+}
+
+class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
+  late WebViewController _webViewController;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("GitHub 로그인"),
+        title: Text("Github 로그인"),
       ),
       body: WebView(
-        initialUrl: githubLoginUrl,
+        initialUrl: widget.githubLoginUrl,
         javascriptMode: JavascriptMode.unrestricted,
-        debuggingEnabled: true, // 디버그 모드 활성화
+        debuggingEnabled: true,
+        onWebViewCreated: (controller) {
+          _webViewController = controller;
+        },
+        onPageFinished: (url) {
+          _readWebViewContents();
+        },
       ),
     );
   }
+
+  Future<void> _readWebViewContents() async {
+    try {
+      String contents = await _webViewController.evaluateJavascript('document.body.innerText');
+
+      String unescapedContents = contents.replaceAll('\\', '');
+
+      String trimmedContents = unescapedContents.substring(1, unescapedContents.length - 1);
+      Map<String, dynamic> jsonData = json.decode(trimmedContents);
+
+      String token = jsonData['AccessToken'];
+      print('AccessToken: $token');
+
+      Provider.of<UserData>(context, listen: false).setAccessToken(token);
+
+
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return AlertDialog(
+            title: Text('연동 성공'),
+            // content: Text('ID: ${jsonData['result']['id']}\nNickname: ${jsonData['result']['nickname']}'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(dialogContext).pop();
+                  Navigator.pushReplacementNamed(dialogContext, 'join-screen');
+                },
+                child: Text('확인'),
+              ),
+            ],
+          );
+        },
+      );
+
+    } catch (e) {
+      print('Error while reading WebView contents: $e');
+    }
+  }
 }
+
