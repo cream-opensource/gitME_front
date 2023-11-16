@@ -2,9 +2,13 @@ import 'package:flutter/foundation.dart';
 
 class UserData with ChangeNotifier {
   String? accessToken;
-
+  int? id;
   void setAccessToken(String token) {
     accessToken = token;
-    notifyListeners(); // 변경을 구독하는 위젯에 알림
+    notifyListeners();
+  }
+  void setId(int Id) {
+    id = Id;
+    notifyListeners();
   }
 }

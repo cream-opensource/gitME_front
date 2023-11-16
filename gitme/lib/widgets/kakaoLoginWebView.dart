@@ -55,7 +55,8 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
       print('ID: $id');
       print('Nickname: $nickname');
 
-      // Provider.of<UserData>(context, listen: false).setAccessToken(id as String);
+
+      Provider.of<UserData>(context, listen: false).setId(id);
 
       showDialog(
         context: context,

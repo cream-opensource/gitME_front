@@ -1,6 +1,9 @@
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/userData.dart';
 
 
 class ProfileScreen extends StatefulWidget {
