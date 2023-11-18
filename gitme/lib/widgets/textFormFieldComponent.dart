@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget TextFormFieldComponent(bool obscureText, TextInputType keyboardType, TextInputAction textInputAction, String hintText, int maxSize, String errorMessage) {
+Widget TextFormFieldComponent(TextInputType keyboardType, TextInputAction textInputAction, String hintText, int maxSize, String errorMessage, TextEditingController controller, void Function(String?)? onSaved) {
   return Container(
     child: TextFormField(
-      obscureText: obscureText,
       keyboardType: keyboardType,
       textInputAction: textInputAction,
       decoration: InputDecoration(
@@ -14,7 +13,13 @@ Widget TextFormFieldComponent(bool obscureText, TextInputType keyboardType, Text
         if (value!.length < maxSize) {
           return errorMessage;
         }
+        return null; // 유효성 검사 통과
       },
+      onSaved: onSaved,
+      controller: controller,
     ),
   );
 }
+
+
+

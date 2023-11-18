@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:gitme/widgets/kakaoLoginWebView.dart';
 
 class LoginScreen extends StatelessWidget {
   static final route = 'login-screen';
 
   Future<void> openWebView(BuildContext context) async {
-    String webViewUrl = 'https://d750-210-206-182-220.ngrok-free.app/kakao/login';
+    String kakaoLoginUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/kakao/login';
 
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => WebViewPage(webViewUrl: webViewUrl),
+        builder: (context) => KakaoLoginWebView(kakaoLoginUrl: kakaoLoginUrl),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,25 +48,6 @@ class LoginScreen extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class WebViewPage extends StatelessWidget {
-  final String webViewUrl;
-
-  WebViewPage({required this.webViewUrl});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Kakao Login"),
-      ),
-      body: WebView(
-        initialUrl: webViewUrl,
-        javascriptMode: JavascriptMode.unrestricted,
       ),
     );
   }

@@ -13,6 +13,7 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       width: 200,
       child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Stack(
             alignment: Alignment.bottomCenter,
@@ -34,25 +35,13 @@ class MainDrawer extends StatelessWidget {
             ),
             leading: Icon(Icons.account_circle),
             title: Text(
-              'home',
+              'HOME',
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
           ),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              LoginScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '로그인',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
+
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(
               context,
@@ -105,14 +94,16 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(height: 340.0),
+
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(
               context,
-              JoinScreen.route,
+              LoginScreen.route,
             ),
-            leading: Icon(Icons.account_circle),
+            leading: Icon(Icons.logout),
             title: Text(
-              'Join(임시)',
+              '로그아웃',
               style: TextStyle(
                 fontSize: 20,
               ),
@@ -121,5 +112,6 @@ class MainDrawer extends StatelessWidget {
         ],
       ),
     );
+
   }
 }
