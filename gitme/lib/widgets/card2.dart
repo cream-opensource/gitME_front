@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BusinessCardData {
+class BusinessCardData2 {
   final String name;
   final String jobTitle;
   final String contactInfo;
@@ -11,22 +11,22 @@ class BusinessCardData {
   final String stared;
   final String commit;
 
-  BusinessCardData({required this.name, required this.jobTitle, required this.contactInfo, required this.call,
+  BusinessCardData2({required this.name, required this.jobTitle, required this.contactInfo, required this.call,
     required this.techStack, required this.introduce, required this.followers, required this.stared, required this.commit});
 }
 
 
-class BusinessCard extends StatelessWidget {
-  final BusinessCardData data;
+class BusinessCard2 extends StatelessWidget {
+  final BusinessCardData2 data;
 
-  BusinessCard(this.data);
+  BusinessCard2(this.data);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
       // 세로 비즈니스 카드의 너비 설정
-      height: 600,
+      height: 500,
       // 세로 비즈니스 카드의 높이 설정
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.only(top: 30),
@@ -63,7 +63,7 @@ class BusinessCard extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
-                  image: AssetImage('assets/cat.png'), // 이미지 경로 설정
+                  image: AssetImage('assets/kakao.png'), // 이미지 경로 설정
                   fit: BoxFit.cover,
                 ),
               ),
