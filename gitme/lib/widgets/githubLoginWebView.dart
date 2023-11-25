@@ -8,8 +8,9 @@ import '../provider/userData.dart';
 
 class GitHubLoginWebView extends StatefulWidget {
   final String githubLoginUrl;
+  final void Function() onLinked; // Declare the onLinked callback
 
-  GitHubLoginWebView({required this.githubLoginUrl});
+  GitHubLoginWebView({required this.githubLoginUrl, required this.onLinked});
 
   @override
   _GitHubLoginWebViewState createState() => _GitHubLoginWebViewState();
@@ -51,6 +52,7 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
 
       Provider.of<UserData>(context, listen: false).setAccessToken(token);
 
+      widget.onLinked(); // 연동 성공 시 콜백 호출
 
       showDialog(
         context: context,

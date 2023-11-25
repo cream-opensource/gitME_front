@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/main_screen.dart';
+import 'package:gitme/widgets/github_button.dart';
 import 'package:gitme/widgets/textFormFieldComponent.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -32,98 +33,85 @@ class JoinScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+
                   TextFormFieldComponent(
                     TextInputType.text,
                     TextInputAction.next,
-                    "이름",
+                    "ex.홍길동",
                     2,
                     "이름을 입력하세요",
                     nameController,
                         (value) => nameController.text = value!,
+                    '이름'
                   ),
                   SizedBox(height: 16.0),
                   TextFormFieldComponent(
                     TextInputType.phone,
                     TextInputAction.next,
-                    "전화번호",
+                    "ex.01012345678",
                     11,
                     "'-'없이 숫자로만 입력하세요",
                     phoneController,
                         (value) => phoneController.text = value!,
+                    '전화번호'
                   ),
                   SizedBox(height: 16.0),
                   TextFormFieldComponent(
                     TextInputType.emailAddress,
                     TextInputAction.next,
-                    "이메일",
+                    "ex.gildong@gmail.com",
                     10,
                     "이메일을 입력하세요",
                     emailController,
                         (value) => emailController.text = value!,
+                    '이메일'
                   ),
                   SizedBox(height: 16.0),
                   TextFormFieldComponent(
                     TextInputType.datetime,
                     TextInputAction.done,
-                    "생년월일",
+                    "ex.19980101",
                     8,
                     "생년월일을 입력하세요",
                     birthdateController,
                         (value) => birthdateController.text = value!,
+                    '생년월일'
                   ),
                   SizedBox(height: 16.0),
-                  ElevatedButton.icon(
+                  GitHubButton(),
+                  SizedBox(height: 16.0),
 
-                    onPressed: () {
-                      String clientId = '76ec284b2793bee252a3';
+                  FractionallySizedBox(
+                    widthFactor: 0.8, // 최대 너비의 80%
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (formKey.currentState?.validate() ?? false) {
+                          formKey.currentState?.save();
+                          String name = nameController.text;
+                          String phone = phoneController.text;
+                          String email = emailController.text;
+                          String birthdate = birthdateController.text;
 
-                      String githubLoginUrl =
-                          'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/github/login';
+                          print('Name: $name');
+                          print('Phone: $phone');
+                          print('Email: $email');
+                          print('Birthdate: $birthdate');
 
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => GitHubLoginWebView(
-                            githubLoginUrl: githubLoginUrl,
-                          ),
+                          await sendUserDataToServer(context, name, phone, email, birthdate);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.all(15.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.black,
-                      onPrimary: Colors.white,
-                      padding: EdgeInsets.all(10.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
                       ),
+                      child: Text("가입 완료"),
                     ),
-                    icon: Image.asset(
-                      'assets/git_icon.png',
-                      height: 24.0,
-                      width: 24.0,
-                    ),
-                    label: Text("GitHub 연동"),
                   ),
 
-                  SizedBox(height: 16.0,),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (formKey.currentState?.validate() ?? false) {
-                        formKey.currentState?.save();
-                        String name = nameController.text;
-                        String phone = phoneController.text;
-                        String email = emailController.text;
-                        String birthdate = birthdateController.text;
-
-                        print('Name: $name');
-                        print('Phone: $phone');
-                        print('Email: $email');
-                        print('Birthdate: $birthdate');
-
-                        await sendUserDataToServer(context, name, phone, email, birthdate);
-                      }
-                    },
-                    child: Text("가입 완료"),
-                  ),
                 ],
               ),
             ),
@@ -142,12 +130,12 @@ class JoinScreen extends StatelessWidget {
     int? Id = userData.id;
 
     final Map<String, dynamic> data = {
-      'id' : Id ?? '',
+      'kakaoId' : Id ?? '',
       'name': name ?? '',
       'phone': phone ?? '',
       'email': email ?? '',
-      'birthdate': birthdate ?? '',
-      'accessToken': accessToken ?? '',
+      'birthDate': birthdate ?? '',
+      'gitAccessToken': accessToken ?? '',
     };
 
 
@@ -160,6 +148,7 @@ class JoinScreen extends StatelessWidget {
       },
       body: jsonData,
     );
+    print('보낼 데이터 확인: $data');
 
     if (response.statusCode == 200) {
       print(jsonData);
@@ -173,6 +162,4 @@ class JoinScreen extends StatelessWidget {
       print('요청 실패: ${response.reasonPhrase}');
     }
   }
-
-
 }
