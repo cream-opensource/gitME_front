@@ -35,6 +35,9 @@ dependencies:
   http: ^0.13.3
   flutter_native_splash: ^2.3.5
   webview_flutter: ^3.0.4
+  qr_flutter: ^4.1.0
+  flip_card: ^0.5.0
+
 
 
 dev_dependencies:

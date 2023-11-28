@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class BusinessCardData {
   final String name;
   final String jobTitle;
@@ -18,16 +19,19 @@ class BusinessCardData {
 
 class BusinessCard extends StatelessWidget {
   final BusinessCardData data;
+  // final String name;
+  // final String contactInfo;
 
+  // BusinessCard({required this.name, required this.contactInfo, required this.data});
   BusinessCard(this.data);
+
 
   @override
   Widget build(BuildContext context) {
+    // String qrCodeData = "$name\n$contactInfo";
     return Container(
       width: 300,
-      // 세로 비즈니스 카드의 너비 설정
-      height: 600,
-      // 세로 비즈니스 카드의 높이 설정
+      height: 500,
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.only(top: 30),
       // 비즈니스 카드를 아래로 내리기 위한 여백 설정

@@ -52,7 +52,7 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
 
       Provider.of<UserData>(context, listen: false).setAccessToken(token);
 
-      widget.onLinked(); // 연동 성공 시 콜백 호출
+      widget.onLinked();
 
       showDialog(
         context: context,
