@@ -11,10 +11,18 @@ class BusinessCardData {
   final String stared;
   final String commit;
 
-  BusinessCardData({required this.name, required this.jobTitle, required this.contactInfo, required this.call,
-    required this.techStack, required this.introduce, required this.followers, required this.stared, required this.commit});
+  BusinessCardData({
+    required this.name,
+    required this.jobTitle,
+    required this.contactInfo,
+    required this.call,
+    required this.techStack,
+    required this.introduce,
+    required this.followers,
+    required this.stared,
+    required this.commit,
+  });
 }
-
 
 class BusinessCard extends StatelessWidget {
   final BusinessCardData data;
@@ -24,21 +32,20 @@ class BusinessCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      // 세로 비즈니스 카드의 너비 설정
-      height: 600,
-      // 세로 비즈니스 카드의 높이 설정
-      padding: EdgeInsets.all(16),
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
-      // 비즈니스 카드를 아래로 내리기 위한 여백 설정
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Colors.indigo.withOpacity(0.6),
             Colors.indigo.withOpacity(0.6),
-            Colors.white, // 하얀색
+            Colors.white,
           ],
-          stops: [0.0, 0.7, 0.7], // 각 색상의 정지점 (0.66이면 2/3 지점에서 색이 변경됩니다.)
+          stops: [0.0, 0.7, 0.7],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -55,33 +62,32 @@ class BusinessCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Align(
-            alignment: Alignment.center, // 이미지를 가로 방향으로 중앙에 배치
+            alignment: Alignment.center,
             child: Container(
-              width: 250, // 이미지의 너비
-              height: 100, // 이미지의 높이
+              width: 250,
+              height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
-                  image: AssetImage('assets/cat.png'), // 이미지 경로 설정
+                  image: AssetImage('assets/cat.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
-          SizedBox(height: 160),
+          SizedBox(height: 40),
           Container(
             width: 80,
             height: 20,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               image: DecorationImage(
-                image: AssetImage('assets/mark2.png'), // 이미지 경로 설정
+                image: AssetImage('assets/mark2.png'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          //SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -92,10 +98,11 @@ class BusinessCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 80), // 간격 조정
+              SizedBox(width: 80),
+              // 나머지 버튼들 추가
               InkWell(
                 onTap: () {
-                  // 버튼 클릭 시 동작할 내용을 추가하세요.
+                  // 첫 번째 버튼 클릭 시 동작할 내용을 추가하세요.
                 },
                 child: Container(
                   width: 40,
@@ -103,7 +110,7 @@ class BusinessCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
-                      image: AssetImage('assets/tistory.png'), // 버튼 이미지 경로 설정
+                      image: AssetImage('assets/tistory.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -111,7 +118,7 @@ class BusinessCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // 버튼 클릭 시 동작할 내용을 추가하세요.
+                  // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
                 },
                 child: Container(
                   width: 30,
@@ -119,7 +126,7 @@ class BusinessCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
-                      image: AssetImage('assets/notion.png'), // 버튼 이미지 경로 설정
+                      image: AssetImage('assets/notion.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -127,7 +134,7 @@ class BusinessCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: Text(
