@@ -11,17 +11,22 @@ class _GitHubButtonState extends State<GitHubButton> {
 
   @override
   Widget build(BuildContext context) {
+    print('Building GitHubButton. isLinked: $isLinked');
+
     return FractionallySizedBox(
       widthFactor: 0.8,
       child: ElevatedButton.icon(
-        onPressed: () {
-          String githubLoginUrl =
-              'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/github/login';
-          Navigator.of(context).push(
+        onPressed: () async {
+          print('GitHubButton onPressed.');
+          String githubLoginUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/github/login';
+
+          // Navigate to the GitHubLoginWebView using push, not pushReplacement
+          await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => GitHubLoginWebView(
                 githubLoginUrl: githubLoginUrl,
                 onLinked: () {
+                  print('onLinked callback triggered.');
                   setState(() {
                     isLinked = true;
                   });
@@ -29,9 +34,12 @@ class _GitHubButtonState extends State<GitHubButton> {
               ),
             ),
           );
+
+          // After returning from GitHubLoginWebView, GitHubButton will still be part of the widget tree
+          // and the state (isLinked) will be preserved
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: isLinked ? Colors.black : Colors.grey,
+          backgroundColor: isLinked ? Colors.red : Colors.grey,
           foregroundColor: Colors.white,
           padding: EdgeInsets.all(10.0),
           shape: RoundedRectangleBorder(

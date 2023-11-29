@@ -14,6 +14,7 @@ class JoinScreen extends StatelessWidget {
   static final route = 'join-screen';
 
   final formKey = GlobalKey<FormState>();
+  bool isLinked = false;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -82,7 +83,7 @@ class JoinScreen extends StatelessWidget {
                   SizedBox(height: 16.0),
 
                   FractionallySizedBox(
-                    widthFactor: 0.8, // 최대 너비의 80%
+                    widthFactor: 0.8,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (formKey.currentState?.validate() ?? false) {
@@ -111,7 +112,6 @@ class JoinScreen extends StatelessWidget {
                       child: Text("가입 완료"),
                     ),
                   ),
-
                 ],
               ),
             ),
