@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gitme/widgets/card.dart';
@@ -24,34 +25,83 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: <Widget>[
           CustomDrawerBtn(),
-          SizedBox(height: 30.0),
+
           Positioned(
             top: MediaQuery.of(context).size.height * 0.15,
             left: 16,
             right: 16,
-            child: Column(
-              children: <Widget>[
+            child: CarouselSlider(
+              items: [
                 FlipCard(
-                  front: BusinessCard(
-                    BusinessCardData(
-                      name: "조재중",
-                      jobTitle: "Frontend Developer",
-                      contactInfo: "kc0393@gmail.com",
-                      call: "010-1234-5678",
-                      techStack: "React",
-                      followers: "1000",
-                      stared: "500",
-                      commit: "1000",
-                      introduce: "m_a_king",
+                    front: BusinessCard(
+                      BusinessCardData(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
                     ),
-                  ),
-                  back: QrImageView(
-                    data: "hi im qrcode",
-                    version: QrVersions.auto,
-                    size: 200.0,
-                  )
-                ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
+                FlipCard(
+                    front: BusinessCard(
+                      BusinessCardData(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
+                    ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
+                FlipCard(
+                    front: BusinessCard2(
+                      BusinessCardData2(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
+                    ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
               ],
+              options: CarouselOptions(
+                height: 500.0,
+                enlargeCenterPage: true,
+                viewportFraction: 0.8,
+                initialPage: 0,
+                // 초기 페이지 설정
+                enableInfiniteScroll: false,
+                // 무한 스크롤 사용 여부
+                reverse: false,
+                // 캐러셀 역방향 스크롤 여부
+                autoPlay: false,
+              ),
             ),
           ),
           Positioned(
@@ -83,14 +133,12 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             SimpleDialogOption(
               onPressed: () {
-                print('이미지로 저장하기');
                 Navigator.of(dialogContext).pop(); // 닫기
               },
               child: Text('이미지로 저장하기'),
             ),
             SimpleDialogOption(
               onPressed: () {
-                print('카카오톡으로 공유하기');
                 Navigator.of(dialogContext).pop();
               },
               child: Text('카카오톡으로 공유하기'),
