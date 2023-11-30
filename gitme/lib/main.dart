@@ -8,6 +8,7 @@ import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
+import 'package:gitme/screens/qr_scan_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
           ProfileScreen.route: (_) => ProfileScreen(),
           CardWalletScreen.route: (_) => CardWalletScreen(),
           CustomScreen.route: (_) => CustomScreen(),
-          JoinScreen.route: (_) => JoinScreen()
+          JoinScreen.route: (_) => JoinScreen(),
+          QRScanScreen.route: (_) => QRScanScreen()
         },
       );
   }

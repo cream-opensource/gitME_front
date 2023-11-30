@@ -17,9 +17,69 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   List<bool> isFlippedList = [false]; // 초기에 앞면(false)으로 시작
+  int _current = 0; // 현재 명함 인덱스를 알려주는 변수
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> items = [
+      FlipCard(
+          front: BusinessCard(
+            BusinessCardData(
+              name: "조재중",
+              jobTitle: "Frontend Developer",
+              contactInfo: "kc0393@gmail.com",
+              call: "010-1234-5678",
+              techStack: "React",
+              followers: "1000",
+              stared: "500",
+              commit: "1000",
+              introduce: "m_a_king",
+            ),
+          ),
+          back: QrImageView(
+            data: "hi im qrcode",
+            version: QrVersions.auto,
+            size: 200.0,
+          )),
+      FlipCard(
+          front: BusinessCard(
+            BusinessCardData(
+              name: "조재중",
+              jobTitle: "Frontend Developer",
+              contactInfo: "kc0393@gmail.com",
+              call: "010-1234-5678",
+              techStack: "React",
+              followers: "1000",
+              stared: "500",
+              commit: "1000",
+              introduce: "m_a_king",
+            ),
+          ),
+          back: QrImageView(
+            data: "hi im qrcode",
+            version: QrVersions.auto,
+            size: 200.0,
+          )),
+      FlipCard(
+          front: BusinessCard(
+            BusinessCardData(
+              name: "조재중",
+              jobTitle: "Frontend Developer",
+              contactInfo: "kc0393@gmail.com",
+              call: "010-1234-5678",
+              techStack: "React",
+              followers: "1000",
+              stared: "500",
+              commit: "1000",
+              introduce: "m_a_king",
+            ),
+          ),
+          back: QrImageView(
+            data: "hi im qrcode",
+            version: QrVersions.auto,
+            size: 200.0,
+          )),
+    ];
     return Scaffold(
       appBar: null,
       body: Stack(
@@ -31,65 +91,7 @@ class _MainScreenState extends State<MainScreen> {
             left: 16,
             right: 16,
             child: CarouselSlider(
-              items: [
-                FlipCard(
-                    front: BusinessCard(
-                      BusinessCardData(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-                FlipCard(
-                    front: BusinessCard(
-                      BusinessCardData(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-                FlipCard(
-                    front: BusinessCard2(
-                      BusinessCardData2(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-              ],
+              items: items,
               options: CarouselOptions(
                 height: 500.0,
                 enlargeCenterPage: true,
@@ -101,6 +103,33 @@ class _MainScreenState extends State<MainScreen> {
                 reverse: false,
                 // 캐러셀 역방향 스크롤 여부
                 autoPlay: false,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                },
+              ),
+            ),
+          ),
+          // Indicator 추가
+          Positioned(
+            bottom: MediaQuery.of(context).size.height * 0.2, // 10%의 여백을 설정
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                // Indicator의 개수를 items의 개수로 설정
+                items.length,
+                    (index) => Container(
+                  width: 8.0,
+                  height: 8.0,
+                  margin: EdgeInsets.symmetric(horizontal: 4.0),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: _current == index ? Colors.blue : Colors.grey,
+                  ),
+                ),
               ),
             ),
           ),
