@@ -6,6 +6,7 @@ import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
+import 'package:gitme/screens/qr_scan_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -76,6 +77,19 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(Icons.account_circle),
             title: Text(
               '명함지갑',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              QRScanScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              'QRScan',
               style: TextStyle(
                 fontSize: 20,
               ),
