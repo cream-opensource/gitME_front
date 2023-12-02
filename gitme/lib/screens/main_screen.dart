@@ -3,6 +3,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
+import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/qrcode.dart';
@@ -91,7 +92,67 @@ class _MainScreenState extends State<MainScreen> {
             left: 16,
             right: 16,
             child: CarouselSlider(
-              items: items,
+
+              items: [
+                FlipCard(
+                    front: BusinessCard3(
+                      BusinessCardData3(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
+                    ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
+                FlipCard(
+                    front: BusinessCard(
+                      BusinessCardData(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
+                    ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
+                FlipCard(
+                    front: BusinessCard2(
+                      BusinessCardData2(
+                        name: "조재중",
+                        jobTitle: "Frontend Developer",
+                        contactInfo: "kc0393@gmail.com",
+                        call: "010-1234-5678",
+                        techStack: "React",
+                        followers: "1000",
+                        stared: "500",
+                        commit: "1000",
+                        introduce: "m_a_king",
+                      ),
+                    ),
+                    back: QrImageView(
+                      data: "hi im qrcode",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                    )),
+              ],
+
               options: CarouselOptions(
                 height: 500.0,
                 enlargeCenterPage: true,

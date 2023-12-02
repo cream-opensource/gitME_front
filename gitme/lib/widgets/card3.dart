@@ -87,6 +87,7 @@ class BusinessCard3 extends StatelessWidget {
             SizedBox(height: 20,),
             Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
             style: TextStyle(color: Colors.white, fontSize: 16, ), textAlign: TextAlign.center),
+
           ],
         ),
       ),
