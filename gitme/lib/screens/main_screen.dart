@@ -95,17 +95,30 @@ class _MainScreenState extends State<MainScreen> {
               introduce: userData.nickname ?? "",
             ),
           ),
-        back: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              QrImageView(
-                data: "hi im qrcode : ${_current}",
-                version: QrVersions.auto,
-                size: 200.0,
+        back: Container(
+          // 카드 크기와 일치하는 컨테이너 생성
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 400,
+          margin: EdgeInsets.only(top: 30),
+          decoration: BoxDecoration(
+            color: Color(0xFFCEF700),
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
               ),
             ],
+          ),
+          padding: EdgeInsets.all(16.0), // 원하는 패딩값 설정
+          child: Center(
+            child: QrImageView(
+              data: "hi im qrcode : ${_current}",
+              version: QrVersions.auto,
+              size: 200.0,
+              backgroundColor: Colors.white,
+            ),
           ),
         ),
       ),
