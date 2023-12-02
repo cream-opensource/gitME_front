@@ -2,9 +2,8 @@ import 'package:flutter/foundation.dart';
 
 class UserData with ChangeNotifier {
   String? accessToken;
-  int? id;
   int? userIdx;
-  String? kakaoId;
+  int? kakaoId;
   String? name;
   String? birthDate;
   String? email;
@@ -23,8 +22,8 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
-  void setId(int Id) {
-    id = Id;
+  void setKId(int kId) {
+    kakaoId = kId;
     notifyListeners();
   }
   void setIdx(int userId) {
@@ -34,7 +33,6 @@ class UserData with ChangeNotifier {
 
   void setUserData(Map<String, dynamic> userData) {
     userIdx = userData['userIdx'];
-    kakaoId = userData['kakaoId'];
     name = userData['name'];
     birthDate = userData['birthDate'];
     email = userData['email'];

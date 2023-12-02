@@ -127,17 +127,20 @@ class JoinScreen extends StatelessWidget {
       ) async {
     UserData userData = Provider.of<UserData>(context, listen: false);
     String? accessToken = userData.accessToken;
-    int? Id = userData.id;
+    String? kakaoId = userData.kakaoId?.toString();
 
     final Map<String, dynamic> data = {
-      'kakaoId' : Id ?? '',
+      'kakaoId' : kakaoId ?? '',
       'name': name ?? '',
       'phone': phone ?? '',
       'email': email ?? '',
       'birthDate': birthdate ?? '',
       'gitAccessToken': accessToken ?? '',
+      "externalLink": {
+        "notion1": "test1",
+        "notion2": "test2"
+      }
     };
-
 
     final String jsonData = jsonEncode(data);
 
@@ -150,9 +153,9 @@ class JoinScreen extends StatelessWidget {
     );
     print('보낼 데이터 확인: $data');
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       print(jsonData);
-      print('보낼 데이터 확인: $data');
+      print('보낼 데이터 확인: $jsonData');
       print('데이터: ${response.body}');
       Navigator.pushReplacementNamed(
         context,

@@ -26,18 +26,17 @@ class _MainScreenState extends State<MainScreen> {
   late UserData userData; // UserData 타입의 변수를 선언
   String userName = ""; // nullable로 변경
 
-  final ServerCommunication serverCommunication = ServerCommunication();
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    userData = UserData(); // 예시로 UserData 클래스를 사용하였습니다. 실제로 사용하는 클래스에 맞게 수정하세요.
     fetchDataFromServer();
   }
 
   Future<void> fetchDataFromServer() async {
     try {
-      await serverCommunication.fetchDataFromServer(context);
       userData = Provider.of<UserData>(context, listen: false);
       print('성공');
     } catch (e) {
@@ -57,6 +56,25 @@ class _MainScreenState extends State<MainScreen> {
       FlipCard(
           front: BusinessCard3(
             BusinessCardData3(
+              name: userData.name ?? "",
+              jobTitle: "Frontend Developer",
+              contactInfo: userData.email ?? "",
+              call: userData.phone ?? "",
+              techStack: userData.languages?['JavaScript'].toString() ?? "",
+              followers: userData.followers.toString() ?? "",
+              stared: userData.totalStars.toString() ?? "",
+              commit: userData.totalCommits.toString() ?? "",
+              introduce: userData.nickname ?? "",
+            ),
+          ),
+          back: QrImageView(
+            data: "hi im qrcode : ${_current}",
+            version: QrVersions.auto,
+            size: 200.0,
+          )),
+      FlipCard(
+          front: BusinessCard(
+            BusinessCardData(
               name: userData.name ?? "",
               jobTitle: "Frontend Developer",
               contactInfo: userData.email ?? "",
