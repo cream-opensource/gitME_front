@@ -8,6 +8,8 @@ import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
 
+import '../screens/test_screen.dart';
+
 class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,21 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 340.0),
+
+          ListTile(
+            onTap: () => Navigator.pushReplacementNamed(
+              context,
+              TestScreen.route,
+            ),
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              '테스트화면',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(height: 240.0),
 
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(

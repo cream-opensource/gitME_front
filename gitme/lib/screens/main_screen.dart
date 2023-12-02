@@ -1,12 +1,17 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:gitme/provider/userData.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
+import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/qrcode.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+
+import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
   static final route = 'main-screen';
@@ -18,64 +23,72 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List<bool> isFlippedList = [false]; // 초기에 앞면(false)으로 시작
   int _current = 0; // 현재 명함 인덱스를 알려주는 변수
+  late UserData userData; // UserData 타입의 변수를 선언
+  String userName = ""; // nullable로 변경
+
+  final ServerCommunication serverCommunication = ServerCommunication();
+  bool isLoading = true;
 
   @override
+  void initState() {
+    super.initState();
+    fetchDataFromServer();
+  }
+
+  Future<void> fetchDataFromServer() async {
+    try {
+      await serverCommunication.fetchDataFromServer(context);
+      userData = Provider.of<UserData>(context, listen: false);
+      print('성공');
+    } catch (e) {
+      print('error: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return CircularProgressIndicator();
+    }
     List<Widget> items = [
       FlipCard(
-          front: BusinessCard(
-            BusinessCardData(
-              name: "조재중",
+          front: BusinessCard3(
+            BusinessCardData3(
+              name: userData.name ?? "",
               jobTitle: "Frontend Developer",
-              contactInfo: "kc0393@gmail.com",
-              call: "010-1234-5678",
-              techStack: "React",
-              followers: "1000",
-              stared: "500",
-              commit: "1000",
-              introduce: "m_a_king",
+              contactInfo: userData.email ?? "",
+              call: userData.phone ?? "",
+              techStack: userData.languages?['JavaScript'].toString() ?? "",
+              followers: userData.followers.toString() ?? "",
+              stared: userData.totalStars.toString() ?? "",
+              commit: userData.totalCommits.toString() ?? "",
+              introduce: userData.nickname ?? "",
             ),
           ),
           back: QrImageView(
-            data: "hi im qrcode",
+            data: "hi im qrcode : ${_current}",
             version: QrVersions.auto,
             size: 200.0,
           )),
       FlipCard(
           front: BusinessCard(
             BusinessCardData(
-              name: "조재중",
+              name: userData.name ?? "",
               jobTitle: "Frontend Developer",
-              contactInfo: "kc0393@gmail.com",
-              call: "010-1234-5678",
-              techStack: "React",
-              followers: "1000",
-              stared: "500",
-              commit: "1000",
-              introduce: "m_a_king",
+              contactInfo: userData.email ?? "",
+              call: userData.phone ?? "",
+              techStack: userData.languages?['JavaScript'].toString() ?? "",
+              followers: userData.followers.toString() ?? "",
+              stared: userData.totalStars.toString() ?? "",
+              commit: userData.totalCommits.toString() ?? "",
+              introduce: userData.nickname ?? "",
             ),
           ),
           back: QrImageView(
-            data: "hi im qrcode",
-            version: QrVersions.auto,
-            size: 200.0,
-          )),
-      FlipCard(
-          front: BusinessCard(
-            BusinessCardData(
-              name: "조재중",
-              jobTitle: "Frontend Developer",
-              contactInfo: "kc0393@gmail.com",
-              call: "010-1234-5678",
-              techStack: "React",
-              followers: "1000",
-              stared: "500",
-              commit: "1000",
-              introduce: "m_a_king",
-            ),
-          ),
-          back: QrImageView(
-            data: "hi im qrcode",
+            data: "hi im qrcode : ${_current}",
             version: QrVersions.auto,
             size: 200.0,
           )),
@@ -85,7 +98,6 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: <Widget>[
           CustomDrawerBtn(),
-
           Positioned(
             top: MediaQuery.of(context).size.height * 0.15,
             left: 16,
