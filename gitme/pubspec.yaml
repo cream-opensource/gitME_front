@@ -40,6 +40,7 @@ dependencies:
   carousel_slider: ^4.2.1
   qrscan: ^0.3.3
   permission_handler: ^6.1.0
+  image_gallery_saver: ^2.0.3
 
 
 

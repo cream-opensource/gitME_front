@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
-class CardWalletScreen extends StatelessWidget {
+class CardWalletScreen extends StatefulWidget { // StatelessWidget에서 StatefulWidget로 변경
   static final route = 'card-wallet-screen';
+
+  @override
+  _CardWalletScreenState createState() => _CardWalletScreenState();
+}
+
+class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래스 추가
 
   final List<Map<String, dynamic>> tableList = [
     {
@@ -54,6 +60,19 @@ class CardWalletScreen extends StatelessWidget {
       'imagePath': 'assets/BBANG.png',
     },
   ];
+
+  List<String> cardImages = [
+    'assets/card1.png',
+    'assets/card2.png',
+    'assets/card3.png',
+    'assets/card4.png',
+    'assets/card5.png',
+    'assets/card6.png',
+    'assets/card1.png',
+    'assets/card2.png',
+  ];
+
+  bool isListView = true;
 
   @override
   Widget build(BuildContext context) {
@@ -113,29 +132,68 @@ class CardWalletScreen extends StatelessWidget {
                 // 검색 기능 구현
               },
             ),
-
           ),
           SizedBox(height: 30),
-          Row(
-            children: [
-              Image.asset(
-                'assets/cardlist.png', // 이미지 경로
-                width: 50, // 이미지 너비
-                height: 50, // 이미지 높이
-              ),
-              Text(
-                '${tableList.length}개 보관중', // 테이블 수 표시
-                textAlign: TextAlign.start, // 왼쪽 정렬
-                style: TextStyle(
-                  color: Color(0xFF676A66),
-                  fontSize: 15, // 텍스트 크기 조정
-                  fontWeight: FontWeight.bold, // 텍스트 굵기 조정
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/cardlist.png', // 이미지 경로
+                      width: 50, // 이미지 너비
+                      height: 50, // 이미지 높이
+                    ),
+                    SizedBox(width: 5), // 이미지와 텍스트 사이 간격 조정
+                    Text(
+                      '${tableList.length}개 보관중', // 테이블 수 표시
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF676A66),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      isListView = !isListView;
+                    });
+                  },
+                    child: Row(
+                      children: [
+                        Text(
+                          isListView ? '보기 정렬' : '그리드 정렬',
+                          style: TextStyle(
+                            color: Color(0xFF676A66),
+                            fontSize: 13,
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Padding(
+                          padding: EdgeInsets.only(top: 2.0),
+                          child: Icon(
+                            isListView ? Icons.view_list : Icons.grid_view,
+                            color: Color(0xFF676A66),
+                            size: 18,
+                          ),
+                        ),
+                      ],
+                    ),
+                    style: TextButton.styleFrom(
+                    minimumSize: Size(10, 10),
+                  ),
+                ),
+              ],
+            ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: isListView
+                ? ListView.builder(
               itemCount: tableList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
@@ -180,6 +238,55 @@ class CardWalletScreen extends StatelessWidget {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            )
+                : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                childAspectRatio: 0.8,
+              ),
+              itemCount: cardImages.length,
+              itemBuilder: (context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          backgroundColor: Colors.transparent,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Image.asset(cardImages[index]),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // 다이얼로그 닫기
+                                  },
+                                  child: Text('닫기'),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: SizedBox(
+                    child: Card(
+                      child: Image.asset(
+                        cardImages[index],
+                        width: 100,
+                        height: 100,
                       ),
                     ),
                   ),
