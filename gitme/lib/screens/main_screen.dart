@@ -55,8 +55,8 @@ class _MainScreenState extends State<MainScreen> {
     }
     List<Widget> items = [
       FlipCard(
-          front: BusinessCard(
-            BusinessCardData(
+          front: BusinessCard3(
+            BusinessCardData3(
               name: userData.name ?? "",
               jobTitle: "Frontend Developer",
               contactInfo: userData.email ?? "",
@@ -76,15 +76,15 @@ class _MainScreenState extends State<MainScreen> {
       FlipCard(
           front: BusinessCard(
             BusinessCardData(
-              name: "조재중",
+              name: userData.name ?? "",
               jobTitle: "Frontend Developer",
-              contactInfo: "kc0393@gmail.com",
-              call: "010-1234-5678",
-              techStack: "React",
-              followers: "1000",
-              stared: "500",
-              commit: "1000",
-              introduce: "m_a_king",
+              contactInfo: userData.email ?? "",
+              call: userData.phone ?? "",
+              techStack: userData.languages?['JavaScript'].toString() ?? "",
+              followers: userData.followers.toString() ?? "",
+              stared: userData.totalStars.toString() ?? "",
+              commit: userData.totalCommits.toString() ?? "",
+              introduce: userData.nickname ?? "",
             ),
           ),
           back: QrImageView(
@@ -103,67 +103,7 @@ class _MainScreenState extends State<MainScreen> {
             left: 16,
             right: 16,
             child: CarouselSlider(
-
-              items: [
-                FlipCard(
-                    front: BusinessCard3(
-                      BusinessCardData3(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-                FlipCard(
-                    front: BusinessCard(
-                      BusinessCardData(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-                FlipCard(
-                    front: BusinessCard2(
-                      BusinessCardData2(
-                        name: "조재중",
-                        jobTitle: "Frontend Developer",
-                        contactInfo: "kc0393@gmail.com",
-                        call: "010-1234-5678",
-                        techStack: "React",
-                        followers: "1000",
-                        stared: "500",
-                        commit: "1000",
-                        introduce: "m_a_king",
-                      ),
-                    ),
-                    back: QrImageView(
-                      data: "hi im qrcode",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                    )),
-              ],
-
+              items: items,
               options: CarouselOptions(
                 height: 500.0,
                 enlargeCenterPage: true,
