@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/custom_drawer_btn.dart';
-import '../widgets/main_drawer.dart';
+import 'main_screen.dart';
 
 class CardListScreen extends StatelessWidget {
   static final route = 'cardList-screen';
@@ -20,19 +18,55 @@ class CardListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
-      body: Stack(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFF4F4F4),
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/back_button.png', // 이미지 경로
+            width: 20, // 이미지 너비
+            height: 20, // 이미지 높이
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(MainScreen.route);
+          },
+        ),
+        title: Text(
+          '내 명함',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
         children: [
-          CustomDrawerBtn(),
-          Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            bottom: 0,
+          SizedBox(height: 20),
+          Row(
+            children: [
+              SizedBox(width: 16),
+              Image.asset(
+                'assets/cardlist.png', // 이미지 경로
+                width: 50, // 이미지 너비
+                height: 50, // 이미지 높이
+              ),
+              SizedBox(width: 5), // 이미지와 텍스트 사이 간격 조정
+              Text(
+                '${cardImages.length}개 보관중',
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Color(0xFF676A66),
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          Expanded(
             child: GridView.builder(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.all(16.0),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 200,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
               ),
               itemCount: cardImages.length,
               itemBuilder: (context, index) {
@@ -52,9 +86,9 @@ class CardListScreen extends StatelessWidget {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: ElevatedButton(
-                                  onPressed: (
-                                      // #TODO:  index에 맞는 명함의 수정페이지로 이동
-                                      ) {},
+                                  onPressed: () {
+                                    // #TODO:  index에 맞는 명함의 수정페이지로 이동
+                                  },
                                   child: Text('수정'),
                                 ),
                               )
@@ -64,22 +98,21 @@ class CardListScreen extends StatelessWidget {
                       },
                     );
                   },
-                    child: SizedBox(
-                      child: Card(
-                        child: Image.asset(
-                          cardImages[index],
-                          width: 100,
-                          height: 100,
-                        ),
+                  child: SizedBox(
+                    child: Card(
+                      child: Image.asset(
+                        cardImages[index],
+                        width: 100,
+                        height: 100,
                       ),
-                    )
+                    ),
+                  ),
                 );
               },
             ),
-          )
+          ),
         ],
       ),
-      drawer: MainDrawer(),
     );
   }
 }
