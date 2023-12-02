@@ -3,6 +3,7 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
+import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/qrcode.dart';
@@ -33,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
             child: CarouselSlider(
               items: [
                 FlipCard(
-                    front: BusinessCard(
-                      BusinessCardData(
+                    front: BusinessCard3(
+                      BusinessCardData3(
                         name: "조재중",
                         jobTitle: "Frontend Developer",
                         contactInfo: "kc0393@gmail.com",
