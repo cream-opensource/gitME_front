@@ -124,7 +124,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 340.0),
+          SizedBox(height: 240.0),
 
           ListTile(
             onTap: () => Navigator.pushReplacementNamed(

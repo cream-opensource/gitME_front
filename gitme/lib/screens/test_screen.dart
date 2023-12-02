@@ -1,5 +1,5 @@
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qrscan/qr_scan.dart' as scanner;  // 변경된 부분
+import 'package:qrscan/qrscan.dart' as scanner;  // 여기서 qrscan이라는 별칭을 사용하고 있음
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatefulWidget {
@@ -95,7 +95,7 @@ class _testState extends State<TestScreen> {
 
   Future _scan() async {
     await Permission.camera.request();
-    String? barcode = await scanner.scan();  // 여기서 변경된 부분
+    String? barcode = await scanner.scan();  // 여기서 scan 함수가 qrscan 라이브러리의 scan 함수를 호출하고 있음
     if (barcode == null) {
       print('nothing return.');
     } else {

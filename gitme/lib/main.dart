@@ -5,6 +5,7 @@ import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
+import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: MainScreen(),
+        home: LoginScreen(),
         routes: {
           MainScreen.route: (_) => MainScreen(),
           LoginScreen.route: (_) => LoginScreen(),
@@ -41,7 +42,8 @@ class MyApp extends StatelessWidget {
           CustomScreen.route: (_) => CustomScreen(),
           JoinScreen.route: (_) => JoinScreen(),
           QRScanScreen.route: (_) => QRScanScreen(),
-          TestScreen.route: (_) => TestScreen()
+          TestScreen.route: (_) => TestScreen(),
+          LoadingScreen.route: (_) => LoadingScreen()
         },
       );
   }
