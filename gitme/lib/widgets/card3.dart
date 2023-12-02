@@ -54,6 +54,7 @@ class BusinessCard3 extends StatelessWidget {
         child: Column(
 
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(data.name, style: TextStyle(color: Colors.white, fontSize: 22),),
             Text(data.name, style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
@@ -76,13 +77,16 @@ class BusinessCard3 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildRoundedText("Word1"),
+                _buildRoundedText("Commit: 899"),
+                // SizedBox(width: 5),
+                // _buildRoundedText("Star: 17K"),
                 SizedBox(width: 5),
-                _buildRoundedText("Word1Word1"),
-                SizedBox(width: 5),
-                _buildRoundedText("Word1"),// Add more Text widgets as needed
+                _buildRoundedText("PR: 900"),// Add more Text widgets as needed
               ],
-            )
+            ),
+            SizedBox(height: 20,),
+            Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+            style: TextStyle(color: Colors.white, fontSize: 16, ), textAlign: TextAlign.center),
           ],
         ),
       ),
@@ -97,7 +101,7 @@ Widget _buildRoundedText(String text) {
       borderRadius: BorderRadius.circular(30),
       border: Border.all(color: Colors.white), // 테두리 색상 설정
     ),
-    padding: EdgeInsets.fromLTRB(15, 8, 15, 8), // 텍스트와 테두리 간격 설정
+    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
     child: Center(
       child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
     ),
