@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
@@ -10,11 +11,17 @@ import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/qrcode.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:typed_data';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 
 import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
   static final route = 'main-screen';
+  final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -49,6 +56,26 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  Future<void> captureAndSave() async {
+    try {
+      RenderRepaintBoundary boundary = widget.globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage();
+      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+      // 이미지를 갤러리에 저장합니다.
+      final result = await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
+
+      if (result != null && result.isNotEmpty) {
+        print('이미지 저장 성공');
+      } else {
+        print('이미지 저장 실패');
+      }
+    } catch (e) {
+      print('에러: $e');
+    }
+  }
+
   Widget build(BuildContext context) {
     if (isLoading) {
       return CircularProgressIndicator();
@@ -68,11 +95,20 @@ class _MainScreenState extends State<MainScreen> {
               introduce: userData.nickname ?? "",
             ),
           ),
-          back: QrImageView(
-            data: "hi im qrcode : ${_current}",
-            version: QrVersions.auto,
-            size: 200.0,
-          )),
+        back: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              QrImageView(
+                data: "hi im qrcode : ${_current}",
+                version: QrVersions.auto,
+                size: 200.0,
+              ),
+            ],
+          ),
+        ),
+      ),
       FlipCard(
           front: BusinessCard(
             BusinessCardData(
@@ -87,80 +123,87 @@ class _MainScreenState extends State<MainScreen> {
               introduce: userData.nickname ?? "",
             ),
           ),
-          back: QrImageView(
-            data: "hi im qrcode : ${_current}",
-            version: QrVersions.auto,
-            size: 200.0,
-          )),
+          back: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                QrImageView(
+                  data: "hi im qrcode : ${_current}",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ),
+              ],
+            ),
+          ),
+      ),
     ];
     return Scaffold(
       appBar: null,
-      body: Stack(
-        children: <Widget>[
-          CustomDrawerBtn(),
-          Positioned(
-            top: MediaQuery.of(context).size.height * 0.15,
-            left: 16,
-            right: 16,
-            child: CarouselSlider(
-              items: items,
-              options: CarouselOptions(
-                height: 500.0,
-                enlargeCenterPage: true,
-                viewportFraction: 0.8,
-                initialPage: 0,
-                // 초기 페이지 설정
-                enableInfiniteScroll: false,
-                // 무한 스크롤 사용 여부
-                reverse: false,
-                // 캐러셀 역방향 스크롤 여부
-                autoPlay: false,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                },
+      body: RepaintBoundary(
+        key: widget.globalKey,
+        child: Stack(
+          children: <Widget>[
+            CustomDrawerBtn(),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.15,
+              left: 16,
+              right: 16,
+              child: CarouselSlider(
+                items: items,
+                options: CarouselOptions(
+                  height: 500.0,
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.8,
+                  initialPage: 0,
+                  enableInfiniteScroll: false,
+                  reverse: false,
+                  autoPlay: false,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  },
+                ),
               ),
             ),
-          ),
-          // Indicator 추가
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.2, // 10%의 여백을 설정
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                // Indicator의 개수를 items의 개수로 설정
-                items.length,
-                    (index) => Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.symmetric(horizontal: 4.0),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _current == index ? Colors.blue : Colors.grey,
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.2,
+              left: 0,
+              right: 0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  items.length,
+                      (index) => Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: EdgeInsets.symmetric(horizontal: 4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _current == index ? Colors.blue : Colors.grey,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            top: 45,
-            right: 10,
-            child: IconButton(
-              icon: Image.asset(
-                'assets/share.png',
-                width: 24.0,
-                height: 24.0,
+            Positioned(
+              top: 45,
+              right: 10,
+              child: IconButton(
+                icon: Image.asset(
+                  'assets/share.png',
+                  width: 24.0,
+                  height: 24.0,
+                ),
+                onPressed: () {
+                  print('Share button pressed');
+                  showShareOptionsDialog(context);
+                },
               ),
-              onPressed: () {
-                print('Share button pressed');
-                showShareOptionsDialog(context);
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       drawer: MainDrawer(),
     );
@@ -174,7 +217,7 @@ class _MainScreenState extends State<MainScreen> {
           children: [
             SimpleDialogOption(
               onPressed: () {
-                Navigator.of(dialogContext).pop(); // 닫기
+                captureAndSave();
               },
               child: Text('이미지로 저장하기'),
             ),
