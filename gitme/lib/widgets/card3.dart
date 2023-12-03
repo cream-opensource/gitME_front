@@ -77,7 +77,7 @@ class BusinessCard3 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildRoundedText("Commit: 899"),
+                _buildRoundedText(data.commit),
                 // SizedBox(width: 5),
                 // _buildRoundedText("Star: 17K"),
                 SizedBox(width: 5),
