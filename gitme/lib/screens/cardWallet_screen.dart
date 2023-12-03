@@ -185,7 +185,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                       ],
                     ),
                     style: TextButton.styleFrom(
-                    minimumSize: Size(10, 10),
+                    minimumSize: Size(30, 30),
                   ),
                 ),
               ],
