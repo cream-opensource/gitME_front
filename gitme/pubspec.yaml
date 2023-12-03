@@ -41,6 +41,7 @@ dependencies:
   qrscan: ^0.3.3
   permission_handler: ^6.1.0
   image_gallery_saver: ^2.0.3
+  kakao_flutter_sdk: ^1.4.2
 
 
 
