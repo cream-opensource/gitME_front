@@ -15,7 +15,6 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
   static final route = 'main-screen';
