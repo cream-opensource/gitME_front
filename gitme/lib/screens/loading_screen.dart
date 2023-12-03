@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
 import '../service/apiService.dart';
+import 'join_screen.dart';
 import 'main_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -13,7 +14,7 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  final ServerCommunication serverCommunication = ServerCommunication();
+  final DataHandler serverCommunication = DataHandler();
   late Future<void> _fetchDataFuture;
 
   @override
@@ -46,7 +47,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
             return Text('Error: ${snapshot.error}');
           } else {
             // 데이터를 성공적으로 받아온 경우 MainScreen으로 이동
-            Navigator.of(context).pushReplacementNamed(MainScreen.route);
+            // Navigator.of(context).pushReplacementNamed(MainScreen.route);
             return Container(); // 빈 컨테이너를 반환하여 에러를 방지
           }
         },
