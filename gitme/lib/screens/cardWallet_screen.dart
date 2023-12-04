@@ -364,21 +364,75 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                       builder: (context) {
                         return Dialog(
                           backgroundColor: Colors.transparent,
-                          child: Stack(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(cardImages[index]),
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Image.asset(cardImages[index]),
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pop(); // Close the dialog
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black.withOpacity(0.6),
+                                        ),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // 다이얼로그 닫기
-                                  },
-                                  child: Text('닫기'),
-                                ),
-                              )
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('선택한 명함을 삭제하시겠습니까?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context, rootNavigator: true).pop(); // 안쪽 대화 상자 닫기
+                                                  Navigator.of(context).pop(); // 바깥쪽 이미지 대화 상자 닫기
+                                                },
+                                                child: Text('취소'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    cardImages.removeAt(index);
+                                                  });
+                                                  Navigator.of(context, rootNavigator: true).pop(); // 안쪽 대화 상자 닫기
+                                                  Navigator.of(context).pop(); // 바깥쪽 이미지 대화 상자 닫기
+                                                },
+                                                child: Text('삭제'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(Icons.delete), // Use "delete" icon
+                                    color: Colors.red, // Define icon color
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         );
