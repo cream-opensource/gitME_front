@@ -8,28 +8,37 @@ Widget TextFormFieldComponent(
     String errorMessage,
     TextEditingController controller,
     void Function(String?)? onSaved,
-    String labelText, // 새로 추가한 속성: 폼 위의 라벨 텍스트
+    String labelText,
     ) {
   return Container(
+    height: 70,
     margin: EdgeInsets.symmetric(vertical: 10.0),
     child: TextFormField(
       keyboardType: keyboardType,
       textInputAction: textInputAction,
+
       decoration: InputDecoration(
-        labelText: labelText, // 라벨 텍스트 추가
-        labelStyle: TextStyle(fontWeight: FontWeight.bold), // 라벨 폰트를 bold체로 설정
+        labelText: labelText,
+        labelStyle: TextStyle(
+          fontSize: 16.5,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFF8D919F),
+          fontFamily: 'DarkerGrotesque',
+        ),
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.0),
           borderSide: BorderSide(color: Colors.grey, width: 1.0),
         ),
         focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(13.0),
           borderSide: BorderSide(color: Colors.black, width: 1.5),
         ),
       ),
       validator: (value) {
-        if (value!.trim().isEmpty) {
+        if (value == null || value.trim().isEmpty) {
           return '입력 필수 항목입니다.';
-        } else if (value.length < maxSize) {
+        } else if (value.length > maxSize) {
           return errorMessage;
         }
         return null; // 유효성 검사 통과
@@ -37,5 +46,7 @@ Widget TextFormFieldComponent(
       onSaved: onSaved,
       controller: controller,
     ),
+
+
   );
 }

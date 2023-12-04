@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
+import 'package:gitme/widgets/introduceFormFieldComponent.dart';
 import 'package:gitme/widgets/textFormFieldComponent.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -20,104 +21,135 @@ class JoinScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
+  final TextEditingController introduceController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
-      body: Center(
-        child: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(
+        leading: IconButton(
+        icon: Image.asset(
+          'assets/back_button.png', // 이미지 경로
+          width: 20, // 이미지 너비
+          height: 20, // 이미지 높이
+        ),
+        onPressed: () {
+          Navigator.of(context).pushNamed(MainScreen.route);
+          },
+        ),
+      ),
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Let's", style: TextStyle(
+                fontSize: 36,
+                color: Color(0xFF56CC94),
+                fontFamily: 'DarkerGrotesque',
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.8,
+              )),
+              Text("Start!", style: TextStyle(
+                fontSize: 36,
+                color: Color(0xFF56CC94),
+                fontFamily: 'DarkerGrotesque',
+                fontWeight: FontWeight.w800,
+                letterSpacing: -0.8,
+              )),
+              SizedBox(height: 20), // 예시로 간격 추가
+              TextFormFieldComponent(
+                TextInputType.text,
+                TextInputAction.next,
+                "ex. 홍길동",
+                2,
+                "이름을 입력하세요",
+                nameController,
+                    (value) => nameController.text = value!,
+                '이름',
+              ),
+              TextFormFieldComponent(
+                  TextInputType.datetime,
+                  TextInputAction.done,
+                  "ex. 19980101",
+                  8,
+                  "생년월일을 입력하세요",
+                  birthdateController,
+                      (value) => birthdateController.text = value!,
+                  '생년월일',
+              ),
+              TextFormFieldComponent(
+                  TextInputType.phone,
+                  TextInputAction.next,
+                  "ex. 01012345678",
+                  11,
+                  "'-'없이 숫자로만 입력하세요",
+                  phoneController,
+                      (value) => phoneController.text = value!,
+                  '전화번호',
+              ),
+              TextFormFieldComponent(
+                  TextInputType.emailAddress,
+                  TextInputAction.next,
+                  "ex. gildong@gmail.com",
+                  10,
+                  "이메일을 입력하세요",
+                  emailController,
+                      (value) => emailController.text = value!,
+                  '이메일',
+              ),
+              IntroduceFormFieldComponent(
+                  TextInputType.text,
+                  TextInputAction.next,
+                  "자기소개",
+                  50,
+                  "자기소개 글을 작성해주세요",
+                  introduceController,
+                      (value) => introduceController.text = value!,
+                  '자기소개',
+              ),
+              TextFormFieldComponent(
+                TextInputType.emailAddress,
+                TextInputAction.next,
+                "ex. gildong@gmail.com",
+                10,
+                "이메일을 입력하세요",
+                emailController,
+                    (value) => emailController.text = value!,
+                '외부 링크',
+              ),
+              SizedBox(height: 20,),
+              Row(
                 children: [
-
-                  TextFormFieldComponent(
-                    TextInputType.text,
-                    TextInputAction.next,
-                    "ex.홍길동",
-                    2,
-                    "이름을 입력하세요",
-                    nameController,
-                        (value) => nameController.text = value!,
-                    '이름'
-                  ),
-                  SizedBox(height: 16.0),
-                  TextFormFieldComponent(
-                    TextInputType.phone,
-                    TextInputAction.next,
-                    "ex.01012345678",
-                    11,
-                    "'-'없이 숫자로만 입력하세요",
-                    phoneController,
-                        (value) => phoneController.text = value!,
-                    '전화번호'
-                  ),
-                  SizedBox(height: 16.0),
-                  TextFormFieldComponent(
-                    TextInputType.emailAddress,
-                    TextInputAction.next,
-                    "ex.gildong@gmail.com",
-                    10,
-                    "이메일을 입력하세요",
-                    emailController,
-                        (value) => emailController.text = value!,
-                    '이메일'
-                  ),
-                  SizedBox(height: 16.0),
-                  TextFormFieldComponent(
-                    TextInputType.datetime,
-                    TextInputAction.done,
-                    "ex.19980101",
-                    8,
-                    "생년월일을 입력하세요",
-                    birthdateController,
-                        (value) => birthdateController.text = value!,
-                    '생년월일'
-                  ),
-                  SizedBox(height: 16.0),
-                  GitHubButton(),
-                  SizedBox(height: 16.0),
-
-                  FractionallySizedBox(
-                    widthFactor: 0.8,
+                  Expanded(
                     child: ElevatedButton(
-                      onPressed: () async {
-                        if (formKey.currentState?.validate() ?? false) {
-                          formKey.currentState?.save();
-                          String name = nameController.text;
-                          String phone = phoneController.text;
-                          String email = emailController.text;
-                          String birthdate = birthdateController.text;
-
-                          print('Name: $name');
-                          print('Phone: $phone');
-                          print('Email: $email');
-                          print('Birthdate: $birthdate');
-
-                          await sendUserDataToServer(context, name, phone, email, birthdate);
-                        }
+                      onPressed: () {
+                        print("언어 선택 창으로");
                       },
+                      child: Text("다음", softWrap: false),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.all(15.0),
+                        primary: Color(0xFF56CC94),
+                        onPrimary: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(10), // 모서리 조절
                         ),
                       ),
-                      child: Text("가입 완료"),
                     ),
                   ),
                 ],
-              ),
-            ),
+              )
+            ],
           ),
-        ),
-      ),
+        )
+
+
     );
   }
 
