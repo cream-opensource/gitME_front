@@ -94,11 +94,39 @@ class _MainScreenState extends State<MainScreen> {
               introduce: userData.nickname ?? "",
             ),
           ),
-          back: QrImageView(
-            data: "hi im qrcode : ${_current}",
-            version: QrVersions.auto,
-            size: 200.0,
-          )),
+        back: Container(
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 400,
+          decoration: BoxDecoration(
+            color: Color(0xFFCEF700),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: QrImageView(
+                  data: "hi im qrcode : ${_current}",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                  backgroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
+              Text(
+                'Scan Me!',
+                style: TextStyle(
+                  color: Color(0xFF393737),
+                  fontSize: 24,
+                  //fontFamily: 'AbhayaLibre-ExtraBold',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       FlipCard(
           front: BusinessCard(
             BusinessCardData(
@@ -161,29 +189,35 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         back: Container(
-          // 카드 크기와 일치하는 컨테이너 생성
           width: MediaQuery.of(context).size.width * 0.8,
           height: 400,
-          margin: EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             color: Color(0xFFCEF700),
             borderRadius: BorderRadius.circular(20.0),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                blurRadius: 4,
-                offset: Offset(0, 4),
+          ),
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: QrImageView(
+                  data: "hi im qrcode : ${_current}",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                  backgroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
+              Text(
+                'Scan Me!',
+                style: TextStyle(
+                  color: Color(0xFF393737),
+                  fontSize: 24,
+                  //fontFamily: 'AbhayaLibre-ExtraBold',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
-          ),
-          padding: EdgeInsets.all(16.0), // 원하는 패딩값 설정
-          child: Center(
-            child: QrImageView(
-              data: "hi im qrcode : ${_current}",
-              version: QrVersions.auto,
-              size: 200.0,
-              backgroundColor: Colors.white,
-            ),
           ),
         ),
       ),
