@@ -114,7 +114,6 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         back: Container(
-          // 카드 크기와 일치하는 컨테이너 생성
           width: MediaQuery.of(context).size.width * 0.8,
           height: 400,
           margin: EdgeInsets.only(top: 30),
@@ -129,14 +128,29 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ],
           ),
-          padding: EdgeInsets.all(16.0), // 원하는 패딩값 설정
-          child: Center(
-            child: QrImageView(
-              data: "hi im qrcode : ${_current}",
-              version: QrVersions.auto,
-              size: 200.0,
-              backgroundColor: Colors.white,
-            ),
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: QrImageView(
+                  data: "hi im qrcode : ${_current}",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                  backgroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
+              Text(
+                'Scan Me!',
+                style: TextStyle(
+                  color: Color(0xFF393737),
+                  fontSize: 24,
+                  //fontFamily: 'AbhayaLibre-ExtraBold',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
           ),
         ),
       ),
