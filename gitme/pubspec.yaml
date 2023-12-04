@@ -100,3 +100,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: DarkerGrotesque
+      fonts:
+        - asset: assets/fonts/DarkerGrotesque-Black.ttf
+        - asset: assets/fonts/DarkerGrotesque-Bold.ttf
+        - asset: assets/fonts/DarkerGrotesque-ExtraBold.ttf
+        - asset: assets/fonts/DarkerGrotesque-Light.ttf
+        - asset: assets/fonts/DarkerGrotesque-Medium.ttf
+        - asset: assets/fonts/DarkerGrotesque-Regular.ttf
+        - asset: assets/fonts/DarkerGrotesque-SemiBold.ttf
