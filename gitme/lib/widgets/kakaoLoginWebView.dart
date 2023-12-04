@@ -56,7 +56,7 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
       print('Nickname: $nickname');
 
 
-      Provider.of<UserData>(context, listen: false).setId(id);
+      Provider.of<UserData>(context, listen: false).setKId(id);
 
       showDialog(
         context: context,
@@ -69,7 +69,7 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
                 onPressed: () {
                   Navigator.of(dialogContext).pop();
                   // #TODO: 신규가입자의 경우 join-screen으로, 기존가입자의 경우 main-screen으로
-                  Navigator.pushReplacementNamed(dialogContext, 'main-screen');
+                  Navigator.pushReplacementNamed(dialogContext, 'loading-screen');
                 },
                 child: Text('확인'),
               ),
