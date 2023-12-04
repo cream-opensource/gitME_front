@@ -23,9 +23,6 @@ class _CardListScreenState extends State<CardListScreen> {
   List<bool> selectedItems = List.generate(8, (index) => false);
   List<int> selectedGridIndices = [];
 
-  int? draggingIndex;
-  int? newPosition;
-
   void toggleSelection(int index) {
     setState(() {
       if (selectedItems[index]) {
