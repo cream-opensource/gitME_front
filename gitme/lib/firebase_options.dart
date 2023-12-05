@@ -78,3 +78,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'gitme-6767c.appspot.com',
     iosBundleId: 'com.example.gitme.RunnerTests',
   );
+}
+

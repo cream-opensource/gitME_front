@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
-class CardListScreen extends StatelessWidget {
+class CardListScreen extends StatefulWidget {
   static final route = 'cardList-screen';
 
+  @override
+  _CardListScreenState createState() => _CardListScreenState();
+}
+
+class _CardListScreenState extends State<CardListScreen> {
   List<String> cardImages = [
     'assets/card1.png',
     'assets/card2.png',
@@ -15,6 +20,39 @@ class CardListScreen extends StatelessWidget {
     'assets/card2.png',
   ];
 
+  List<bool> selectedItems = List.generate(8, (index) => false);
+  List<int> selectedGridIndices = [];
+
+  void toggleSelection(int index) {
+    setState(() {
+      if (selectedItems[index]) {
+        if (selectedGridIndices.contains(index)) {
+          selectedGridIndices.remove(index);
+        } else {
+          selectedGridIndices.add(index);
+        }
+      }
+    });
+  }
+
+  void deleteSelectedItems() {
+    setState(() {
+      selectedGridIndices.sort((a, b) => b.compareTo(a));
+      selectedGridIndices.forEach((index) {
+        cardImages.removeAt(index);
+      });
+      selectedGridIndices.clear();
+      selectedItems = List.generate(8, (index) => false);
+    });
+  }
+
+  void resetSelection() {
+    setState(() {
+      selectedGridIndices.clear();
+      selectedItems = List.generate(8, (index) => false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +60,9 @@ class CardListScreen extends StatelessWidget {
         backgroundColor: Color(0xFFF4F4F4),
         leading: IconButton(
           icon: Image.asset(
-            'assets/back_button.png', // 이미지 경로
-            width: 20, // 이미지 너비
-            height: 20, // 이미지 높이
+            'assets/back_button.png',
+            width: 20,
+            height: 20,
           ),
           onPressed: () {
             Navigator.of(context).pushNamed(MainScreen.route);
@@ -39,26 +77,84 @@ class CardListScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: 20),
-          Row(
-            children: [
-              SizedBox(width: 16),
-              Image.asset(
-                'assets/cardlist.png', // 이미지 경로
-                width: 50, // 이미지 너비
-                height: 50, // 이미지 높이
-              ),
-              SizedBox(width: 5), // 이미지와 텍스트 사이 간격 조정
-              Text(
-                '${cardImages.length}개 보관중',
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  color: Color(0xFF676A66),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(width: 16),
+                    Image.asset(
+                      'assets/cardlist.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      '${cardImages.length}개 보관중',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF676A66),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: () {
+                    if (!selectedItems.any((isSelected) => isSelected)) {
+                      setState(() {
+                        selectedItems = List.generate(8, (index) => true);
+                      });
+                    } else {
+                      if (selectedGridIndices.isNotEmpty) {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('선택한 명함을 삭제하시겠습니까?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    resetSelection(); // '취소' 누를 때 선택 초기화
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('취소'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    deleteSelectedItems();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('삭제'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } else {
+                        // '삭제'와 '완료' 상태 전환
+                        setState(() {
+                          selectedItems = List.generate(8, (index) => false);
+                        });
+                      }
+                    }
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
+                      if (!selectedItems.any((isSelected) => isSelected)) {
+                        return Colors.red;
+                      } else {
+                        return Colors.blue;
+                      }
+                    }),
+                  ),
+                  child: Text(!selectedItems.any((isSelected) => isSelected) ? '삭제' : '완료'),
+                ),
+              ],
+            ),
           ),
           Expanded(
             child: GridView.builder(
@@ -72,39 +168,95 @@ class CardListScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          backgroundColor: Colors.transparent,
+                    if (!selectedItems.any((isSelected) => isSelected)) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.asset(cardImages[index]),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withOpacity(0.6),
+                                          ),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      setState(() {
+                        if (selectedItems[index]) {
+                          if (selectedGridIndices.contains(index)) {
+                            selectedGridIndices.remove(index);
+                          } else {
+                            selectedGridIndices.add(index);
+                          }
+                        }
+                      });
+                    }
+                  },
+                  child: Card(
+                    child: Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: selectedGridIndices.contains(index)
+                                  ? Colors.red
+                                  : Colors.transparent,
+                              width: 1.0,
+                            ),
+                          ),
                           child: Stack(
                             children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(cardImages[index]),
+                              Image.asset(
+                                cardImages[index],
+                                width: 150,
+                                height: 150,
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    // #TODO:  index에 맞는 명함의 수정페이지로 이동
-                                  },
-                                  child: Text('수정'),
+                              if (selectedItems[index])
+                                Positioned(
+                                  top: 4,
+                                  right: 4,
+                                  child: Icon(
+                                    Icons.check,
+                                    size: 20,
+                                    color: selectedGridIndices.contains(index)
+                                        ? Colors.red
+                                        : Colors.grey,
+                                  ),
                                 ),
-                              )
                             ],
                           ),
-                        );
-                      },
-                    );
-                  },
-                  child: SizedBox(
-                    child: Card(
-                      child: Image.asset(
-                        cardImages[index],
-                        width: 100,
-                        height: 100,
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );
