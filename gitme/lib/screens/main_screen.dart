@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
+import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
@@ -38,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    userData = UserData(); // 예시로 UserData 클래스를 사용하였습니다. 실제로 사용하는 클래스에 맞게 수정하세요.
+    userData = UserData();
     fetchDataFromServer();
   }
 
@@ -73,6 +75,61 @@ class _MainScreenState extends State<MainScreen> {
     } catch (e) {
       print('에러: $e');
     }
+  }
+
+  Future<String> createDynamicLink() async {
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://gitME.page.link',
+      link: Uri.parse('https://gitME.page.link/card?id=$_current'),
+      androidParameters: AndroidParameters(
+        packageName: 'com.example.gitme',
+      ),
+      iosParameters: IOSParameters(
+        bundleId: 'com.example.gitme',
+        minimumVersion: '12.0',
+      ),
+    );
+
+    ShortDynamicLink dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    return dynamicLink.shortUrl.toString();
+  }
+
+  Future<void> handleDynamicLink() async {
+    try {
+      // Get the dynamic link
+      final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
+
+      // Extract card ID from the dynamic link data
+      String cardIdFromDynamicLink = extractCardIdFromLinkData(data);
+
+      // Check if card ID is valid
+      if (cardIdFromDynamicLink.isNotEmpty) {
+        // Navigate to the screen with the extracted card ID
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DynamicLinkScreen(cardId: cardIdFromDynamicLink),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error handling dynamic link: $e');
+    }
+  }
+
+
+
+  String extractCardIdFromLinkData(PendingDynamicLinkData? data) {
+    // Add your logic to extract the card ID based on the dynamic link data structure
+    // For example, if the link is 'https://gitME.page.link/card?id=123', you can extract '123'
+    if (data != null && data.link != null) {
+      Uri link = data.link!;
+      List<String> pathSegments = link.pathSegments;
+      if (pathSegments.isNotEmpty && pathSegments.first == 'card') {
+        return pathSegments.length > 1 ? pathSegments[1] : '';
+      }
+    }
+    return '';
   }
 
   Widget build(BuildContext context) {
@@ -253,10 +310,14 @@ class _MainScreenState extends State<MainScreen> {
               child: Text('이미지로 저장하기'),
             ),
             SimpleDialogOption(
-              onPressed: () {
+              onPressed: () async {
+                String dynamicLink = await createDynamicLink();
+                print('공유 링크: $dynamicLink');
+
+                await handleDynamicLink();
                 Navigator.of(dialogContext).pop();
               },
-              child: Text('카카오톡으로 공유하기'),
+              child: Text('공유하기'),
             ),
           ],
         );
