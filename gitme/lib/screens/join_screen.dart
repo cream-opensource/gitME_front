@@ -121,30 +121,8 @@ class JoinScreen extends StatelessWidget {
                 '외부 링크',
               ),
               SizedBox(height: 20,),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        print("언어 선택 창으로");
-                      },
-                      child: Text("다음", softWrap: false),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF56CC94),
-                        onPrimary: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        textStyle: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10), // 모서리 조절
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
+              GitHubButton(),
+
             ],
           ),
         )
