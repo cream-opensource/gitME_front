@@ -27,18 +27,18 @@ class JoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-        icon: Image.asset(
-          'assets/back_button.png', // 이미지 경로
-          width: 20, // 이미지 너비
-          height: 20, // 이미지 높이
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Image.asset(
+              'assets/back_button.png', // 이미지 경로
+              width: 20, // 이미지 너비
+              height: 20, // 이미지 높이
+            ),
+            onPressed: () {
+              Navigator.of(context).pushNamed(MainScreen.route);
+            },
+          ),
         ),
-        onPressed: () {
-          Navigator.of(context).pushNamed(MainScreen.route);
-          },
-        ),
-      ),
         body: Padding(
           padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
           child: Column(
@@ -71,44 +71,44 @@ class JoinScreen extends StatelessWidget {
                 '이름',
               ),
               TextFormFieldComponent(
-                  TextInputType.datetime,
-                  TextInputAction.done,
-                  "ex. 19980101",
-                  8,
-                  "생년월일을 입력하세요",
-                  birthdateController,
-                      (value) => birthdateController.text = value!,
-                  '생년월일',
+                TextInputType.datetime,
+                TextInputAction.done,
+                "ex. 19980101",
+                8,
+                "생년월일을 입력하세요",
+                birthdateController,
+                    (value) => birthdateController.text = value!,
+                '생년월일',
               ),
               TextFormFieldComponent(
-                  TextInputType.phone,
-                  TextInputAction.next,
-                  "ex. 01012345678",
-                  11,
-                  "'-'없이 숫자로만 입력하세요",
-                  phoneController,
-                      (value) => phoneController.text = value!,
-                  '전화번호',
+                TextInputType.phone,
+                TextInputAction.next,
+                "ex. 01012345678",
+                11,
+                "'-'없이 숫자로만 입력하세요",
+                phoneController,
+                    (value) => phoneController.text = value!,
+                '전화번호',
               ),
               TextFormFieldComponent(
-                  TextInputType.emailAddress,
-                  TextInputAction.next,
-                  "ex. gildong@gmail.com",
-                  10,
-                  "이메일을 입력하세요",
-                  emailController,
-                      (value) => emailController.text = value!,
-                  '이메일',
+                TextInputType.emailAddress,
+                TextInputAction.next,
+                "ex. gildong@gmail.com",
+                10,
+                "이메일을 입력하세요",
+                emailController,
+                    (value) => emailController.text = value!,
+                '이메일',
               ),
               IntroduceFormFieldComponent(
-                  TextInputType.text,
-                  TextInputAction.next,
-                  "자기소개",
-                  50,
-                  "자기소개 글을 작성해주세요",
-                  introduceController,
-                      (value) => introduceController.text = value!,
-                  '자기소개',
+                TextInputType.text,
+                TextInputAction.next,
+                "자기소개",
+                50,
+                "자기소개 글을 작성해주세요",
+                introduceController,
+                    (value) => introduceController.text = value!,
+                '자기소개',
               ),
               TextFormFieldComponent(
                 TextInputType.emailAddress,
@@ -126,8 +126,6 @@ class JoinScreen extends StatelessWidget {
             ],
           ),
         )
-
-
     );
   }
 
