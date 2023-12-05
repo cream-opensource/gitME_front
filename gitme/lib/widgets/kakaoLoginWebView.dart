@@ -40,7 +40,8 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
 
   Future<void> _readWebViewContents() async {
     try {
-      String contents = await _webViewController.evaluateJavascript('document.body.innerText');
+      // 변경: evaluateJavascript -> runJavascriptReturningResult
+      String contents = await _webViewController.runJavascriptReturningResult('document.body.innerText');
 
       String unescapedContents = contents.replaceAll('\\', '');
 

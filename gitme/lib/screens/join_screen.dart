@@ -132,10 +132,10 @@ class JoinScreen extends StatelessWidget {
 
     final Map<String, dynamic> data = {
       'kakaoId' : kakaoId ?? '',
-      'name': name ?? '',
-      'phone': phone ?? '',
-      'email': email ?? '',
-      'birthDate': birthdate ?? '',
+      'name': name,
+      'phone': phone,
+      'email': email,
+      'birthDate': birthdate,
       'gitAccessToken': accessToken ?? '',
       "externalLink": {
         "notion1": "test1",
