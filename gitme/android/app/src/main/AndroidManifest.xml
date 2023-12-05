@@ -2,7 +2,7 @@
     <application
         android:label="gitme"
         android:name="${applicationName}"
-        android:icon="@drawable/gitme_logo"
+        android:icon="@mipmap/ic_launcher"
         android:hardwareAccelerated="true">
         <activity
             android:name=".MainActivity"
@@ -21,11 +21,10 @@
               android:resource="@style/NormalTheme"
               />
             <intent-filter>
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--                <category android:name="android.intent.category.BROWSABLE"/>-->
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+<!--                <action android:name="android.intent.action.VIEW"/>-->
+<!--                <category android:name="android.intent.category.DEFAULT"/>-->
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https"
                     android:host="gitme.page.link" />

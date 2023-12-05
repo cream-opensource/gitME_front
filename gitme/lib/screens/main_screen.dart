@@ -96,15 +96,11 @@ class _MainScreenState extends State<MainScreen> {
 
   Future<void> handleDynamicLink() async {
     try {
-      // Get the dynamic link
       final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
 
-      // Extract card ID from the dynamic link data
       String cardIdFromDynamicLink = extractCardIdFromLinkData(data);
 
-      // Check if card ID is valid
       if (cardIdFromDynamicLink.isNotEmpty) {
-        // Navigate to the screen with the extracted card ID
         Navigator.push(
           context,
           MaterialPageRoute(
