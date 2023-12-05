@@ -3,10 +3,14 @@ import 'package:gitme/widgets/kakaoLoginWebView.dart';
 
 class LoginScreen extends StatelessWidget {
   static final route = 'login-screen';
+  static const kakaoLoginUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/kakao/login';
+  static const backgroundColor = Color(0xffFFFFFF);
+  static const buttonColor = Color(0xffFEE20B);
+  static const buttonTextColor = Colors.black;
+  static const logoAsset = 'assets/gitme_logo.png';
+  static const kakaoIconAsset = 'assets/kakaoIcon.png';
 
   Future<void> openWebView(BuildContext context) async {
-    String kakaoLoginUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/kakao/login';
-
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => KakaoLoginWebView(kakaoLoginUrl: kakaoLoginUrl),
@@ -16,9 +20,12 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final deviceWidth = mediaQuery.size.width;
+    final deviceHeight = mediaQuery.size.height;
+
     return Scaffold(
-      appBar: null,
-      backgroundColor: const Color(0xffFFFFFF),
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           Column(
@@ -27,9 +34,9 @@ class LoginScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: Center(
-                  child: Image(
-                    image: AssetImage('assets/gitme_logo.png'),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                  child: Image.asset(
+                    logoAsset,
+                    width: deviceWidth * 0.8,
                   ),
                 ),
               ),
@@ -37,42 +44,40 @@ class LoginScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.1,
+            bottom: deviceHeight * 0.1,
             left: 0,
             right: 0,
             child: FractionallySizedBox(
               widthFactor: 0.8,
-              child: ButtonTheme(
-                child: ElevatedButton(
-                  onPressed: () => openWebView(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffFEE20B),
-                    foregroundColor: Colors.black,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    textStyle: TextStyle(fontSize: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+              child: ElevatedButton(
+                onPressed: () => openWebView(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: buttonColor,
+                  foregroundColor: buttonTextColor,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  textStyle: TextStyle(fontSize: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: Image.asset(
+                        kakaoIconAsset,
+                        width: 20,
+                        height: 20,
+                      ),
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: Image.asset(
-                          'assets/kakaoIcon.png',
-                          width: 20,
-                          height: 20,
-                        ),
+                    Text(
+                      '카카오로 시작하기',
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                      Text(
-                        '카카오로 시작하기',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
