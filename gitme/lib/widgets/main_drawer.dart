@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
-import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
@@ -11,6 +10,8 @@ import 'package:gitme/screens/qr_scan_screen.dart';
 import '../screens/test_screen.dart';
 
 class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(

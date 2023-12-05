@@ -4,24 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/widgets/card.dart';
-import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
-import 'package:gitme/widgets/qrcode.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'dart:typed_data';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
-  static final route = 'main-screen';
+  static const route = 'main-screen';
   final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
+
+  MainScreen({super.key});
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -75,6 +72,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return CircularProgressIndicator();
@@ -95,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           back: QrImageView(
-            data: "hi im qrcode : ${_current}",
+            data: "hi im qrcode : $_current",
             version: QrVersions.auto,
             size: 200.0,
           )),
@@ -134,7 +132,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : ${_current}",
+                  data: "hi im qrcode : $_current",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -187,7 +185,7 @@ class _MainScreenState extends State<MainScreen> {
           padding: EdgeInsets.all(16.0), // 원하는 패딩값 설정
           child: Center(
             child: QrImageView(
-              data: "hi im qrcode : ${_current}",
+              data: "hi im qrcode : $_current",
               version: QrVersions.auto,
               size: 200.0,
               backgroundColor: Colors.white,

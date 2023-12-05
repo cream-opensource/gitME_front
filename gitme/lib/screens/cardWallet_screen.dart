@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
 class CardWalletScreen extends StatefulWidget { // StatelessWidget에서 StatefulWidget로 변경
-  static final route = 'card-wallet-screen';
+  static const route = 'card-wallet-screen';
+
+  const CardWalletScreen({super.key});
 
   @override
   _CardWalletScreenState createState() => _CardWalletScreenState();

@@ -3,7 +3,9 @@ import 'package:qrscan/qrscan.dart' as scanner;  // 여기서 qrscan이라는 �
 import 'package:flutter/material.dart';
 
 class TestScreen extends StatefulWidget {
-  static final route = 'test-screen';
+  static const route = 'test-screen';
+
+  const TestScreen({super.key});
 
   @override
   _testState createState() => _testState();
@@ -15,7 +17,7 @@ class _testState extends State<TestScreen> {
   @override
   initState() {
     super.initState();
-    this._outputController = TextEditingController();
+    _outputController = TextEditingController();
   }
 
   @override
@@ -32,7 +34,7 @@ class _testState extends State<TestScreen> {
                   child: Column(
                     children: <Widget>[
                       TextField(
-                        controller: this._outputController,
+                        controller: _outputController,
                         maxLines: 2,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.wrap_text),
@@ -46,7 +48,7 @@ class _testState extends State<TestScreen> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      this._buttonGroup(),
+                      _buttonGroup(),
                       SizedBox(height: 70),
                     ],
                   ),
@@ -99,7 +101,7 @@ class _testState extends State<TestScreen> {
     if (barcode == null) {
       print('nothing return.');
     } else {
-      this._outputController.text = barcode;
+      _outputController.text = barcode;
     }
   }
 }

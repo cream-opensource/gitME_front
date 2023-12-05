@@ -19,7 +19,7 @@ class BusinessCardData2 {
 class BusinessCard2 extends StatelessWidget {
   final BusinessCardData2 data;
 
-  BusinessCard2(this.data);
+  BusinessCard2(this.data, {super.key});
 
   @override
   Widget build(BuildContext context) {

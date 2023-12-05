@@ -9,7 +9,7 @@ import '../provider/userData.dart';
 class KakaoLoginWebView extends StatefulWidget {
   final String kakaoLoginUrl;
 
-  KakaoLoginWebView({required this.kakaoLoginUrl});
+  KakaoLoginWebView({super.key, required this.kakaoLoginUrl});
 
   @override
   _KakaoLoginWebViewState createState() => _KakaoLoginWebViewState();

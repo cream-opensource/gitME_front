@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gitme/widgets/kakaoLoginWebView.dart';
 
 class LoginScreen extends StatelessWidget {
-  static final route = 'login-screen';
+  static const route = 'login-screen';
   static const kakaoLoginUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/kakao/login';
   static const backgroundColor = Color(0xffFFFFFF);
   static const buttonColor = Color(0xffFEE20B);
   static const buttonTextColor = Colors.black;
   static const logoAsset = 'assets/gitme_logo.png';
   static const kakaoIconAsset = 'assets/kakaoIcon.png';
+
+  const LoginScreen({super.key});
 
   Future<void> openWebView(BuildContext context) async {
     await Navigator.of(context).push(

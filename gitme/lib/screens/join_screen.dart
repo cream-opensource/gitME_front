@@ -8,10 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
-import '../widgets/githubLoginWebView.dart';
 
 class JoinScreen extends StatelessWidget {
-  static final route = 'join-screen';
+  static const route = 'join-screen';
 
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
@@ -20,6 +19,8 @@ class JoinScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
+
+  JoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

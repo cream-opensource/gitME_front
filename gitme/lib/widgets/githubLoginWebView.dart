@@ -10,7 +10,7 @@ class GitHubLoginWebView extends StatefulWidget {
   final String githubLoginUrl;
   final void Function() onLinked; // Declare the onLinked callback
 
-  GitHubLoginWebView({required this.githubLoginUrl, required this.onLinked});
+  GitHubLoginWebView({super.key, required this.githubLoginUrl, required this.onLinked});
 
   @override
   _GitHubLoginWebViewState createState() => _GitHubLoginWebViewState();
