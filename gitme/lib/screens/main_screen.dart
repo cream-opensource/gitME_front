@@ -116,9 +116,17 @@ class _MainScreenState extends State<MainScreen> {
         back: Container(
           width: MediaQuery.of(context).size.width * 0.8,
           height: 400,
+          margin: EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             color: Color(0xFFCEF700),
             borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
           padding: EdgeInsets.all(16.0),
           child: Column(
