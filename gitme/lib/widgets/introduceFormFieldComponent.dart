@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget TextFormFieldComponent(
+Widget IntroduceFormFieldComponent(
     TextInputType keyboardType,
     TextInputAction textInputAction,
     String hintText,
@@ -10,13 +10,15 @@ Widget TextFormFieldComponent(
     void Function(String?)? onSaved,
     String labelText,
     ) {
+
   return Container(
-    height: 70,
+    height: 100,
     margin: EdgeInsets.symmetric(vertical: 10.0),
     child: TextFormField(
       keyboardType: keyboardType,
       textInputAction: textInputAction,
-
+      maxLines: 4,  // 여러 줄 입력을 위한 설정
+      maxLength: maxSize, // 최대 글자 수 제한
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: TextStyle(
@@ -46,7 +48,6 @@ Widget TextFormFieldComponent(
       onSaved: onSaved,
       controller: controller,
     ),
-
-
   );
+
 }

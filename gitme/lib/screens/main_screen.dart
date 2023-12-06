@@ -6,14 +6,20 @@ import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/widgets/card.dart';
+import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
+import 'package:gitme/widgets/qrcode.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'dart:typed_data';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
+
+import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
   static const route = 'main-screen';
@@ -36,7 +42,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    userData = UserData();
+    userData = UserData(); // 예시로 UserData 클래스를 사용하였습니다. 실제로 사용하는 클래스에 맞게 수정하세요.
     fetchDataFromServer();
   }
 
@@ -288,7 +294,7 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   items.length,
-                  (index) => Container(
+                      (index) => Container(
                     width: 8.0,
                     height: 8.0,
                     margin: EdgeInsets.symmetric(horizontal: 4.0),

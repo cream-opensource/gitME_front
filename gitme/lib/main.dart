@@ -4,6 +4,7 @@ import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
+import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
@@ -29,30 +30,31 @@ void mainAsync() async {
   );
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Drawer without AppBar',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: LoginScreen(),
-      routes: {
-        MainScreen.route: (_) => MainScreen(),
-        LoginScreen.route: (_) => LoginScreen(),
-        CardListScreen.route: (_) => CardListScreen(),
-        ProfileScreen.route: (_) => ProfileScreen(),
-        CardWalletScreen.route: (_) => CardWalletScreen(),
-        CustomScreen.route: (_) => CustomScreen(),
-        JoinScreen.route: (_) => JoinScreen(),
-        QRScanScreen.route: (_) => QRScanScreen(),
-        // TestScreen.route: (_) => TestScreen(),
-        LoadingScreen.route: (_) => LoadingScreen(),
-      },
-    );
+        title: 'Drawer without AppBar',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: LoginScreen(),
+        routes: {
+          MainScreen.route: (_) => MainScreen(),
+          LoginScreen.route: (_) => LoginScreen(),
+          CardListScreen.route: (_) => CardListScreen(),
+          ProfileScreen.route: (_) => ProfileScreen(),
+          CardWalletScreen.route: (_) => CardWalletScreen(),
+          CustomScreen.route: (_) => CustomScreen(),
+          JoinScreen.route: (_) => JoinScreen(),
+          QRScanScreen.route: (_) => QRScanScreen(),
+          LoadingScreen.route: (_) => LoadingScreen(),
+          ExternalLinkScreen.route: (_) => ExternalLinkScreen()
+        },
+      );
   }
 }
