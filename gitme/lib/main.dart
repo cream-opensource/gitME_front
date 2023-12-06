@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         JoinScreen.route: (_) => JoinScreen(),
         QRScanScreen.route: (_) => QRScanScreen(),
         TestScreen.route: (_) => TestScreen(),
-        LoadingScreen.route: (_) => LoadingScreen(),
+        LoadingScreen.route: (_) => LoadingScreen()
       },
     );
   }
