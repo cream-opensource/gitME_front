@@ -44,12 +44,15 @@ class _MainScreenState extends State<MainScreen> {
     try {
       userData = Provider.of<UserData>(context, listen: false);
       print('성공');
-    } catch (e) {
-      print('error: $e');
-    } finally {
       setState(() {
         isLoading = false;
       });
+    } catch (e) {
+      print('error: $e');
+    // } finally {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
     }
   }
 
@@ -129,6 +132,7 @@ class _MainScreenState extends State<MainScreen> {
     return '';
   }
 
+  @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return CircularProgressIndicator();
