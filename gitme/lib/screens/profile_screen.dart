@@ -1,13 +1,13 @@
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/userData.dart';
 
 
 class ProfileScreen extends StatefulWidget {
-  static final route = 'profile-screen';
+  static const route = 'profile-screen';
+
+  const ProfileScreen({super.key});
 
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
           SizedBox(height: 30.0),
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: Column(
               children: <Widget>[

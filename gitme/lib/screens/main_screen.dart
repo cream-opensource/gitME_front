@@ -6,24 +6,21 @@ import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/widgets/card.dart';
-import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
-import 'package:gitme/widgets/qrcode.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'dart:typed_data';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
-import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
-  static final route = 'main-screen';
+  static const route = 'main-screen';
   final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
+
+  MainScreen({super.key});
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -77,6 +74,7 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  @override
   Future<String> createDynamicLink() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://gitME.page.link',
@@ -141,14 +139,14 @@ class _MainScreenState extends State<MainScreen> {
               contactInfo: userData.email ?? "",
               call: userData.phone ?? "",
               techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
+              followers: userData.followers.toString(),
+              stared: userData.totalStars.toString(),
+              commit: userData.totalCommits.toString(),
               introduce: userData.nickname ?? "",
             ),
           ),
           back: QrImageView(
-            data: "hi im qrcode : ${_current}",
+            data: "hi im qrcode : $_current",
             version: QrVersions.auto,
             size: 200.0,
           )),
@@ -160,9 +158,9 @@ class _MainScreenState extends State<MainScreen> {
               contactInfo: userData.email ?? "",
               call: userData.phone ?? "",
               techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
+              followers: userData.followers.toString(),
+              stared: userData.totalStars.toString(),
+              commit: userData.totalCommits.toString(),
               introduce: userData.nickname ?? "",
             ),
           ),
@@ -188,7 +186,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : ${_current}",
+                  data: "hi im qrcode : $_current",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -216,12 +214,35 @@ class _MainScreenState extends State<MainScreen> {
               contactInfo: userData.email ?? "",
               call: userData.phone ?? "",
               techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
+              followers: userData.followers.toString(),
+              stared: userData.totalStars.toString(),
+              commit: userData.totalCommits.toString(),
               introduce: userData.nickname ?? "",
             ),
           ),
+        back: Container(
+          // 카드 크기와 일치하는 컨테이너 생성
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 400,
+          margin: EdgeInsets.only(top: 30),
+          decoration: BoxDecoration(
+            color: Color(0xFFCEF700),
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          padding: EdgeInsets.all(16.0), // 원하는 패딩값 설정
+          child: Center(
+            child: QrImageView(
+              data: "hi im qrcode : $_current",
+              version: QrVersions.auto,
+              size: 200.0,
+              backgroundColor: Colors.white,
           back: Container(
             // 카드 크기와 일치하는 컨테이너 생성
             width: MediaQuery.of(context).size.width * 0.8,

@@ -10,7 +10,7 @@ class GitHubLoginWebView extends StatefulWidget {
   final String githubLoginUrl;
   final void Function() onLinked; // Declare the onLinked callback
 
-  GitHubLoginWebView({required this.githubLoginUrl, required this.onLinked});
+  GitHubLoginWebView({super.key, required this.githubLoginUrl, required this.onLinked});
 
   @override
   _GitHubLoginWebViewState createState() => _GitHubLoginWebViewState();
@@ -40,7 +40,8 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
 
   Future<void> _readWebViewContents() async {
     try {
-      String contents = await _webViewController.evaluateJavascript('document.body.innerText');
+      // 변경: evaluateJavascript -> runJavascriptReturningResult
+      String contents = await _webViewController.runJavascriptReturningResult('document.body.innerText');
 
       String unescapedContents = contents.replaceAll('\\', '');
 

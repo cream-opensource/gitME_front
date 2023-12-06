@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
 class CardListScreen extends StatefulWidget {
-  static final route = 'cardList-screen';
+  static const route = 'cardList-screen';
+
+  const CardListScreen({super.key});
 
   @override
   _CardListScreenState createState() => _CardListScreenState();
@@ -38,9 +40,9 @@ class _CardListScreenState extends State<CardListScreen> {
   void deleteSelectedItems() {
     setState(() {
       selectedGridIndices.sort((a, b) => b.compareTo(a));
-      selectedGridIndices.forEach((index) {
+      for (var index in selectedGridIndices) {
         cardImages.removeAt(index);
-      });
+      }
       selectedGridIndices.clear();
       selectedItems = List.generate(8, (index) => false);
     });

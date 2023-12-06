@@ -8,10 +8,9 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
-import '../widgets/githubLoginWebView.dart';
 
 class JoinScreen extends StatelessWidget {
-  static final route = 'join-screen';
+  static const route = 'join-screen';
 
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
@@ -20,6 +19,8 @@ class JoinScreen extends StatelessWidget {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
+
+  JoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -129,20 +130,20 @@ class JoinScreen extends StatelessWidget {
     String? accessToken = userData.accessToken;
     String? kakaoId = userData.kakaoId?.toString();
 
-    final Map<String, dynamic> data = {
-      'kakaoId' : kakaoId ?? '',
-      'name': name ?? '',
-      'phone': phone ?? '',
-      'email': email ?? '',
-      'birthDate': birthdate ?? '',
-      'gitAccessToken': accessToken ?? '',
+    final Map<String, dynamic> signUpData = {
+      "kakaoId" : kakaoId ?? '',
+      "name": name,
+      "phone": phone,
+      "email": email,
+      "birthDate": birthdate,
+      "gitAccessToken": accessToken ?? '',
       "externalLink": {
         "notion1": "test1",
         "notion2": "test2"
       }
     };
 
-    final String jsonData = jsonEncode(data);
+    final String jsonData = jsonEncode(signUpData);
 
     final response = await http.post(
       Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/signUp'),
@@ -151,7 +152,7 @@ class JoinScreen extends StatelessWidget {
       },
       body: jsonData,
     );
-    print('보낼 데이터 확인: $data');
+    print('보낼 데이터 확인: $signUpData');
 
     if (response.statusCode == 201) {
       print(jsonData);
