@@ -12,8 +12,16 @@ import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
 import 'package:gitme/screens/test_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  mainAsync();
+}
+
+void mainAsync() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Firebase 초기화
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserData(),
@@ -22,11 +30,29 @@ void main() {
   );
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Drawer without AppBar',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginScreen(),
+      routes: {
+        MainScreen.route: (_) => MainScreen(),
+        LoginScreen.route: (_) => LoginScreen(),
+        CardListScreen.route: (_) => CardListScreen(),
+        ProfileScreen.route: (_) => ProfileScreen(),
+        CardWalletScreen.route: (_) => CardWalletScreen(),
+        CustomScreen.route: (_) => CustomScreen(),
+        JoinScreen.route: (_) => JoinScreen(),
+        QRScanScreen.route: (_) => QRScanScreen(),
+        TestScreen.route: (_) => TestScreen(),
+        LoadingScreen.route: (_) => LoadingScreen()
+      },
+    );
         title: 'Drawer without AppBar',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

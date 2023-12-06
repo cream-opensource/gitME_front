@@ -111,19 +111,19 @@ class MainDrawer extends StatelessWidget {
             ),
           ),
 
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              TestScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '테스트화면',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
+          // ListTile(
+          //   onTap: () => Navigator.pushReplacementNamed(
+          //     context,
+          //     TestScreen.route,
+          //   ),
+          //   leading: Icon(Icons.account_circle),
+          //   title: Text(
+          //     '테스트화면',
+          //     style: TextStyle(
+          //       fontSize: 20,
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: 240.0),
 
           ListTile(

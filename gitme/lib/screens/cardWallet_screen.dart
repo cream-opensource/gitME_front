@@ -108,7 +108,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
     {
       'name': '김지연',
       'text': 'Front',
-      'stack': '@front #공무원 #JAVA',
+      'stack': '#front #공무원 #JAVA',
       'imagePath': 'assets/HJH.png',
     },
     {
@@ -247,58 +247,102 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
               itemCount: tableList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Dismissible(
-                    key: Key(tableList[index]['name']),
-                    direction: DismissDirection.endToStart,
-                    onDismissed: (direction) {
-                      setState(() {
-                        if (direction == DismissDirection.endToStart) {
-                          int originalIndex = tableList.indexOf(tableList[index]);
-                          originalPositions[tableList[index]] = originalIndex;
+                  key: Key(tableList[index]['name']),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    setState(() {
+                      if (direction == DismissDirection.endToStart) {
+                        int originalIndex = tableList.indexOf(tableList[index]);
+                        originalPositions[tableList[index]] = originalIndex;
 
-                          undoList.add(tableList[index]);
-                          tableList.removeAt(index);
-                        }
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Row(
-                            children: [
-                              Expanded(
-                                child: Text('삭제되었습니다'),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (undoList.isNotEmpty) {
-                                      var lastUndo = undoList.removeLast();
-                                      var originalPosition = originalPositions[lastUndo];
-                                      if (originalPosition != null) {
-                                        tableList.insert(originalPosition, lastUndo);
-                                      } else {
-                                        // originalPosition이 null일 경우 기본값(예를 들어 리스트의 맨 끝)을 설정하여 insert를 실행합니다.
-                                        tableList.add(lastUndo);
-                                      }
-                                      originalPositions.remove(lastUndo);
+                        undoList.add(tableList[index]);
+                        tableList.removeAt(index);
+                      }
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            Expanded(
+                              child: Text('삭제되었습니다'),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (undoList.isNotEmpty) {
+                                    var lastUndo = undoList.removeLast();
+                                    var originalPosition = originalPositions[lastUndo];
+                                    if (originalPosition != null) {
+                                      tableList.insert(originalPosition, lastUndo);
+                                    } else {
+                                      // originalPosition이 null일 경우 기본값(예를 들어 리스트의 맨 끝)을 설정하여 insert를 실행합니다.
+                                      tableList.add(lastUndo);
                                     }
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.undo,
-                                  color: Colors.white,
-                                ),
+                                    originalPositions.remove(lastUndo);
+                                  }
+                                });
+                              },
+                              icon: Icon(
+                                Icons.undo,
+                                color: Colors.white,
                               ),
-                            ],
-                          ),
-                          backgroundColor: Colors.black.withOpacity(0.6),
+                            ),
+                          ],
                         ),
+                        backgroundColor: Colors.black.withOpacity(0.6),
+                      ),
+                    );
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.asset(cardImages[index]),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withOpacity(0.6),
+                                          ),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          );
+                        },
                       );
                     },
-                    background: Container(
-                      color: Colors.red,
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(right: 20.0),
-                      child: Icon(Icons.delete, color: Colors.white),
-                    ),
                     child: Container(
                       height: 140,
                       margin: EdgeInsets.only(left: 3.0, right: 3.0, bottom: 0),
@@ -345,6 +389,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                         ),
                       ),
                     ),
+                  ),
                 );
               },
             )

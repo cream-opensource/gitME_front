@@ -168,15 +168,59 @@ class _CardListScreenState extends State<CardListScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      if (selectedItems[index]) {
-                        if (selectedGridIndices.contains(index)) {
-                          selectedGridIndices.remove(index);
-                        } else {
-                          selectedGridIndices.add(index);
+                    if (!selectedItems.any((isSelected) => isSelected)) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.asset(cardImages[index]),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withOpacity(0.6),
+                                          ),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      setState(() {
+                        if (selectedItems[index]) {
+                          if (selectedGridIndices.contains(index)) {
+                            selectedGridIndices.remove(index);
+                          } else {
+                            selectedGridIndices.add(index);
+                          }
                         }
-                      }
-                    });
+                      });
+                    }
                   },
                   child: Card(
                     child: Stack(
