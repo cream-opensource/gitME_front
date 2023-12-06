@@ -1,6 +1,8 @@
-import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+
+import 'login_screen.dart';
+import 'main_screen.dart';
 
 
 
@@ -19,9 +21,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFF4F4F4),
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/back_button.png', // 이미지 경로
+            width: 20, // 이미지 너비
+            height: 20, // 이미지 높이
+          ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(MainScreen.route);
+          },
+        ),
+        title: Text(
+          '마이페이지',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+      ),
       body: Column(
         children: <Widget>[
-          CustomDrawerBtn(),
           Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
@@ -69,6 +89,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: ListTile(
                     leading: Icon(Icons.favorite),
                     title: Text('1998.12.11'),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    onTap: () => Navigator.pushReplacementNamed(
+                      context,
+                      LoginScreen.route,
+                    ),
+                    leading: Icon(Icons.logout),
+                    title: Text('로그아웃'),
                   ),
                 ),
               ],
