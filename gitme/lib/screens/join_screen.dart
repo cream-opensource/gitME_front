@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gitme/screens/language_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
 import 'package:gitme/widgets/introduceFormFieldComponent.dart';
@@ -110,19 +111,34 @@ class JoinScreen extends StatelessWidget {
                     (value) => introduceController.text = value!,
                 '자기소개',
               ),
-              TextFormFieldComponent(
-                TextInputType.emailAddress,
-                TextInputAction.next,
-                "ex. gildong@gmail.com",
-                10,
-                "이메일을 입력하세요",
-                emailController,
-                    (value) => emailController.text = value!,
-                '외부 링크',
-              ),
               SizedBox(height: 20,),
-              GitHubButton(),
-
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LanguageScreen()),
+                        );
+                      },
+                      child: Text('다음'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF56CC94),
+                        onPrimary: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // 모서리 조절
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         )

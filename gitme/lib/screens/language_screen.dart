@@ -61,7 +61,7 @@ class LanguageScreen extends StatelessWidget {
               )),
               SizedBox(height: 30), // 예시로 간격 추가
               Text("노현이 님이 github 내 사용 언어", style: TextStyle(fontSize: 16, color: Color(0xFF8D919F))),
-              SizedBox(height: 12), // 예시로 간격 추가
+              SizedBox(height: 20), // 예시로 간격 추가
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -72,9 +72,8 @@ class LanguageScreen extends StatelessWidget {
                   _buildRoundedText("Word1"),// Add more Text widgets as needed
                 ],
               ),
-              Container(width: 500,
-                  child: Divider(color: Color(0xFF8D919F), thickness: 2.0))
-
+              SizedBox(height: 13),
+              Divider(),
             ],
           ),
         )
@@ -141,3 +140,18 @@ Widget _buildRoundedText(String text) {
     ),
   );
 }
+
+// Widget selctionButton()(String text) {
+//   return Container(
+//     decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(30),
+//         border: Border.all(color: Color(0xFF56CC94)), // 테두리 색상 설정
+//         color: Color(0xFF56CC94)
+//     ),
+//     padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
+//     child: Center(
+//       child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
+//     ),
+//   );
+// }
+//
