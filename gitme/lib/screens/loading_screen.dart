@@ -24,7 +24,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> fetchDataFromServer() async {
     try {
       await serverCommunication.fetchDataFromServer(context);
-
       print('성공');
     } catch (e) {
       print('error: $e');

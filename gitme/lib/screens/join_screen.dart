@@ -9,18 +9,24 @@ import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
 
-class JoinScreen extends StatelessWidget {
+class JoinScreen extends StatefulWidget {
   static const route = 'join-screen';
 
+  JoinScreen({Key? key}) : super(key: key);
+
+  @override
+  _JoinScreenState createState() => _JoinScreenState();
+}
+
+class _JoinScreenState extends State<JoinScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
+  bool _isLoading = false;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController birthdateController = TextEditingController();
-
-  JoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -82,12 +88,18 @@ class JoinScreen extends StatelessWidget {
                   SizedBox(height: 16.0),
                   GitHubButton(),
                   SizedBox(height: 16.0),
+                  _isLoading
+                      ? CircularProgressIndicator() // _isLoading이 true일 때만 CircularProgressIndicator를 표시합니다.
+                      : SizedBox.shrink(),
 
                   FractionallySizedBox(
                     widthFactor: 0.8,
                     child: ElevatedButton(
                       onPressed: () async {
                         if (formKey.currentState?.validate() ?? false) {
+                          setState(() {
+                            _isLoading = true;
+                          });
                           formKey.currentState?.save();
                           String name = nameController.text;
                           String phone = phoneController.text;
@@ -100,6 +112,10 @@ class JoinScreen extends StatelessWidget {
                           print('Birthdate: $birthdate');
 
                           await sendUserDataToServer(context, name, phone, email, birthdate);
+
+                          setState(() {
+                            _isLoading = false;
+                          });
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -126,6 +142,7 @@ class JoinScreen extends StatelessWidget {
       BuildContext context,
       String name, String phone, String email, String birthdate,
       ) async {
+
     UserData userData = Provider.of<UserData>(context, listen: false);
     String? accessToken = userData.accessToken;
     String? kakaoId = userData.kakaoId?.toString();

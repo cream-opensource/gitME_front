@@ -21,9 +21,7 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Github 로그인"),
-      ),
+      appBar: null,
       body: WebView(
         initialUrl: widget.githubLoginUrl,
         javascriptMode: JavascriptMode.unrestricted,
@@ -54,25 +52,7 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
       Provider.of<UserData>(context, listen: false).setAccessToken(token);
 
       widget.onLinked();
-
-      showDialog(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          return AlertDialog(
-            title: Text('연동 성공'),
-            // content: Text('ID: ${jsonData['result']['id']}\nNickname: ${jsonData['result']['nickname']}'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  Navigator.pushReplacementNamed(dialogContext, 'join-screen');
-                },
-                child: Text('확인'),
-              ),
-            ],
-          );
-        },
-      );
+      Navigator.pushReplacementNamed(context, 'loading-screen');
 
     } catch (e) {
       print('Error while reading WebView contents: $e');
