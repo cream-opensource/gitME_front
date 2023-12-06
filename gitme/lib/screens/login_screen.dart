@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   static const backgroundColor = Color(0xffFFFFFF);
   static const buttonColor = Color(0xffFEE20B);
   static const buttonTextColor = Colors.black;
-  static const logoAsset = 'assets/gitME_logo.png';
+  static const logoAsset = 'assets/gitme_logo.png';
   static const kakaoIconAsset = 'assets/kakaoIcon.png';
 
   const LoginScreen({super.key});
