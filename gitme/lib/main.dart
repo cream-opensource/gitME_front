@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         CustomScreen.route: (_) => CustomScreen(),
         JoinScreen.route: (_) => JoinScreen(),
         QRScanScreen.route: (_) => QRScanScreen(),
-        // TestScreen.route: (_) => TestScreen(),
+        TestScreen.route: (_) => TestScreen(),
         LoadingScreen.route: (_) => LoadingScreen(),
       },
     );
