@@ -61,6 +61,7 @@ class BusinessCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          SizedBox(height: 20),
           Align(
             alignment: Alignment.center,
             child: Container(
@@ -76,21 +77,27 @@ class BusinessCard extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 40),
-          Container(
-            width: 80,
-            height: 20,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(
-                image: AssetImage('assets/mark2.png'),
-                fit: BoxFit.cover,
+          SizedBox(height: 135),
+          Row(
+            children: [
+              SizedBox(width: 10),
+              Container(
+                width: 80,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage(
+                    image: AssetImage('assets/mark2.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(width: 5),
               Text(
                 data.introduce,
                 style: TextStyle(
@@ -99,14 +106,13 @@ class BusinessCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 80),
-              // 나머지 버튼들 추가
               InkWell(
                 onTap: () {
                   // 첫 번째 버튼 클릭 시 동작할 내용을 추가하세요.
                 },
                 child: Container(
-                  width: 40,
-                  height: 40,
+                  width: 50,
+                  height: 50,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
@@ -121,8 +127,8 @@ class BusinessCard extends StatelessWidget {
                   // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
                 },
                 child: Container(
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
@@ -132,6 +138,7 @@ class BusinessCard extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(width: 5),
             ],
           ),
           SizedBox(height: 20),
