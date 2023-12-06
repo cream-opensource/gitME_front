@@ -7,7 +7,7 @@ class LoginScreen extends StatelessWidget {
   static const backgroundColor = Color(0xffFFFFFF);
   static const buttonColor = Color(0xffFEE20B);
   static const buttonTextColor = Colors.black;
-  static const logoAsset = 'assets/gitme_logo.png';
+  static const logoAsset = 'assets/gitME_logo.png';
   static const kakaoIconAsset = 'assets/kakaoIcon.png';
 
   const LoginScreen({super.key});
@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
             ],
           ),
           Positioned(
-            bottom: deviceHeight * 0.1,
+            bottom: deviceHeight * 0.05,
             left: 0,
             right: 0,
             child: FractionallySizedBox(
@@ -64,19 +64,22 @@ class LoginScreen extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(right: 5.0),
                       child: Image.asset(
                         kakaoIconAsset,
-                        width: 20,
-                        height: 20,
+                        width: 24,
+                        height: 24,
                       ),
                     ),
                     Text(
                       '카카오로 시작하기',
                       style: TextStyle(
                         fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff333333),
                       ),
                     ),
                   ],

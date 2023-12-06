@@ -1,148 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
-import 'package:gitme/screens/custom_screen.dart';
-import 'package:gitme/screens/login_screen.dart';
-import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
-import 'package:gitme/screens/qr_scan_screen.dart';
-
-import '../screens/test_screen.dart';
 
 class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
+  const MainDrawer({Key? key});
+
+  Widget _buildListTile(BuildContext context, IconData icon, String title, String route) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom : BorderSide(
+            color: Color(0xFFCCCCCC),
+            width: 1.0,
+          ),
+        ),
+      ),
+      child: ListTile(
+        onTap: () => Navigator.pushReplacementNamed(context, route),
+        leading: Icon(icon),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 15,
+            color: Color(0xFF676A66),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 200,
+      width: 256,
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.topLeft,
-                padding: EdgeInsets.only(bottom: 10),
-                width: 50,
-                height: 50,
-                child: Image.asset('assets/default-user.png'),
-              )
-            ],
-          ),
-          SizedBox(height: 30),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              MainScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              'HOME',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              ProfileScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '내정보',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              CardListScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '내명함',
-              style: TextStyle(
-                fontSize: 20,
-              ),
+          Container(
+            color: Color(0xFF56CC94),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(height: 33),
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.topLeft,
+                      padding: EdgeInsets.only(bottom: 10),
+                      width: 138,
+                      height: 138,
+                      child: Image.asset('assets/jjj.png'),
+                    )
+                  ],
+                ),
+                SizedBox(height: 40),
+                Text(
+                  '조재중',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  'm-a-king',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 44),
+              ],
             ),
           ),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              CardWalletScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '명함지갑',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              QRScanScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              'QRScan',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              CustomScreen.route,
-            ),
-            leading: Icon(Icons.account_circle),
-            title: Text(
-              '커스텀스크린(임시)',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
-
-          // ListTile(
-          //   onTap: () => Navigator.pushReplacementNamed(
-          //     context,
-          //     TestScreen.route,
-          //   ),
-          //   leading: Icon(Icons.account_circle),
-          //   title: Text(
-          //     '테스트화면',
-          //     style: TextStyle(
-          //       fontSize: 20,
-          //     ),
-          //   ),
-          // ),
-          SizedBox(height: 240.0),
-
-          ListTile(
-            onTap: () => Navigator.pushReplacementNamed(
-              context,
-              LoginScreen.route,
-            ),
-            leading: Icon(Icons.logout),
-            title: Text(
-              '로그아웃',
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-          ),
+          _buildListTile(context, Icons.person, '마이페이지', ProfileScreen.route),
+          _buildListTile(context, Icons.badge, '내 명함', CardListScreen.route),
+          _buildListTile(context, Icons.wallet, '명함 지갑', CardWalletScreen.route),
+          SizedBox(height: 120),
         ],
       ),
     );
-
   }
 }

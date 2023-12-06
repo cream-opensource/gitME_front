@@ -46,7 +46,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
     {
       'name': '김지연',
       'text': 'Front',
-      'stack': '@front #공무원 #JAVA',
+      'stack': '#front #공무원 #JAVA',
       'imagePath': 'assets/HJH.png',
     },
     {
