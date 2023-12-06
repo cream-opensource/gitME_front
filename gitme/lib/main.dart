@@ -53,5 +53,24 @@ class MyApp extends StatelessWidget {
         LoadingScreen.route: (_) => LoadingScreen()
       },
     );
+        title: 'Drawer without AppBar',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: LoginScreen(),
+        routes: {
+          MainScreen.route: (_) => MainScreen(),
+          LoginScreen.route: (_) => LoginScreen(),
+          CardListScreen.route: (_) => CardListScreen(),
+          ProfileScreen.route: (_) => ProfileScreen(),
+          CardWalletScreen.route: (_) => CardWalletScreen(),
+          CustomScreen.route: (_) => CustomScreen(),
+          JoinScreen.route: (_) => JoinScreen(),
+          QRScanScreen.route: (_) => QRScanScreen(),
+          TestScreen.route: (_) => TestScreen(),
+          LoadingScreen.route: (_) => LoadingScreen()
+        },
+      );
   }
 }
