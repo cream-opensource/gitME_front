@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/language_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
@@ -13,8 +12,8 @@ import 'package:provider/provider.dart';
 import '../provider/userData.dart';
 import '../widgets/githubLoginWebView.dart';
 
-class JoinScreen extends StatelessWidget {
-  static final route = 'join-screen';
+class ExternalLinkScreen extends StatelessWidget {
+  static final route = 'externalLink-screen';
 
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
@@ -53,7 +52,7 @@ class JoinScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Let's",
+                        "Next",
                         style: TextStyle(
                           fontSize: 36,
                           color: Color(0xFF56CC94),
@@ -63,7 +62,7 @@ class JoinScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Start!",
+                        "Turn",
                         style: TextStyle(
                           fontSize: 36,
                           color: Color(0xFF56CC94),
@@ -75,7 +74,7 @@ class JoinScreen extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "1 / 3",
+                    "2 / 3",
                     style: TextStyle(
                       fontSize: 20,
                       color: Color(0xFF56CC94),
@@ -86,57 +85,19 @@ class JoinScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 3개까지 등록 가능해요",
+                style: TextStyle(
+                  fontSize: 16.5,
+                  color: Color(0xFF8D919F),
+                  fontFamily: 'DarkerGrotesque',
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.8,
+                ),
+                textAlign: TextAlign.center, // 가운데 정렬 추가
+              ),
               SizedBox(height: 20), // 예시로 간격 추가
-              TextFormFieldComponent(
-                TextInputType.text,
-                TextInputAction.next,
-                "ex. 홍길동",
-                2,
-                "이름을 입력하세요",
-                nameController,
-                    (value) => nameController.text = value!,
-                '이름',
-              ),
-              TextFormFieldComponent(
-                TextInputType.datetime,
-                TextInputAction.done,
-                "ex. 19980101",
-                8,
-                "생년월일을 입력하세요",
-                birthdateController,
-                    (value) => birthdateController.text = value!,
-                '생년월일',
-              ),
-              TextFormFieldComponent(
-                TextInputType.phone,
-                TextInputAction.next,
-                "ex. 01012345678",
-                11,
-                "'-'없이 숫자로만 입력하세요",
-                phoneController,
-                    (value) => phoneController.text = value!,
-                '전화번호',
-              ),
-              TextFormFieldComponent(
-                TextInputType.emailAddress,
-                TextInputAction.next,
-                "ex. gildong@gmail.com",
-                10,
-                "이메일을 입력하세요",
-                emailController,
-                    (value) => emailController.text = value!,
-                '이메일',
-              ),
-              IntroduceFormFieldComponent(
-                TextInputType.text,
-                TextInputAction.next,
-                "자기소개",
-                50,
-                "자기소개 글을 작성해주세요",
-                introduceController,
-                    (value) => introduceController.text = value!,
-                '자기소개',
-              ),
+
+              
               SizedBox(height: 20,),
               Row(
                 children: [
@@ -145,7 +106,7 @@ class JoinScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ExternalLinkScreen()),
+                          MaterialPageRoute(builder: (context) => LanguageScreen()),
                         );
                       },
                       child: Text('다음'),
