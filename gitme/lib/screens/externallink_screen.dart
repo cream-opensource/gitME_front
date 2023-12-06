@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/language_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
@@ -41,12 +42,12 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
             height: 20, // 이미지 높이
           ),
           onPressed: () {
-            Navigator.of(context).pushNamed(MainScreen.route);
+            Navigator.of(context).pushNamed(JoinScreen.route);
           },
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+        padding: EdgeInsets.fromLTRB(50, 5, 50, 5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

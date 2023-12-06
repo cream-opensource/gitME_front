@@ -1,19 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
-import 'package:gitme/widgets/introduceFormFieldComponent.dart';
-import 'package:gitme/widgets/textFormFieldComponent.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
-import '../provider/userData.dart';
-import '../widgets/githubLoginWebView.dart';
+class LanguageScreen extends StatefulWidget {
+  static final route = 'language-screen';
 
-class LanguageScreen extends StatelessWidget {
-  static final route = 'join-screen';
+  @override
+  _LanguageScreenState createState() => _LanguageScreenState();
+}
 
+class _LanguageScreenState extends State<LanguageScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
 
@@ -23,135 +22,211 @@ class LanguageScreen extends StatelessWidget {
   final TextEditingController birthdateController = TextEditingController();
   final TextEditingController introduceController = TextEditingController();
 
+  String languageDropdownValue = 'tistory';
+  List<String> languageItemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
+
+  String FrameLibdropdownValue = 'tistory';
+  List<String> FrameLibItemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Image.asset(
-              'assets/back_button.png', // 이미지 경로
-              width: 20, // 이미지 너비
-              height: 20, // 이미지 높이
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(MainScreen.route);
-            },
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/back_button.png',
+            width: 20,
+            height: 20,
           ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(ExternalLinkScreen.route);
+          },
         ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(50, 5, 50, 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Next", style: TextStyle(
-                fontSize: 36,
-                color: Color(0xFF56CC94),
-                fontFamily: 'DarkerGrotesque',
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.8,
-              )),
-              Text("Turn!", style: TextStyle(
-                fontSize: 36,
-                color: Color(0xFF56CC94),
-                fontFamily: 'DarkerGrotesque',
-                fontWeight: FontWeight.w800,
-                letterSpacing: -0.8,
-              )),
-              SizedBox(height: 30), // 예시로 간격 추가
-              Text("노현이 님이 github 내 사용 언어", style: TextStyle(fontSize: 16, color: Color(0xFF8D919F))),
-              SizedBox(height: 20), // 예시로 간격 추가
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRoundedText("Word1"),
-                  SizedBox(width: 5),
-                  _buildRoundedText("Word1"),
-                  SizedBox(width: 5),
-                  _buildRoundedText("Word1"),// Add more Text widgets as needed
+                  Text(
+                    "Final",
+                    style: TextStyle(
+                      fontSize: 36,
+                      color: Color(0xFF56CC94),
+                      fontFamily: 'DarkerGrotesque',
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.8,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 13),
-              Divider(),
+              Text(
+                "3 / 3",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color(0xFF56CC94),
+                  fontFamily: 'DarkerGrotesque',
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.8,
+                ),
+              ),
             ],
           ),
-        )
+            SizedBox(height: 20),
+            GitHubButton(),
+            SizedBox(height: 20),
+
+            Center(
+              child: Text(
+                "노현이 님이 github 내 사용 언어",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF8D919F),
+                  fontFamily: 'DarkerGrotesque',
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: -0.8,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildRoundedText("Word1"),
+                SizedBox(width: 5),
+                _buildRoundedText("Word1"),
+                SizedBox(width: 5),
+                _buildRoundedText("Word1"),
+              ],
+            ),
+            SizedBox(height: 13),
+            Divider(),
+            Expanded(
+              child: ListView(
+                children: [
+                  SizedBox(height: 20,),
+                  buildDropdownInput("주사용 언어", languageItemList, languageDropdownValue, (String newValue) {
+                    setState(() {
+                      languageDropdownValue = newValue;
+                    });
+                  }),
+                  SizedBox(height: 20,),
+                  buildDropdownInput("주사용 프레임워크 & 라이브러리", FrameLibItemList, FrameLibdropdownValue, (String newValue) {
+                    setState(() {
+                      FrameLibdropdownValue = newValue;
+                    });
+                  }),
+                  SizedBox(height: 20,),
+
+              ],
+              ),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainScreen()),
+                        );
+                      },
+                      child: Text('확인'),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF56CC94),
+                        onPrimary: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10), // 모서리 조절
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  Future<void> sendUserDataToServer(
-      BuildContext context,
-      String name, String phone, String email, String birthdate,
-      ) async {
-    UserData userData = Provider.of<UserData>(context, listen: false);
-    String? accessToken = userData.accessToken;
-    String? kakaoId = userData.kakaoId?.toString();
+  // ... rest of the code
 
-    final Map<String, dynamic> data = {
-      'kakaoId' : kakaoId ?? '',
-      'name': name ?? '',
-      'phone': phone ?? '',
-      'email': email ?? '',
-      'birthDate': birthdate ?? '',
-      'gitAccessToken': accessToken ?? '',
-      "externalLink": {
-        "notion1": "test1",
-        "notion2": "test2"
-      }
-    };
-
-    final String jsonData = jsonEncode(data);
-
-    final response = await http.post(
-      Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/signUp'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
+  Widget _buildRoundedText(String text) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Color(0xFF56CC94)),
+        color: Color(0xFF56CC94),
+      ),
+      padding: EdgeInsets.fromLTRB(10, 8, 10, 8),
+      child: Center(
+        child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
+      ),
     );
-    print('보낼 데이터 확인: $data');
-
-    if (response.statusCode == 201) {
-      print(jsonData);
-      print('보낼 데이터 확인: $jsonData');
-      print('데이터: ${response.body}');
-      Navigator.pushReplacementNamed(
-        context,
-        MainScreen.route,
-      );
-    } else {
-      print('요청 실패: ${response.reasonPhrase}');
-    }
   }
+
+  Widget buildDropdownInput(String key, List<String> list, String value, Function(String) onChanged) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "* " + key + "  ",
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF8D919F),
+            fontFamily: 'DarkerGrotesque',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.8,
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          child: DropdownButton<String>(
+            value: value,
+            menuMaxHeight: 300,
+            items: list.map((String itemText) {
+              return DropdownMenuItem<String>(
+                value: itemText,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  child: Text(
+                    itemText,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              onChanged(newValue ?? '');
+            },
+            icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+            iconSize: 24,
+            isExpanded: true,
+            elevation: 16,
+            style: TextStyle(color: Colors.black),
+            underline: Container(),
+          ),
+        ),
+      ],
+    );
+  }
+
 }
-
-
-Widget _buildRoundedText(String text) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
-      border: Border.all(color: Color(0xFF56CC94)), // 테두리 색상 설정
-      color: Color(0xFF56CC94)
-    ),
-    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
-    child: Center(
-      child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
-    ),
-  );
-}
-
-// Widget selctionButton()(String text) {
-//   return Container(
-//     decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(30),
-//         border: Border.all(color: Color(0xFF56CC94)), // 테두리 색상 설정
-//         color: Color(0xFF56CC94)
-//     ),
-//     padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
-//     child: Center(
-//       child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
-//     ),
-//   );
-// }
-//

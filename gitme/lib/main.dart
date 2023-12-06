@@ -4,13 +4,13 @@ import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
+import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
-import 'package:gitme/screens/test_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -52,7 +52,6 @@ class MyApp extends StatelessWidget {
           CustomScreen.route: (_) => CustomScreen(),
           JoinScreen.route: (_) => JoinScreen(),
           QRScanScreen.route: (_) => QRScanScreen(),
-          TestScreen.route: (_) => TestScreen(),
           LoadingScreen.route: (_) => LoadingScreen(),
           ExternalLinkScreen.route: (_) => ExternalLinkScreen()
         },
