@@ -12,82 +12,90 @@ import 'package:provider/provider.dart';
 import '../provider/userData.dart';
 import '../widgets/githubLoginWebView.dart';
 
-class ExternalLinkScreen extends StatelessWidget {
+class ExternalLinkScreen extends StatefulWidget {
   static final route = 'externalLink-screen';
 
+  @override
+  _ExternalLinkScreenState createState() => _ExternalLinkScreenState();
+}
+
+
+class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController birthdateController = TextEditingController();
-  final TextEditingController introduceController = TextEditingController();
 
+  String dropdownValue = 'tistory';
+  List<String> itemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
+  Map<String, String> dropdownValues = {'tistory': 'tistory'};
+  List<Widget> webpageInputs = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Image.asset(
-              'assets/back_button.png', // 이미지 경로
-              width: 20, // 이미지 너비
-              height: 20, // 이미지 높이
-            ),
-            onPressed: () {
-              Navigator.of(context).pushNamed(MainScreen.route);
-            },
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Image.asset(
+            'assets/back_button.png', // 이미지 경로
+            width: 20, // 이미지 너비
+            height: 20, // 이미지 높이
           ),
+          onPressed: () {
+            Navigator.of(context).pushNamed(MainScreen.route);
+          },
         ),
-        body: Padding(
-          padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Next",
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Color(0xFF56CC94),
-                          fontFamily: 'DarkerGrotesque',
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.8,
-                        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Next",
+                      style: TextStyle(
+                        fontSize: 36,
+                        color: Color(0xFF56CC94),
+                        fontFamily: 'DarkerGrotesque',
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.8,
                       ),
-                      Text(
-                        "Turn",
-                        style: TextStyle(
-                          fontSize: 36,
-                          color: Color(0xFF56CC94),
-                          fontFamily: 'DarkerGrotesque',
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: -0.8,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "2 / 3",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Color(0xFF56CC94),
-                      fontFamily: 'DarkerGrotesque',
-                      fontWeight: FontWeight.w800,
-                      letterSpacing: -0.8,
                     ),
+                    Text(
+                      "Turn",
+                      style: TextStyle(
+                        fontSize: 36,
+                        color: Color(0xFF56CC94),
+                        fontFamily: 'DarkerGrotesque',
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.8,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "2 / 3",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xFF56CC94),
+                    fontFamily: 'DarkerGrotesque',
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -0.8,
                   ),
-                ],
-              ),
-              Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 3개까지 등록 가능해요",
+                ),
+              ],
+            ),
+            SizedBox(height: 20), // 예시로 간격 추가
+
+            Center(
+              child: Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 5개까지 등록 가능해요",
                 style: TextStyle(
-                  fontSize: 16.5,
+                  fontSize: 18,
                   color: Color(0xFF8D919F),
                   fontFamily: 'DarkerGrotesque',
                   fontWeight: FontWeight.w800,
@@ -95,13 +103,59 @@ class ExternalLinkScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center, // 가운데 정렬 추가
               ),
-              SizedBox(height: 20), // 예시로 간격 추가
+            ),
+            SizedBox(height: 20), // 예시로 간격 추가
+            Divider(),
+            SizedBox(height: 20), // 예시로 간격 추가
 
-              
-              SizedBox(height: 20,),
-              Row(
+            Expanded(
+              child: ListView(
                 children: [
-                  Expanded(
+                  Column(
+                    children: webpageInputs,
+                  ),
+                  SizedBox(height: 20,),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FloatingActionButton(
+                          onPressed: () {
+                            setState(() {
+                              webpageInputs.add(buildWebpageInput());
+                            });
+                          },
+                          child: Icon(Icons.add, color: Colors.red),
+                          backgroundColor: Colors.white,
+
+                          shape: CircleBorder(),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            setState(() {
+                              if (webpageInputs.isNotEmpty) {
+                                webpageInputs.removeLast();
+                              }
+                            });
+                          },
+                          child: Icon(Icons.remove, color: Colors.blueAccent,),
+                          backgroundColor: Colors.white,
+                          shape: CircleBorder(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 20),
+            Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 15.0),
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -124,55 +178,115 @@ class ExternalLinkScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildWebpageInput() {
+    return Container(
+      key: UniqueKey(),
+      width: double.infinity,
+      child: Column(
+        children: [
+          buildDropdownInput(),
+          buildUrlInput(),
+          SizedBox(height: 20,),
+          Divider()
+        ],
+      ),
+    );
+  }
+
+  Widget buildDropdownInput() {
+    String dropdownId = UniqueKey().toString(); // 각 DropdownButton에 대한 고유한 키 생성
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "* 웹페이지  ",
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF8D919F),
+            fontFamily: 'DarkerGrotesque',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.8,
           ),
-        )
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            child: DropdownButton<String>(
+              value: dropdownValues[dropdownId], // 초기값 설정
+              menuMaxHeight: 300,
+              items: itemList.map((String itemText) {
+                return DropdownMenuItem<String>(
+                  value: itemText,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    child: Text(
+                      itemText,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValues[dropdownId] = newValue ?? '';
+                });
+              },
+
+              icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+              iconSize: 24,
+              isExpanded: true,
+              elevation: 16,
+              style: TextStyle(color: Colors.black),
+              underline: Container(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Future<void> sendUserDataToServer(
-      BuildContext context,
-      String name, String phone, String email, String birthdate,
-      ) async {
-    UserData userData = Provider.of<UserData>(context, listen: false);
-    String? accessToken = userData.accessToken;
-    String? kakaoId = userData.kakaoId?.toString();
-
-    final Map<String, dynamic> data = {
-      'name': name ?? '',
-      'phone': phone ?? '',
-      'email': email ?? '',
-      'birthDate': birthdate ?? '',
-      'gitAccessToken': accessToken ?? '',
-      "externalLink": {
-        "notion1": "test1",
-        "notion2": "test2"
-      }
-    };
-
-    final String jsonData = jsonEncode(data);
-
-    final response = await http.post(
-      Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/signUp'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
+  Widget buildUrlInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "* 주소 URL  ",
+          style: TextStyle(
+            fontSize: 16,
+            color: Color(0xFF8D919F),
+            fontFamily: 'DarkerGrotesque',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.8,
+          ),
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            child: TextField(
+              decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
-    print('보낼 데이터 확인: $data');
-
-    if (response.statusCode == 201) {
-      print(jsonData);
-      print('보낼 데이터 확인: $jsonData');
-      print('데이터: ${response.body}');
-      Navigator.pushReplacementNamed(
-        context,
-        MainScreen.route,
-      );
-    } else {
-      print('요청 실패: ${response.reasonPhrase}');
-    }
   }
+
 }
+
+
