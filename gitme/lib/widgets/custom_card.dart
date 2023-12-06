@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DraggableText extends StatefulWidget {
   final String text;
 
-  DraggableText({required this.text});
+  DraggableText({super.key, required this.text});
 
   @override
   _DraggableTextState createState() => _DraggableTextState();

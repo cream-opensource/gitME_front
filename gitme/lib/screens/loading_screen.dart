@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/userData.dart';
 import '../service/apiService.dart';
-import 'join_screen.dart';
-import 'main_screen.dart';
 
 class LoadingScreen extends StatefulWidget {
-  static final route = 'loading-screen';
+  static const route = 'loading-screen';
+
+  const LoadingScreen({super.key});
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -26,7 +24,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> fetchDataFromServer() async {
     try {
       await serverCommunication.fetchDataFromServer(context);
-
       print('성공');
     } catch (e) {
       print('error: $e');

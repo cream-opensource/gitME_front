@@ -9,7 +9,7 @@ import '../provider/userData.dart';
 class KakaoLoginWebView extends StatefulWidget {
   final String kakaoLoginUrl;
 
-  KakaoLoginWebView({required this.kakaoLoginUrl});
+  KakaoLoginWebView({super.key, required this.kakaoLoginUrl});
 
   @override
   _KakaoLoginWebViewState createState() => _KakaoLoginWebViewState();
@@ -21,9 +21,7 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Kakao 로그인"),
-      ),
+      appBar: null,
       body: WebView(
         initialUrl: widget.kakaoLoginUrl,
         javascriptMode: JavascriptMode.unrestricted,
@@ -40,11 +38,14 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
 
   Future<void> _readWebViewContents() async {
     try {
-      String contents = await _webViewController.evaluateJavascript('document.body.innerText');
+      // 변경: evaluateJavascript -> runJavascriptReturningResult
+      String contents = await _webViewController
+          .runJavascriptReturningResult('document.body.innerText');
 
       String unescapedContents = contents.replaceAll('\\', '');
 
-      String trimmedContents = unescapedContents.substring(1, unescapedContents.length - 1);
+      String trimmedContents =
+          unescapedContents.substring(1, unescapedContents.length - 1);
       Map<String, dynamic> jsonData = json.decode(trimmedContents);
 
       String msg = jsonData['msg'];
@@ -55,29 +56,8 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
       print('ID: $id');
       print('Nickname: $nickname');
 
-
       Provider.of<UserData>(context, listen: false).setKId(id);
-
-      showDialog(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          return AlertDialog(
-            title: Text('로그인 성공'),
-            // content: Text('ID: ${jsonData['result']['id']}\nNickname: ${jsonData['result']['nickname']}'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  // #TODO: 신규가입자의 경우 join-screen으로, 기존가입자의 경우 main-screen으로
-                  Navigator.pushReplacementNamed(dialogContext, 'loading-screen');
-                },
-                child: Text('확인'),
-              ),
-            ],
-          );
-        },
-      );
-
+      Navigator.pushReplacementNamed(context, 'loading-screen');
     } catch (e) {
       print('Error while reading WebView contents: $e');
     }

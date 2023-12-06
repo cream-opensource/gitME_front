@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:gitme/provider/userData.dart';
+import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
@@ -20,8 +22,10 @@ import 'dart:ui' as ui;
 import '../service/apiService.dart';
 
 class MainScreen extends StatefulWidget {
-  static final route = 'main-screen';
+  static const route = 'main-screen';
   final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
+
+  MainScreen({super.key});
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -46,24 +50,30 @@ class _MainScreenState extends State<MainScreen> {
     try {
       userData = Provider.of<UserData>(context, listen: false);
       print('성공');
-    } catch (e) {
-      print('error: $e');
-    } finally {
       setState(() {
         isLoading = false;
       });
+    } catch (e) {
+      print('error: $e');
+    // } finally {
+    //   setState(() {
+    //     isLoading = false;
+    //   });
     }
   }
 
   Future<void> captureAndSave() async {
     try {
-      RenderRepaintBoundary boundary = widget.globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+      RenderRepaintBoundary boundary = widget.globalKey.currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
-      ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
 
       // 이미지를 갤러리에 저장합니다.
-      final result = await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
+      final result =
+          await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
 
       if (result != null && result.isNotEmpty) {
         print('이미지 저장 성공');
@@ -75,31 +85,94 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  @override
+  Future<String> createDynamicLink() async {
+    final DynamicLinkParameters parameters = DynamicLinkParameters(
+      uriPrefix: 'https://gitME.page.link',
+      link: Uri.parse('https://gitME.page.link/card?id=$_current'),
+      androidParameters: AndroidParameters(
+        packageName: 'com.example.gitme',
+      ),
+      iosParameters: IOSParameters(
+        bundleId: 'com.example.gitme',
+        minimumVersion: '12.0',
+      ),
+    );
+
+    ShortDynamicLink dynamicLink =
+        await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    return dynamicLink.shortUrl.toString();
+  }
+
+  Future<void> handleDynamicLink() async {
+    try {
+      final PendingDynamicLinkData? data =
+          await FirebaseDynamicLinks.instance.getInitialLink();
+
+      String cardIdFromDynamicLink = extractCardIdFromLinkData(data);
+
+      if (cardIdFromDynamicLink.isNotEmpty) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DynamicLinkScreen(cardId: cardIdFromDynamicLink),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error handling dynamic link: $e');
+    }
+  }
+
+  String extractCardIdFromLinkData(PendingDynamicLinkData? data) {
+    // Add your logic to extract the card ID based on the dynamic link data structure
+    // For example, if the link is 'https://gitME.page.link/card?id=123', you can extract '123'
+    if (data != null && data.link != null) {
+      Uri link = data.link!;
+      List<String> pathSegments = link.pathSegments;
+      if (pathSegments.isNotEmpty && pathSegments.first == 'card') {
+        return pathSegments.length > 1 ? pathSegments[1] : '';
+      }
+    }
+    return '';
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return CircularProgressIndicator();
     }
     List<Widget> items = [
       FlipCard(
-          front: BusinessCard3(
-            BusinessCardData3(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
-              introduce: userData.nickname ?? "",
-            ),
+        front: BusinessCard3(
+          BusinessCardData3(
+            name: userData.name ?? "",
+            jobTitle: "Frontend Developer",
+            contactInfo: userData.email ?? "",
+            call: userData.phone ?? "",
+            techStack: userData.languages?['JavaScript'].toString() ?? "",
+            followers: userData.followers.toString(),
+            stared: userData.totalStars.toString(),
+            commit: userData.totalCommits.toString(),
+            introduce: userData.nickname ?? "",
           ),
+        ),
         back: Container(
+          // 카드 크기와 일치하는 컨테이너 생성
           width: MediaQuery.of(context).size.width * 0.8,
           height: 400,
+          margin: EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             color: Color(0xFFCEF700),
             borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
           padding: EdgeInsets.all(16.0),
           child: Column(
@@ -107,7 +180,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : ${_current}",
+                  data: "hi im qrcode : $_current",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -128,80 +201,42 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       FlipCard(
-          front: BusinessCard(
-            BusinessCardData(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
-              introduce: userData.nickname ?? "",
-            ),
+        front: BusinessCard(
+          BusinessCardData(
+            name: userData.name ?? "",
+            jobTitle: "Frontend Developer",
+            contactInfo: userData.email ?? "",
+            call: userData.phone ?? "",
+            techStack: userData.languages?['JavaScript'].toString() ?? "",
+            followers: userData.followers.toString(),
+            stared: userData.totalStars.toString(),
+            commit: userData.totalCommits.toString(),
+            introduce: userData.nickname ?? "",
           ),
+        ),
         back: Container(
+          // 카드 크기와 일치하는 컨테이너 생성
           width: MediaQuery.of(context).size.width * 0.8,
           height: 400,
+          margin: EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             color: Color(0xFFCEF700),
             borderRadius: BorderRadius.circular(20.0),
-          ),
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: QrImageView(
-                  data: "hi im qrcode : ${_current}",
-                  version: QrVersions.auto,
-                  size: 200.0,
-                  backgroundColor: Colors.white,
-                ),
-              ),
-              SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
-              Text(
-                'Scan Me!',
-                style: TextStyle(
-                  color: Color(0xFF393737),
-                  fontSize: 24,
-                  //fontFamily: 'AbhayaLibre-ExtraBold',
-                  fontWeight: FontWeight.bold,
-                ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
               ),
             ],
           ),
-        ),
-      ),
-      FlipCard(
-          front: BusinessCard(
-            BusinessCardData(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString() ?? "",
-              stared: userData.totalStars.toString() ?? "",
-              commit: userData.totalCommits.toString() ?? "",
-              introduce: userData.nickname ?? "",
-            ),
-          ),
-        back: Container(
-          width: MediaQuery.of(context).size.width * 0.8,
-          height: 400,
-          decoration: BoxDecoration(
-            color: Color(0xFFCEF700),
-            borderRadius: BorderRadius.circular(20.0),
-          ),
           padding: EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : ${_current}",
+                  data: "hi im qrcode : $_current",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -306,10 +341,14 @@ class _MainScreenState extends State<MainScreen> {
               child: Text('이미지로 저장하기'),
             ),
             SimpleDialogOption(
-              onPressed: () {
+              onPressed: () async {
+                String dynamicLink = await createDynamicLink();
+                print('공유 링크: $dynamicLink');
+
+                await handleDynamicLink();
                 Navigator.of(dialogContext).pop();
               },
-              child: Text('카카오톡으로 공유하기'),
+              child: Text('공유하기'),
             ),
           ],
         );

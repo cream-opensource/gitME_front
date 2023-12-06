@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'githubLoginWebView.dart';
 
 class GitHubButton extends StatefulWidget {
+  const GitHubButton({super.key});
+
   @override
   _GitHubButtonState createState() => _GitHubButtonState();
 }

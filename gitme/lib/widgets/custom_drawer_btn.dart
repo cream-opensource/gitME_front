@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomDrawerBtn extends StatelessWidget {
+  const CustomDrawerBtn({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Align(

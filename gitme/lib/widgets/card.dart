@@ -27,7 +27,7 @@ class BusinessCardData {
 class BusinessCard extends StatelessWidget {
   final BusinessCardData data;
 
-  BusinessCard(this.data);
+  BusinessCard(this.data, {super.key});
 
   @override
   Widget build(BuildContext context) {

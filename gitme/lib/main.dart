@@ -4,7 +4,6 @@ import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
-import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
@@ -13,8 +12,16 @@ import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
 import 'package:gitme/screens/test_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() {
+  mainAsync();
+}
+
+void mainAsync() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Firebase 초기화
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => UserData(),
@@ -25,6 +32,8 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

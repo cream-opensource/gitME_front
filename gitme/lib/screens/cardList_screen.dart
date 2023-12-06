@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
 class CardListScreen extends StatefulWidget {
-  static final route = 'cardList-screen';
+  static const route = 'cardList-screen';
+
+  const CardListScreen({super.key});
 
   @override
   _CardListScreenState createState() => _CardListScreenState();
@@ -23,9 +25,6 @@ class _CardListScreenState extends State<CardListScreen> {
   List<bool> selectedItems = List.generate(8, (index) => false);
   List<int> selectedGridIndices = [];
 
-  int? draggingIndex;
-  int? newPosition;
-
   void toggleSelection(int index) {
     setState(() {
       if (selectedItems[index]) {
@@ -41,9 +40,9 @@ class _CardListScreenState extends State<CardListScreen> {
   void deleteSelectedItems() {
     setState(() {
       selectedGridIndices.sort((a, b) => b.compareTo(a));
-      selectedGridIndices.forEach((index) {
+      for (var index in selectedGridIndices) {
         cardImages.removeAt(index);
-      });
+      }
       selectedGridIndices.clear();
       selectedItems = List.generate(8, (index) => false);
     });
@@ -171,15 +170,59 @@ class _CardListScreenState extends State<CardListScreen> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      if (selectedItems[index]) {
-                        if (selectedGridIndices.contains(index)) {
-                          selectedGridIndices.remove(index);
-                        } else {
-                          selectedGridIndices.add(index);
+                    if (!selectedItems.any((isSelected) => isSelected)) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.asset(cardImages[index]),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withOpacity(0.6),
+                                          ),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 10),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      setState(() {
+                        if (selectedItems[index]) {
+                          if (selectedGridIndices.contains(index)) {
+                            selectedGridIndices.remove(index);
+                          } else {
+                            selectedGridIndices.add(index);
+                          }
                         }
-                      }
-                    });
+                      });
+                    }
                   },
                   child: Card(
                     child: Stack(

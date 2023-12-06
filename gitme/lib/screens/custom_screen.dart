@@ -4,7 +4,9 @@ import '../widgets/custom_drawer_btn.dart';
 import '../widgets/main_drawer.dart';
 
 class CustomScreen extends StatelessWidget {
-  static final route = 'custom-screen';
+  static const route = 'custom-screen';
+
+  const CustomScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

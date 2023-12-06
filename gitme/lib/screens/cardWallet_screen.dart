@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'main_screen.dart';
 
 class CardWalletScreen extends StatefulWidget { // StatelessWidget에서 StatefulWidget로 변경
-  static final route = 'card-wallet-screen';
+  static const route = 'card-wallet-screen';
+
+  const CardWalletScreen({super.key});
 
   @override
   _CardWalletScreenState createState() => _CardWalletScreenState();
@@ -44,7 +46,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
     {
       'name': '김지연',
       'text': 'Front',
-      'stack': '@front #공무원 #JAVA',
+      'stack': '#front #공무원 #JAVA',
       'imagePath': 'assets/HJH.png',
     },
     {
@@ -73,6 +75,59 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
   ];
 
   bool isListView = true;
+
+  final List<Map<String, dynamic>> originalList = [
+    {
+      'name': '이이섭',
+      'text': '소프트웨어공학 교수',
+      'stack': '#Spring #Backend',
+      'imagePath': 'assets/LLS.png',
+    },
+    {
+      'name': '황준하',
+      'text': 'JS, Spring 개발자 입니다.',
+      'stack': '#Swift #백수',
+      'imagePath': 'assets/HJH.png',
+    },
+    {
+      'name': '윤현주',
+      'text': '커피를 좋아하는 개발자.',
+      'stack': '#Spring #금오공대 #학생',
+      'imagePath': 'assets/YHJ.png',
+    },
+    {
+      'name': '붕어빵',
+      'text': '따끈한 겨울 간식',
+      'stack': '#python #C++',
+      'imagePath': 'assets/BBANG.png',
+    },
+    {
+      'name': '노현이',
+      'text': 'Back',
+      'stack': '#dart #휴학생',
+      'imagePath': 'assets/LLS.png',
+    },
+    {
+      'name': '김지연',
+      'text': 'Front',
+      'stack': '#front #공무원 #JAVA',
+      'imagePath': 'assets/HJH.png',
+    },
+    {
+      'name': '최훈',
+      'text': '커피를 좋아하는 개발자.',
+      'stack': '#Spring #금오공대 #학생',
+      'imagePath': 'assets/YHJ.png',
+    },
+    {
+      'name': '조재중',
+      'text': '따끈한 겨울 간식',
+      'stack': '#python #C++',
+      'imagePath': 'assets/BBANG.png',
+    },
+  ];
+  Map<Map<String, dynamic>, int> originalPositions = {}; // 삭제된 항목의 원래 위치를 저장
+  List<Map<String, dynamic>> undoList = []; // 삭제된 항목을 임시로 저장할 리스트
 
   @override
   Widget build(BuildContext context) {
@@ -164,28 +219,25 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                       isListView = !isListView;
                     });
                   },
-                    child: Row(
-                      children: [
-                        Text(
-                          isListView ? '보기 정렬' : '그리드 정렬',
-                          style: TextStyle(
-                            color: Color(0xFF676A66),
-                            fontSize: 13,
-                          ),
+                  child: Row(
+                    children: [
+                      Text(
+                        isListView ? '보기 정렬' : '보기 정렬',
+                        style: TextStyle(
+                          color: Color(0xFF676A66),
+                          fontSize: 13,
                         ),
-                        SizedBox(width: 5),
-                        Padding(
-                          padding: EdgeInsets.only(top: 2.0),
-                          child: Icon(
-                            isListView ? Icons.view_list : Icons.grid_view,
-                            color: Color(0xFF676A66),
-                            size: 18,
-                          ),
+                      ),
+                      SizedBox(width: 5),
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0),
+                        child: Icon(
+                          isListView ? Icons.view_list : Icons.grid_view,
+                          color: Color(0xFF676A66),
+                          size: 18,
                         ),
-                      ],
-                    ),
-                    style: TextButton.styleFrom(
-                    minimumSize: Size(30, 30),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -196,48 +248,147 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                 ? ListView.builder(
               itemCount: tableList.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  height: 140,
-                  margin: EdgeInsets.only(left: 3.0, right: 3.0, bottom: 0),
-                  child: Card(
-                    elevation: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Expanded(
+                return Dismissible(
+                  key: Key(tableList[index]['name']),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    setState(() {
+                      if (direction == DismissDirection.endToStart) {
+                        int originalIndex = tableList.indexOf(tableList[index]);
+                        originalPositions[tableList[index]] = originalIndex;
+
+                        undoList.add(tableList[index]);
+                        tableList.removeAt(index);
+                      }
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            Expanded(
+                              child: Text('삭제되었습니다'),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (undoList.isNotEmpty) {
+                                    var lastUndo = undoList.removeLast();
+                                    var originalPosition = originalPositions[lastUndo];
+                                    if (originalPosition != null) {
+                                      tableList.insert(originalPosition, lastUndo);
+                                    } else {
+                                      // originalPosition이 null일 경우 기본값(예를 들어 리스트의 맨 끝)을 설정하여 insert를 실행합니다.
+                                      tableList.add(lastUndo);
+                                    }
+                                    originalPositions.remove(lastUndo);
+                                  }
+                                });
+                              },
+                              icon: Icon(
+                                Icons.undo,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.black.withOpacity(0.6),
+                      ),
+                    );
+                  },
+                  background: Container(
+                    color: Colors.red,
+                    alignment: Alignment.centerRight,
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Dialog(
+                            backgroundColor: Colors.transparent,
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  tableList[index]['name'],
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    Image.asset(cardImages[index]),
+                                    Positioned(
+                                      top: 10,
+                                      right: 10,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.black.withOpacity(0.6),
+                                          ),
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                            size: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 15),
-                                Text(
-                                  tableList[index]['text'],
-                                  textAlign: TextAlign.left,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  tableList[index]['stack'],
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.blue),
-                                ),
+                                SizedBox(height: 10),
                               ],
                             ),
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      height: 140,
+                      margin: EdgeInsets.only(left: 3.0, right: 3.0, bottom: 0),
+                      child: Card(
+                        elevation: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      tableList[index]['name'],
+                                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(height: 15),
+                                    Text(
+                                      tableList[index]['text'],
+                                      textAlign: TextAlign.left,
+                                    ),
+                                    SizedBox(height: 8),
+                                    Text(
+                                      tableList[index]['stack'],
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 120,
+                                height: 120,
+                                child: Image.asset(
+                                  tableList[index]['imagePath'],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 120,
-                            height: 120,
-                            child: Image.asset(
-                              tableList[index]['imagePath'],
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -260,21 +411,75 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
                       builder: (context) {
                         return Dialog(
                           backgroundColor: Colors.transparent,
-                          child: Stack(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(cardImages[index]),
+                              Stack(
+                                alignment: Alignment.topRight,
+                                children: [
+                                  Image.asset(cardImages[index]),
+                                  Positioned(
+                                    top: 10,
+                                    right: 10,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pop(); // Close the dialog
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.black.withOpacity(0.6),
+                                        ),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 15,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(); // 다이얼로그 닫기
-                                  },
-                                  child: Text('닫기'),
-                                ),
-                              )
+                              SizedBox(height: 10),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('선택한 명함을 삭제하시겠습니까?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context, rootNavigator: true).pop(); // 안쪽 대화 상자 닫기
+                                                  Navigator.of(context).pop(); // 바깥쪽 이미지 대화 상자 닫기
+                                                },
+                                                child: Text('취소'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    cardImages.removeAt(index);
+                                                  });
+                                                  Navigator.of(context, rootNavigator: true).pop(); // 안쪽 대화 상자 닫기
+                                                  Navigator.of(context).pop(); // 바깥쪽 이미지 대화 상자 닫기
+                                                },
+                                                child: Text('삭제'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(Icons.delete), // Use "delete" icon
+                                    color: Colors.red, // Define icon color
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         );
