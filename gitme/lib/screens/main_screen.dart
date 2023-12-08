@@ -44,6 +44,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     userData = UserData(); // 예시로 UserData 클래스를 사용하였습니다. 실제로 사용하는 클래스에 맞게 수정하세요.
     fetchDataFromServer();
+    handleDynamicLink();
   }
 
   Future<void> fetchDataFromServer() async {
@@ -85,17 +86,18 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  @override
   Future<String> createDynamicLink() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://gitME.page.link',
-      link: Uri.parse('https://gitME.page.link/card?id=$_current'),
+      uriPrefix: 'https://gitme.page.link',
+      link: Uri.parse('https://gitme.com/card?id=$_current'),
       androidParameters: AndroidParameters(
         packageName: 'com.example.gitme',
+        fallbackUrl: Uri.parse('https://naver.com'),
       ),
       iosParameters: IOSParameters(
         bundleId: 'com.example.gitme',
         minimumVersion: '12.0',
+        fallbackUrl: Uri.parse('https://naver.com'),
       ),
     );
 
@@ -344,8 +346,6 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () async {
                 String dynamicLink = await createDynamicLink();
                 print('공유 링크: $dynamicLink');
-
-                await handleDynamicLink();
                 Navigator.of(dialogContext).pop();
               },
               child: Text('공유하기'),
