@@ -97,7 +97,7 @@ class JoinScreen extends StatelessWidget {
                         TextInputType.text,
                         TextInputAction.next,
                         "ex. 홍길동",
-                        2,
+                        8,
                         "이름을 입력하세요",
                         nameController,
                             (value) => nameController.text = value!,
@@ -105,7 +105,7 @@ class JoinScreen extends StatelessWidget {
                       ),
                       TextFormFieldComponent(
                         TextInputType.datetime,
-                        TextInputAction.done,
+                        TextInputAction.next,
                         "ex. 19980101",
                         8,
                         "생년월일을 입력하세요",
@@ -127,7 +127,7 @@ class JoinScreen extends StatelessWidget {
                         TextInputType.emailAddress,
                         TextInputAction.next,
                         "ex. gildong@gmail.com",
-                        10,
+                        20,
                         "이메일을 입력하세요",
                         emailController,
                             (value) => emailController.text = value!,
@@ -135,7 +135,7 @@ class JoinScreen extends StatelessWidget {
                       ),
                       IntroduceFormFieldComponent(
                         TextInputType.text,
-                        TextInputAction.next,
+                        TextInputAction.done,
                         "자기소개",
                         50,
                         "자기소개 글을 작성해주세요",
@@ -155,11 +155,49 @@ class JoinScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 15.0),
                     child: Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ExternalLinkScreen()),
-                          );
+                        onPressed: () async {
+                          if (formKey.currentState?.validate() ?? false) {
+                            UserData userData = Provider.of<UserData>(context, listen: false);
+
+                            formKey.currentState?.save();
+                            String name = nameController.text;
+                            String phone = phoneController.text;
+                            String email = emailController.text;
+                            String birthdate = birthdateController.text;
+                            String introduce = introduceController.text;
+
+                            print('Name: $name');
+                            print('Phone: $phone');
+                            print('Email: $email');
+                            print('Birthdate: $birthdate');
+                            print('introduce: $introduce');
+
+                            // await sendUserDataToServer(context, name, phone, email, birthdate);
+                            //
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => ExternalLinkScreen(name: name, phone: phone, email: email, birthdate: birthdate, introduce: introduce )),
+                            // );
+
+                            userData.setJoinData(name, phone, email, birthdate, introduce);
+
+                            Navigator.pushReplacementNamed(
+                              context,
+                              ExternalLinkScreen.route,
+                            );
+                          } else {
+                            String name = nameController.text;
+                            String phone = phoneController.text;
+                            String email = emailController.text;
+                            String birthdate = birthdateController.text;
+                            String introduce = introduceController.text;
+                            print('Name: $name');
+                            print('Phone: $phone');
+                            print('Email: $email');
+                            print('Birthdate: $birthdate');
+                            print('introduce: $introduce');
+                          }
+
                         },
                         child: Text('다음'),
                         style: ElevatedButton.styleFrom(

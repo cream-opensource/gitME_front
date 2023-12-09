@@ -16,12 +16,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController birthdateController = TextEditingController();
-  final TextEditingController introduceController = TextEditingController();
-
   String languageDropdownValue = 'tistory';
   List<String> languageItemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
 
@@ -228,5 +222,5 @@ class _LanguageScreenState extends State<LanguageScreen> {
       ],
     );
   }
-
 }
+

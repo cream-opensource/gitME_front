@@ -8,6 +8,7 @@ class UserData with ChangeNotifier {
   String? birthDate;
   String? email;
   String? phone;
+  String? introduce;
   Map<String, String>? externalLink;
   String? nickname;
   int? followers;
@@ -31,12 +32,32 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
+  void setJoinData(String name, String phone, String email, String birthdate, String introduce) {
+    this.name = name;
+    this.phone = phone;
+    this.email = email;
+    this.birthDate = birthdate;
+    this.introduce = introduce;
+
+    notifyListeners();
+  }
+
+  void setExternalLinkData(List<Map<String, String>> externalLinkData) {
+    externalLink = Map.fromIterable(
+      externalLinkData,
+      key: (link) => link['webpage'],
+      value: (link) => link['url'],
+    );
+    notifyListeners();
+  }
+
   void setUserData(Map<String, dynamic> userData) {
     userIdx = userData['userIdx'];
     name = userData['name'];
     birthDate = userData['birthDate'];
     email = userData['email'];
     phone = userData['phone'];
+    introduce = userData['introduce'];
     externalLink = Map<String, String>.from(userData['externalLink']);
     nickname = userData['nickname'];
     followers = userData['followers'];
