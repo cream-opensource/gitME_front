@@ -28,6 +28,9 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="https"
                       android:host="gitme.com"/>
+                <data android:host="gitme.com"
+                      android:pathPrefix="/card"
+                      android:scheme="https"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
