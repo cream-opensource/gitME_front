@@ -39,11 +39,10 @@ class BusinessCard3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
+      width: screenWidth * 0.8,
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
@@ -58,42 +57,55 @@ class BusinessCard3 extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenWidth * 0.05),
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(data.nickname, style: TextStyle(color: Colors.white, fontSize: 22),),
-            Text(data.name, style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
-            SizedBox(height: 20),
-            Text("stack", style: TextStyle(color: Colors.white, fontSize: 17),),
-            SizedBox(height: 10),
+            // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06),),
+            Text(data.nickname, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06, fontFamily: 'DarkerGrotesque'),),
+            // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
+            Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
+            SizedBox(height: screenWidth * 0.03),
+            Text("Stack", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
+            SizedBox(height: screenWidth * 0.015),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (data.languages != null)
-                  for (var entry in data.languages!.entries.take(2))
-                    _buildRoundedText("${entry.key}: ${entry.value}"),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text("Info", style: TextStyle(color: Colors.white, fontSize: 17),),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildRoundedText("Commits: ${data.totalCommits}"),
-                // SizedBox(width: 5),
-                // _buildRoundedText("Star: 17K"),
-                SizedBox(width: 5),
-                _buildRoundedText("Followers: ${data.followers}"),// Add more Text widgets as needed
-              ],
-            ),
-            SizedBox(height: 20,),
-            Text(data.externalLink?.values.join(', ') ?? "",
-            style: TextStyle(color: Colors.white, fontSize: 16, ), textAlign: TextAlign.center),
+//                 if (data.languages != null)
+//                   for (var entry in data.languages!.entries.take(2))
+//                     _buildRoundedText("${entry.key}: ${entry.value}"),
 
+                _buildRoundedText("Spring", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("Node.js", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("react", screenWidth), // Add more Text widgets as needed
+              ],
+            ),
+            SizedBox(height: screenWidth * 0.03),
+            Text("Info", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
+            SizedBox(height: screenWidth * 0.015),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                // _buildRoundedText(data.commit, screenWidth),
+                _buildRoundedText("Commits: ${data.totalCommits}", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
+                // _buildRoundedText("Star: 17K"),
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("Followers: ${data.followers}", screenWidth), // Add more Text widgets as needed
+              ],
+            ),
+            SizedBox(height: screenWidth * 0.03),
+            Divider(color: Colors.white),
+            SizedBox(height: screenWidth * 0.03),
+//                     Text(data.externalLink?.values.join(', ') ?? "",
+            Text(
+              "안녕하세요 노현이입니다 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+              style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
@@ -101,16 +113,18 @@ class BusinessCard3 extends StatelessWidget {
   }
 }
 
-
-Widget _buildRoundedText(String text) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
-      border: Border.all(color: Colors.white), // 테두리 색상 설정
+Widget _buildRoundedText(String text, double screenWidth) {
+  return Padding(
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.white),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02, vertical: screenWidth * 0.016),
+      child: Center(
+        child: Text(text, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03)),
+      ),
     ),
-    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
-    child: Center(
-      child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
-    ),
+    padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
   );
 }
