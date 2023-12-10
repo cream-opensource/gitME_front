@@ -348,7 +348,7 @@ class _MainScreenState extends State<MainScreen> {
               child: CarouselSlider(
                 items: items,
                 options: CarouselOptions(
-                  height: 500.0,
+                  height: 520.0,
                   enlargeCenterPage: true,
                   viewportFraction: 0.8,
                   initialPage: 0,
@@ -364,7 +364,7 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.2,
+              bottom: MediaQuery.of(context).size.height * 0.15,
               left: 0,
               right: 0,
               child: Row(
@@ -377,7 +377,7 @@ class _MainScreenState extends State<MainScreen> {
                     margin: EdgeInsets.symmetric(horizontal: 4.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: _current == index ? Colors.blue : Colors.grey,
+                      color: _current == index ? Color(0xFF56CC94) : Colors.grey,
                     ),
                   ),
                 ),
