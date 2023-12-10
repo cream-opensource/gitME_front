@@ -3,6 +3,8 @@ import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 
+import '../screens/share_screen.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({Key? key});
 
@@ -81,6 +83,7 @@ class MainDrawer extends StatelessWidget {
           _buildListTile(context, Icons.person, '마이페이지', ProfileScreen.route),
           _buildListTile(context, Icons.badge, '내 명함', CardListScreen.route),
           _buildListTile(context, Icons.wallet, '명함 지갑', CardWalletScreen.route),
+          _buildListTile(context, Icons.wallet, '교환스크린', ShareScreen.route),
           SizedBox(height: 120),
         ],
       ),

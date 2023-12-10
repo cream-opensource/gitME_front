@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    userData = UserData(); // 예시로 UserData 클래스를 사용하였습니다. 실제로 사용하는 클래스에 맞게 수정하세요.
+    userData = UserData();
     fetchDataFromServer();
   }
 
@@ -226,16 +226,21 @@ class _MainScreenState extends State<MainScreen> {
         front: BusinessCard3(
           BusinessCardData3(
             name: userData.name ?? "",
-            jobTitle: "Frontend Developer",
-            contactInfo: userData.email ?? "",
-            call: userData.phone ?? "",
-            techStack: userData.languages?['JavaScript'].toString() ?? "",
-            followers: userData.followers.toString(),
-            stared: userData.totalStars.toString(),
-            commit: userData.totalCommits.toString(),
-            introduce: userData.nickname ?? "",
+            birthdate: userData.birthDate ?? "",
+            email: userData.email ?? "",
+            phone: userData.phone ?? "",
+            introduce: userData.introduce ?? "",
+            externalLink: userData.externalLink,
+            nickname: userData.nickname ?? "",
+            followers: userData.followers?.toString() ?? "",
+            following: userData.following?.toString() ?? "",
+            totalStars: userData.totalStars?.toString() ?? "",
+            totalCommits: userData.totalCommits?.toString() ?? "",
+            avatarUrl: userData.avatarUrl ?? "",
+            languages: userData.languages,
           ),
         ),
+
         back: Container(
           // 카드 크기와 일치하는 컨테이너 생성
           width: MediaQuery.of(context).size.width * 0.8,

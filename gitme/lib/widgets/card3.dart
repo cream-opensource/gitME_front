@@ -2,25 +2,33 @@ import 'package:flutter/material.dart';
 
 class BusinessCardData3 {
   final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
+  final String birthdate;
+  final String email;
+  final String phone;
   final String introduce;
+  final Map<String, dynamic>? externalLink;
+  final String nickname;
   final String followers;
-  final String stared;
-  final String commit;
+  final String following;
+  final String totalStars;
+  final String totalCommits;
+  final String avatarUrl;
+  final Map<String, dynamic>? languages;
 
   BusinessCardData3({
     required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
+    required this.birthdate,
+    required this.email,
+    required this.phone,
     required this.introduce,
+    required this.externalLink,
+    required this.nickname,
     required this.followers,
-    required this.stared,
-    required this.commit,
+    required this.following,
+    required this.totalStars,
+    required this.totalCommits,
+    required this.avatarUrl,
+    required this.languages,
   });
 }
 
@@ -55,15 +63,19 @@ class BusinessCard3 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06),),
-            Text("glidong", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06, fontFamily: 'DarkerGrotesque'),),
+            Text(data.nickname, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06, fontFamily: 'DarkerGrotesque'),),
             // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
-            Text("홍길동", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
+            Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
             SizedBox(height: screenWidth * 0.03),
             Text("Stack", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
             SizedBox(height: screenWidth * 0.015),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+//                 if (data.languages != null)
+//                   for (var entry in data.languages!.entries.take(2))
+//                     _buildRoundedText("${entry.key}: ${entry.value}"),
+
                 _buildRoundedText("Spring", screenWidth),
                 SizedBox(width: screenWidth * 0.01),
                 _buildRoundedText("Node.js", screenWidth),
@@ -78,16 +90,17 @@ class BusinessCard3 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // _buildRoundedText(data.commit, screenWidth),
-                _buildRoundedText("commit: 365", screenWidth),
+                _buildRoundedText("Commits: ${data.totalCommits}", screenWidth),
                 SizedBox(width: screenWidth * 0.01),
                 // _buildRoundedText("Star: 17K"),
                 SizedBox(width: screenWidth * 0.01),
-                _buildRoundedText("PR: 900", screenWidth), // Add more Text widgets as needed
+                _buildRoundedText("Followers: ${data.followers}", screenWidth), // Add more Text widgets as needed
               ],
             ),
             SizedBox(height: screenWidth * 0.03),
             Divider(color: Colors.white),
             SizedBox(height: screenWidth * 0.03),
+//                     Text(data.externalLink?.values.join(', ') ?? "",
             Text(
               "안녕하세요 노현이입니다 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
               style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
