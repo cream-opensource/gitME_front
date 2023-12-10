@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gitme/provider/userData.dart';
+import 'package:gitme/widgets/add_card.dart';
 import 'package:gitme/widgets/card.dart';
+import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
 import 'package:gitme/widgets/main_drawer.dart';
@@ -105,6 +107,62 @@ class _MainScreenState extends State<MainScreen> {
       return CircularProgressIndicator();
     }
     List<Widget> items = [
+      FlipCard(
+        front: BusinessCard2(
+          BusinessCardData2(
+            name: userData.name ?? "",
+            jobTitle: "Frontend Developer",
+            contactInfo: userData.email ?? "",
+            call: userData.phone ?? "",
+            techStack: userData.languages?['JavaScript'].toString() ?? "",
+            followers: userData.followers.toString(),
+            stared: userData.totalStars.toString(),
+            commit: userData.totalCommits.toString(),
+            introduce: userData.nickname ?? "",
+          ),
+        ),
+        back: Container(
+          // 카드 크기와 일치하는 컨테이너 생성
+          width: MediaQuery.of(context).size.width * 0.8,
+          height: 400,
+          margin: EdgeInsets.only(top: 30),
+          decoration: BoxDecoration(
+            color: Color(0xFFCEF700),
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                blurRadius: 4,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: QrImageView(
+                  data: "hi im qrcode : $_current",
+                  version: QrVersions.auto,
+                  size: 200.0,
+                  backgroundColor: Colors.white,
+                ),
+              ),
+              SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
+              Text(
+                'Scan Me!',
+                style: TextStyle(
+                  color: Color(0xFF393737),
+                  fontSize: 24,
+                  //fontFamily: 'AbhayaLibre-ExtraBold',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       FlipCard(
         front: BusinessCard3(
           BusinessCardData3(
@@ -217,6 +275,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
+      AddCard()
     ];
     return Scaffold(
       appBar: null,

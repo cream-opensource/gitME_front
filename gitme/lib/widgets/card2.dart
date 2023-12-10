@@ -11,10 +11,18 @@ class BusinessCardData2 {
   final String stared;
   final String commit;
 
-  BusinessCardData2({required this.name, required this.jobTitle, required this.contactInfo, required this.call,
-    required this.techStack, required this.introduce, required this.followers, required this.stared, required this.commit});
+  BusinessCardData2({
+    required this.name,
+    required this.jobTitle,
+    required this.contactInfo,
+    required this.call,
+    required this.techStack,
+    required this.introduce,
+    required this.followers,
+    required this.stared,
+    required this.commit,
+  });
 }
-
 
 class BusinessCard2 extends StatelessWidget {
   final BusinessCardData2 data;
@@ -24,136 +32,94 @@ class BusinessCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      // 세로 비즈니스 카드의 너비 설정
-      height: 500,
-      // 세로 비즈니스 카드의 높이 설정
-      padding: EdgeInsets.all(16),
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
-      // 비즈니스 카드를 아래로 내리기 위한 여백 설정
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.indigo.withOpacity(0.6),
-            Colors.indigo.withOpacity(0.6),
-            Colors.white, // 하얀색
-          ],
-          stops: [0.0, 0.7, 0.7], // 각 색상의 정지점 (0.66이면 2/3 지점에서 색이 변경됩니다.)
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-        borderRadius: BorderRadius.circular(10),
+        color: Color(0xFF9BB7FF),
+        borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
-            blurRadius: 5,
-            offset: Offset(0, 3),
+            blurRadius: 4,
+            offset: Offset(0, 4),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.center, // 이미지를 가로 방향으로 중앙에 배치
-            child: Container(
-              width: 250, // 이미지의 너비
-              height: 100, // 이미지의 높이
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  image: AssetImage('assets/kakao.png'), // 이미지 경로 설정
-                  fit: BoxFit.cover,
-                ),
-              ),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+        child: Column(
+
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/jjj.png',
+              fit: BoxFit.cover,
             ),
-          ),
-          SizedBox(height: 160),
-          Container(
-            width: 80,
-            height: 20,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(
-                image: AssetImage('assets/mark2.png'), // 이미지 경로 설정
-                fit: BoxFit.cover,
-              ),
+            Text("jife98", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500)),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("commit: 700", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+              ],
             ),
-          ),
-          //SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                data.introduce,
-                style: TextStyle(
-                  fontSize: 27,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(width: 80), // 간격 조정
-              InkWell(
-                onTap: () {
-                  // 버튼 클릭 시 동작할 내용을 추가하세요.
-                },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/tistory.png'), // 버튼 이미지 경로 설정
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  // 버튼 클릭 시 동작할 내용을 추가하세요.
-                },
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/notion.png'), // 버튼 이미지 경로 설정
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 30),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.name,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("star: 98", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                SizedBox(width: 8,),
+                Text("PR: 100K", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.contactInfo,
-              style: TextStyle(fontSize: 16),
+            SizedBox(height: 8,),
+            Divider(color: Colors.white,),
+            SizedBox(height: 8,),
+            Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+                style: TextStyle(color: Colors.white, fontSize: 14, ), textAlign: TextAlign.center),
+            SizedBox(height: 8,),
+            Divider(color: Colors.white,),
+            SizedBox(height: 8,),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("Phone: ", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("010-0000-0000", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.call,
-              style: TextStyle(fontSize: 16),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text("Email: ", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("sksk02zja@gmail.com", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+              ],
             ),
-          ),
-        ],
+          ],
+
+
+        ),
       ),
     );
   }
+}
+
+
+Widget _buildRoundedText(String text) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(30),
+      border: Border.all(color: Colors.white), // 테두리 색상 설정
+    ),
+    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
+    child: Center(
+      child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
+    ),
+  );
 }
