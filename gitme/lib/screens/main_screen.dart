@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/widgets/add_card.dart';
-import 'package:gitme/widgets/card.dart';
+import 'package:gitme/widgets/card1.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
@@ -220,8 +220,8 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
       FlipCard(
-        front: BusinessCard(
-          BusinessCardData(
+        front: BusinessCard1(
+          BusinessCardData1(
             name: userData.name ?? "",
             jobTitle: "Frontend Developer",
             contactInfo: userData.email ?? "",

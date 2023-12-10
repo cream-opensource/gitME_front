@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class BusinessCardData {
+class BusinessCardData1 {
   final String name;
   final String jobTitle;
   final String contactInfo;
@@ -11,7 +11,7 @@ class BusinessCardData {
   final String stared;
   final String commit;
 
-  BusinessCardData({
+  BusinessCardData1({
     required this.name,
     required this.jobTitle,
     required this.contactInfo,
@@ -24,10 +24,10 @@ class BusinessCardData {
   });
 }
 
-class BusinessCard extends StatelessWidget {
-  final BusinessCardData data;
+class BusinessCard1 extends StatelessWidget {
+  final BusinessCardData1 data;
 
-  BusinessCard(this.data, {super.key});
+  BusinessCard1(this.data, {super.key});
 
   @override
   Widget build(BuildContext context) {
