@@ -2,16 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/join_screen.dart';
-import 'package:gitme/screens/language_screen.dart';
-import 'package:gitme/screens/main_screen.dart';
-import 'package:gitme/widgets/github_button.dart';
-import 'package:gitme/widgets/introduceFormFieldComponent.dart';
-import 'package:gitme/widgets/textFormFieldComponent.dart';
-import 'package:http/http.dart' as http;
+import 'package:gitme/screens/language_screen_after.dart';
+import 'package:gitme/screens/launguage_screen_before.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
-import '../widgets/githubLoginWebView.dart';
+
 
 class ExternalLinkScreen extends StatefulWidget {
   static final route = 'externalLink-screen';
@@ -22,13 +18,15 @@ class ExternalLinkScreen extends StatefulWidget {
 
 
 class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
-  final formKey = GlobalKey<FormState>();
-  bool isLinked = false;
+  List<TextEditingController> urlControllers = [];
+  Map<String, String> selectedWebpages = {};
+  final itemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
+  List<String> dropdownValues = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
+  List<List<String>> dropdownValuesList = [[]];
+  String dropdownValue = "tistory";
+  List<String> dropdownItemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
 
 
-  String dropdownValue = 'tistory';
-  List<String> itemList = ['tistory', 'notion', 'velog', 'github blog ', '기타'];
-  Map<String, String> dropdownValues = {'tistory': 'tistory'};
   List<Widget> webpageInputs = [];
 
   @override
@@ -124,12 +122,11 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
                         FloatingActionButton(
                           onPressed: () {
                             setState(() {
-                              webpageInputs.add(buildWebpageInput());
+                              webpageInputs.add(buildWebpageInput(webpageInputs.length));
                             });
                           },
                           child: Icon(Icons.add, color: Colors.red),
                           backgroundColor: Colors.white,
-
                           shape: CircleBorder(),
                         ),
                         FloatingActionButton(
@@ -159,9 +156,40 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
                     padding: const EdgeInsets.only(bottom: 15.0),
                     child: ElevatedButton(
                       onPressed: () {
+                        List<Map<String, String>> userDataList = [];
+
+                        for (int i = 0; i < urlControllers.length; i++) {
+
+                          String selectedWebpage = dropdownValuesList[i].isNotEmpty
+                              ? dropdownValuesList[i].first
+                              : '';
+                          TextEditingController urlController = urlControllers[i];
+                          String url = urlController.text;
+
+                          print('Webpage: $selectedWebpage, URL: $url');
+
+                          userDataList.add({
+                            'webpage': selectedWebpage,
+                            'url': url,
+                          });
+                        }
+
+                        print('User Data: $userDataList');
+
+                        Map<String, String> convertedData = userDataList.fold({}, (result, item) {
+                          result.addAll(item);
+                          return result;
+                        });
+
+                        print(convertedData);
+
+                        UserData userData = Provider.of<UserData>(context, listen: false);
+                        userData.setExternalLinkData(userDataList);
+                        userData.notifyListeners();
+
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LanguageScreen()),
+                          MaterialPageRoute(builder: (context) => BeforeLanguageScreen()),
                         );
                       },
                       child: Text('다음'),
@@ -188,77 +216,90 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
     );
   }
 
-  Widget buildWebpageInput() {
+  Widget buildWebpageInput(int index) {
+    TextEditingController urlController = TextEditingController();
+    urlControllers.add(urlController);
+    dropdownValuesList.add([]);
+    String dropdownValue = dropdownValuesList[index].isNotEmpty
+        ? dropdownValuesList[index].first
+        : itemList.first; // 기본값 설정
+
     return Container(
       key: UniqueKey(),
       width: double.infinity,
       child: Column(
         children: [
-          buildDropdownInput(),
-          buildUrlInput(),
-          SizedBox(height: 20,),
-          Divider()
+          buildDropdownInput(index, dropdownValue, (String newValue) {
+            setState(() {
+              dropdownValuesList[index] = [newValue];
+            });
+          }),
+          buildUrlInput(urlController),
+          SizedBox(height: 20),
+          Divider(),
         ],
       ),
     );
   }
 
-  Widget buildDropdownInput() {
-    String dropdownId = UniqueKey().toString(); // 각 DropdownButton에 대한 고유한 키 생성
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "* 웹페이지  ",
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xFF8D919F),
-            fontFamily: 'DarkerGrotesque',
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.8,
-          ),
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            child: DropdownButton<String>(
-              value: dropdownValues[dropdownId], // 초기값 설정
-              menuMaxHeight: 300,
-              items: itemList.map((String itemText) {
-                return DropdownMenuItem<String>(
-                  value: itemText,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                    child: Text(
-                      itemText,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValues[dropdownId] = newValue ?? '';
-                });
-              },
-
-              icon: Icon(Icons.arrow_drop_down, color: Colors.black),
-              iconSize: 24,
-              isExpanded: true,
-              elevation: 16,
-              style: TextStyle(color: Colors.black),
-              underline: Container(),
+  Widget buildDropdownInput(int index, String value, Function(String) onChanged) {
+    return Form(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            "* 웹페이지  ",
+            style: TextStyle(
+              fontSize: 16,
+              color: Color(0xFF8D919F),
+              fontFamily: 'DarkerGrotesque',
+              fontWeight: FontWeight.w800,
+              letterSpacing: -0.8,
             ),
           ),
-        ),
-      ],
+          SizedBox(width: 10),
+          Expanded(
+            child: Container(
+              child: DropdownButton<String>(
+                key: UniqueKey(),
+                value: value,
+                menuMaxHeight: 300,
+                items: itemList.map((itemText) {
+                  return DropdownMenuItem(
+                    key: ValueKey<String>(itemText),
+                    value: itemText,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      child: Text(
+                        itemText,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (itemText) {
+                  print('Dropdown onChanged called with: $itemText');
+                  onChanged(itemText!);
+                },
+                icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+                iconSize: 24,
+                isExpanded: true,
+                elevation: 16,
+                style: TextStyle(color: Colors.black),
+                underline: Container(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget buildUrlInput() {
+
+  Widget buildUrlInput(TextEditingController urlController) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -276,6 +317,7 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
         Expanded(
           child: Container(
             child: TextField(
+              controller: urlController,
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.green),
@@ -287,7 +329,4 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
       ],
     );
   }
-
 }
-
-
