@@ -70,7 +70,6 @@ class DataHandler {
           userData.setUserData(cardInfoData);
 
           print('apiService 성공: $cardInfoData');
-          Navigator.of(context).pushReplacementNamed(MainScreen.route);
 
         } else {
           print('Failed to get userIdx from KakaoId');

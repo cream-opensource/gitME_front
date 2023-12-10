@@ -42,6 +42,7 @@ dependencies:
   image_gallery_saver: ^2.0.3
   firebase_dynamic_links: ^5.4.6
   firebase_core: ^2.24.0
+  flutter_secure_storage: ^5.0.0
 
 
 
