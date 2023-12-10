@@ -31,11 +31,10 @@ class BusinessCard3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
+      width: screenWidth * 0.8,
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
@@ -50,44 +49,50 @@ class BusinessCard3 extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenWidth * 0.05),
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(data.name, style: TextStyle(color: Colors.white, fontSize: 22),),
-            Text(data.name, style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
-            SizedBox(height: 20),
-            Text("stack", style: TextStyle(color: Colors.white, fontSize: 17),),
-            SizedBox(height: 10),
+            // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06),),
+            Text("glidong", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.06, fontFamily: 'DarkerGrotesque'),),
+            // Text(data.name, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
+            Text("홍길동", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.08, fontWeight: FontWeight.bold),),
+            SizedBox(height: screenWidth * 0.03),
+            Text("Stack", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
+            SizedBox(height: screenWidth * 0.015),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildRoundedText("Word1"),
-                SizedBox(width: 5),
-                _buildRoundedText("Word1"),
-                SizedBox(width: 5),
-                _buildRoundedText("Word1"),// Add more Text widgets as needed
+                _buildRoundedText("Spring", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("Node.js", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("react", screenWidth), // Add more Text widgets as needed
               ],
             ),
-            SizedBox(height: 20),
-            Text("Info", style: TextStyle(color: Colors.white, fontSize: 17),),
-            SizedBox(height: 10),
+            SizedBox(height: screenWidth * 0.03),
+            Text("Info", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
+            SizedBox(height: screenWidth * 0.015),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _buildRoundedText(data.commit),
-                // SizedBox(width: 5),
+                // _buildRoundedText(data.commit, screenWidth),
+                _buildRoundedText("commit: 365", screenWidth),
+                SizedBox(width: screenWidth * 0.01),
                 // _buildRoundedText("Star: 17K"),
-                SizedBox(width: 5),
-                _buildRoundedText("PR: 900"),// Add more Text widgets as needed
+                SizedBox(width: screenWidth * 0.01),
+                _buildRoundedText("PR: 900", screenWidth), // Add more Text widgets as needed
               ],
             ),
-            SizedBox(height: 20,),
-            Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
-            style: TextStyle(color: Colors.white, fontSize: 14, ), textAlign: TextAlign.center),
-
+            SizedBox(height: screenWidth * 0.03),
+            Divider(color: Colors.white),
+            SizedBox(height: screenWidth * 0.03),
+            Text(
+              "안녕하세요 노현이입니다 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+              style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
@@ -95,16 +100,18 @@ class BusinessCard3 extends StatelessWidget {
   }
 }
 
-
-Widget _buildRoundedText(String text) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(30),
-      border: Border.all(color: Colors.white), // 테두리 색상 설정
+Widget _buildRoundedText(String text, double screenWidth) {
+  return Padding(
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.white),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02, vertical: screenWidth * 0.016),
+      child: Center(
+        child: Text(text, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03)),
+      ),
     ),
-    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
-    child: Center(
-      child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
-    ),
+    padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
   );
 }
