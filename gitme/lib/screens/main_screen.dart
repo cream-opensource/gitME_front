@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gitme/provider/userData.dart';
+import 'package:gitme/widgets/add_card.dart';
 import 'package:gitme/widgets/card.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
@@ -49,10 +50,10 @@ class _MainScreenState extends State<MainScreen> {
       });
     } catch (e) {
       print('error: $e');
-    // } finally {
-    //   setState(() {
-    //     isLoading = false;
-    //   });
+      // } finally {
+      //   setState(() {
+      //     isLoading = false;
+      //   });
     }
   }
 
@@ -62,12 +63,12 @@ class _MainScreenState extends State<MainScreen> {
           .findRenderObject() as RenderRepaintBoundary;
       ui.Image image = await boundary.toImage();
       ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
+      await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
 
       // 이미지를 갤러리에 저장합니다.
       final result =
-          await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
+      await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
 
       if (result != null && result.isNotEmpty) {
         print('이미지 저장 성공');
@@ -95,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     ShortDynamicLink dynamicLink =
-        await FirebaseDynamicLinks.instance.buildShortLink(parameters);
+    await FirebaseDynamicLinks.instance.buildShortLink(parameters);
     return dynamicLink.shortUrl.toString();
   }
 
@@ -217,6 +218,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
       ),
+      AddCard()
     ];
     return Scaffold(
       appBar: null,

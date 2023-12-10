@@ -141,7 +141,7 @@ class BusinessCard extends StatelessWidget {
               SizedBox(width: 5),
             ],
           ),
-          SizedBox(height: 20),
+          //SizedBox(height: 20),
           Align(
             alignment: Alignment.centerRight,
             child: Text(

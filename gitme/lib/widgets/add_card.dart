@@ -35,13 +35,35 @@ class AddCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/add_button.png',
-                width: 86,
-                height: 86,
+              Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  color: Color(0xFF56CC94),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.add,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              SizedBox(height: 10,),
-              Text("Add Card!", style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),)
+              Text(
+                "Add ME!",
+                style: TextStyle(
+                  fontFamily: 'DarkerGrotesque',
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF56CC94),
+                ),
+              ),
+              // Image.asset(
+              //   'assets/gitme_logo.png',
+              //   width: 41, // 이미지 너비
+              //   height: 23, // 이미지 높이
+              // ),
             ],
           ),
         ),
