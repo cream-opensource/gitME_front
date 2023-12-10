@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DynamicLinkScreen extends StatefulWidget {
-  final String cardId;
+  final String userIdx;
+  final String cardIdx;
 
-  DynamicLinkScreen({required this.cardId});
+  DynamicLinkScreen({required this.userIdx, required this.cardIdx});
 
   @override
   _DynamicLinkPageState createState() => _DynamicLinkPageState();
@@ -20,7 +21,8 @@ class _DynamicLinkPageState extends State<DynamicLinkScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Card ID: ${widget.cardId}'),
+            Text('User IDX: ${widget.userIdx}'),
+            Text('Card IDX: ${widget.cardIdx}'),
           ],
         ),
       ),
