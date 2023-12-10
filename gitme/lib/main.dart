@@ -10,7 +10,9 @@ import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/screens/externallink_screen.dart';
+import 'package:gitme/screens/git_loading_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
+import 'package:gitme/screens/language_screen_after.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
@@ -73,7 +75,9 @@ class MyApp extends StatelessWidget {
         JoinScreen.route: (_) => JoinScreen(),
         QRScanScreen.route: (_) => QRScanScreen(),
         LoadingScreen.route: (_) => LoadingScreen(onLoadingComplete: () {}),
-        ExternalLinkScreen.route: (_) => ExternalLinkScreen()
+        ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
+        GitLoadingScreen.route: (_) => GitLoadingScreen(),
+        AfterLanguageScreen.route: (_) => AfterLanguageScreen()
       },
     );
   }

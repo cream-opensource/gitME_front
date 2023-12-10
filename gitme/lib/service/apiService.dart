@@ -83,6 +83,7 @@ class DataHandler {
       } else {
         print('apiService 에러 : $e');
       }
+      rethrow;
     }
   }
 }
