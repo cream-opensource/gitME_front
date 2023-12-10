@@ -31,21 +31,20 @@ class BusinessCard1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
-      height: 400,
+      width: double.infinity,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.indigo.withOpacity(0.6),
-            Colors.indigo.withOpacity(0.6),
-            Colors.white,
+            Color(0xFF4E6DE1),
+            Color(0xFF4E6DE1),
+            Color(0xFFFFFFFF),
+            Color(0xFFFFFFFF),
           ],
-          stops: [0.0, 0.7, 0.7],
+          stops: [0.0, 0.65, 0.35, 1.0],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -54,120 +53,242 @@ class BusinessCard1 extends StatelessWidget {
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: Offset(0, 4),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: 20),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              width: 250,
-              height: 100,
+      child: Padding(
+        padding: EdgeInsets.all(screenWidth * 0.08),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/cat.png',
+              fit: BoxFit.cover,
+              height: screenWidth * 0.3,
+            ),
+            SizedBox(height: screenWidth * 0.2),
+            Container(
+              width: screenWidth * 0.2,
+              height: screenWidth * 0.04,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
-                  image: AssetImage('assets/cat.png'),
+                  image: AssetImage('assets/mark2.png'),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-          ),
-          SizedBox(height: 135),
-          Row(
-            children: [
-              SizedBox(width: 10),
-              Container(
-                width: 80,
-                height: 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  image: DecorationImage(
-                    image: AssetImage('assets/mark2.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(width: 5),
-              Text(
-                data.introduce,
-                style: TextStyle(
-                  fontSize: 27,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(width: 80),
-              InkWell(
-                onTap: () {
-                  // 첫 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-                },
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/tistory.png'),
-                      fit: BoxFit.cover,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "glidong",
+                      style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.08, fontWeight: FontWeight.w800, fontFamily: 'DarkerGrotesque'),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-                },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/notion.png'),
-                      fit: BoxFit.cover,
+                SizedBox(width: screenWidth * 0.1,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
+                      },
+                      child: Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        width: screenWidth * 0.1,
+                        height: screenWidth * 0.1,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                            image: AssetImage('assets/notion.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    InkWell(
+                      onTap: () {
+                        // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
+                      },
+                      child: Container(
+                        width: screenWidth * 0.12,
+                        height: screenWidth * 0.12,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          image: DecorationImage(
+                            image: AssetImage('assets/tistory.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(width: 5),
-            ],
-          ),
-          SizedBox(height: 20),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.name,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-              ),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.contactInfo,
-              style: TextStyle(fontSize: 16),
+            SizedBox(height: screenWidth * 0.04),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end  ,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end, // 수정된 부분
+                  children: [
+                    Text(
+                      "홍길동",
+                      style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.06, fontWeight: FontWeight.w700,),
+                    ),
+                    Text(
+                      "glidong@gmail.com",
+                      style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
+                    ),
+                    Text(
+                      "010-1234-5678",
+                      style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Text(
-              data.call,
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
+
+
+
+
+
+
+
+
+
+
+      // child: Padding(
+      //   padding: EdgeInsets.all(screenWidth * 0.08),
+      //   child: Column(
+      //     crossAxisAlignment: CrossAxisAlignment.start,
+      //     children: <Widget>[
+      //       SizedBox(height: 20),
+      //       Align(
+      //         alignment: Alignment.center,
+      //         child: Container(
+      //           width: screenWidth * 0.5,
+      //           height: screenWidth * 0.25,
+      //           decoration: BoxDecoration(
+      //             shape: BoxShape.rectangle,
+      //             borderRadius: BorderRadius.circular(5),
+      //             image: DecorationImage(
+      //               image: AssetImage('assets/jjj.png'),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //       SizedBox(height: screenWidth * 0.2),
+      //       Row(
+      //         children: [
+      //           SizedBox(width: screenWidth * 0.02),
+      //           Container(
+      //             width: screenWidth * 0.2,
+      //             height: screenWidth * 0.04,
+      //             decoration: BoxDecoration(
+      //               shape: BoxShape.rectangle,
+      //               image: DecorationImage(
+      //                 image: AssetImage('assets/mark2.png'),
+      //                 fit: BoxFit.cover,
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //       Row(
+      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //         children: [
+      //           SizedBox(width: screenWidth * 0.01),
+      //           Expanded(
+      //             child: Text(
+      //               data.introduce,
+      //               style: TextStyle(
+      //                 fontSize: screenWidth * 0.06,
+      //                 fontWeight: FontWeight.bold,
+      //               ),
+      //             ),
+      //           ),
+      //           SizedBox(width: screenWidth * 0.1),
+      //           InkWell(
+      //             onTap: () {
+      //               // 첫 번째 버튼 클릭 시 동작할 내용을 추가하세요.
+      //             },
+      //             child: Container(
+      //               width: screenWidth * 0.06,
+      //               height: screenWidth * 0.06,
+      //               decoration: BoxDecoration(
+      //                 shape: BoxShape.rectangle,
+      //                 image: DecorationImage(
+      //                   image: AssetImage('assets/tistory.png'),
+      //                   fit: BoxFit.cover,
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //           InkWell(
+      //             onTap: () {
+      //               // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
+      //             },
+      //             child: Container(
+      //               width: screenWidth * 0.05,
+      //               height: screenWidth * 0.05,
+      //               decoration: BoxDecoration(
+      //                 shape: BoxShape.rectangle,
+      //                 image: DecorationImage(
+      //                   image: AssetImage('assets/notion.png'),
+      //                   fit: BoxFit.cover,
+      //                 ),
+      //               ),
+      //             ),
+      //           ),
+      //           SizedBox(width: screenWidth * 0.01),
+      //         ],
+      //       ),
+      //       SizedBox(height: screenWidth * 0.05),
+      //       Align(
+      //         alignment: Alignment.centerRight,
+      //         child: Text(
+      //           // data.name,
+      //           "홍길동",
+      //           style: TextStyle(
+      //             fontSize: screenWidth * 0.06,
+      //             fontWeight: FontWeight.bold,
+      //           ),
+      //         ),
+      //       ),
+      //       Align(
+      //         alignment: Alignment.centerRight,
+      //         child: Text(
+      //           // data.contactInfo,
+      //           "frontEnd",
+      //           style: TextStyle(fontSize: screenWidth * 0.025),
+      //         ),
+      //       ),
+      //       Align(
+      //         alignment: Alignment.centerRight,
+      //         child: Text(
+      //           //data.call,
+      //           "010-1234-5678",
+      //           style: TextStyle(fontSize: screenWidth * 0.025),
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
+
