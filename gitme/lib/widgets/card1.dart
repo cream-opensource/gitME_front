@@ -2,25 +2,33 @@ import 'package:flutter/material.dart';
 
 class BusinessCardData1 {
   final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
+  final String birthdate;
+  final String email;
+  final String phone;
   final String introduce;
+  final Map<String, dynamic>? externalLink;
+  final String nickname;
   final String followers;
-  final String stared;
-  final String commit;
+  final String following;
+  final String totalStars;
+  final String totalCommits;
+  final String avatarUrl;
+  final Map<String, dynamic>? languages;
 
   BusinessCardData1({
     required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
+    required this.birthdate,
+    required this.email,
+    required this.phone,
     required this.introduce,
+    required this.externalLink,
+    required this.nickname,
     required this.followers,
-    required this.stared,
-    required this.commit,
+    required this.following,
+    required this.totalStars,
+    required this.totalCommits,
+    required this.avatarUrl,
+    required this.languages,
   });
 }
 
@@ -88,7 +96,7 @@ class BusinessCard1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "glidong",
+                      data.nickname,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.08, fontWeight: FontWeight.w800, fontFamily: 'DarkerGrotesque'),
                     ),
                   ],
@@ -143,15 +151,15 @@ class BusinessCard1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end, // 수정된 부분
                   children: [
                     Text(
-                      "홍길동",
+                      data.name,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.06, fontWeight: FontWeight.w700,),
                     ),
                     Text(
-                      "glidong@gmail.com",
+                      data.email,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
                     ),
                     Text(
-                      "010-1234-5678",
+                      data.phone,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
                     ),
                   ],

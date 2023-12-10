@@ -2,25 +2,33 @@ import 'package:flutter/material.dart';
 
 class BusinessCardData2 {
   final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
+  final String birthdate;
+  final String email;
+  final String phone;
   final String introduce;
+  final Map<String, dynamic>? externalLink;
+  final String nickname;
   final String followers;
-  final String stared;
-  final String commit;
+  final String following;
+  final String totalStars;
+  final String totalCommits;
+  final String avatarUrl;
+  final Map<String, dynamic>? languages;
 
   BusinessCardData2({
     required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
+    required this.birthdate,
+    required this.email,
+    required this.phone,
     required this.introduce,
+    required this.externalLink,
+    required this.nickname,
     required this.followers,
-    required this.stared,
-    required this.commit,
+    required this.following,
+    required this.totalStars,
+    required this.totalCommits,
+    required this.avatarUrl,
+    required this.languages,
   });
 }
 
@@ -98,7 +106,7 @@ class BusinessCard2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text("Phone: ", style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.035)),
-                Text("010-0000-0000", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
+                Text(data.phone, style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
               ],
             ),
             Row(
@@ -106,7 +114,7 @@ class BusinessCard2 extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text("Email: ", style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.035)),
-                Text("sksk02zja@gmail.com", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
+                Text(data.email, style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
               ],
             ),
           ],
