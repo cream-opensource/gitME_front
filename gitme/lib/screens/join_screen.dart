@@ -2,16 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/externallink_screen.dart';
-import 'package:gitme/screens/language_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
-import 'package:gitme/widgets/github_button.dart';
 import 'package:gitme/widgets/introduceFormFieldComponent.dart';
 import 'package:gitme/widgets/textFormFieldComponent.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
-import '../widgets/githubLoginWebView.dart';
 
 class JoinScreen extends StatelessWidget {
   static final route = 'join-screen';
@@ -185,19 +182,7 @@ class JoinScreen extends StatelessWidget {
                               context,
                               ExternalLinkScreen.route,
                             );
-                          } else {
-                            String name = nameController.text;
-                            String phone = phoneController.text;
-                            String email = emailController.text;
-                            String birthdate = birthdateController.text;
-                            String introduce = introduceController.text;
-                            print('Name: $name');
-                            print('Phone: $phone');
-                            print('Email: $email');
-                            print('Birthdate: $birthdate');
-                            print('introduce: $introduce');
                           }
-
                         },
                         child: Text('다음'),
                         style: ElevatedButton.styleFrom(

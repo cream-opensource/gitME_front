@@ -9,7 +9,7 @@ class UserData with ChangeNotifier {
   String? email;
   String? phone;
   String? introduce;
-  Map<String, String>? externalLink;
+  Map<String, dynamic>? externalLink;
   String? nickname;
   int? followers;
   int? following;
@@ -48,6 +48,11 @@ class UserData with ChangeNotifier {
       key: (link) => link['webpage'],
       value: (link) => link['url'],
     );
+    notifyListeners();
+  }
+
+  void setLanguageData(Map<String, int> languageData) {
+    languages = languageData;
     notifyListeners();
   }
 

@@ -5,8 +5,10 @@ import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
 import 'package:gitme/screens/externallink_screen.dart';
+import 'package:gitme/screens/git_loading_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
-import 'package:gitme/screens/language_screen.dart';
+import 'package:gitme/screens/language_screen_after.dart';
+import 'package:gitme/screens/launguage_screen_before.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: ExternalLinkScreen(),
+        home: AfterLanguageScreen(),
         routes: {
           MainScreen.route: (_) => MainScreen(),
           LoginScreen.route: (_) => LoginScreen(),
@@ -55,7 +57,9 @@ class MyApp extends StatelessWidget {
           QRScanScreen.route: (_) => QRScanScreen(),
           LoadingScreen.route: (_) => LoadingScreen(),
           ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
-          LanguageScreen.route: (_) => LanguageScreen(),
+          BeforeLanguageScreen.route: (_) => BeforeLanguageScreen(),
+          AfterLanguageScreen.route: (_) => AfterLanguageScreen(),
+          GitLoadingScreen.route: (_) => GitLoadingScreen(),
         },
       );
   }

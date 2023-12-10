@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/join_screen.dart';
-import 'package:gitme/screens/language_screen.dart';
+import 'package:gitme/screens/language_screen_after.dart';
+import 'package:gitme/screens/launguage_screen_before.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
@@ -175,13 +176,20 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
 
                         print('User Data: $userDataList');
 
+                        Map<String, String> convertedData = userDataList.fold({}, (result, item) {
+                          result.addAll(item);
+                          return result;
+                        });
+
+                        print(convertedData);
+
                         UserData userData = Provider.of<UserData>(context, listen: false);
                         userData.setExternalLinkData(userDataList);
                         userData.notifyListeners();
 
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LanguageScreen()),
+                          MaterialPageRoute(builder: (context) => BeforeLanguageScreen()),
                         );
                       },
                       child: Text('다음'),
