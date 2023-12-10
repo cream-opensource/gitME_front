@@ -63,15 +63,17 @@ class _MainScreenState extends State<MainScreen> {
     try {
       RenderRepaintBoundary boundary = widget.globalKey.currentContext!
           .findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage();
+      ui.Image image = await boundary.toImage(pixelRatio: 3.0); // 예시에서는 3.0 사용
+
       ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
 
       // 이미지를 갤러리에 저장합니다.
-      final result =
-          await ImageGallerySaver.saveImage(Uint8List.fromList(pngBytes));
-
+      final result = await ImageGallerySaver.saveImage(
+        Uint8List.fromList(pngBytes),
+        quality: 90, // 이미지 품질 설정 (0에서 100까지, 기본값은 80)
+      );
       if (result != null && result.isNotEmpty) {
         print('이미지 저장 성공');
       } else {
