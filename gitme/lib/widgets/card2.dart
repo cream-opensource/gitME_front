@@ -24,6 +24,7 @@ class BusinessCardData2 {
   });
 }
 
+
 class BusinessCard2 extends StatelessWidget {
   final BusinessCardData2 data;
 
@@ -31,11 +32,10 @@ class BusinessCard2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
+      width: screenWidth * 0.8,
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
@@ -50,74 +50,79 @@ class BusinessCard2 extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenWidth * 0.05),
         child: Column(
-
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               'assets/jjj.png',
               fit: BoxFit.cover,
+              width: screenWidth * 0.3,
+              height: screenWidth * 0.3,
             ),
-            Text("jife98", style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500)),
+            SizedBox(height: screenWidth * 0.02),
+            Text(
+              "jife98",
+              style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.04, fontWeight: FontWeight.w500),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("commit: 700", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("commit: 700", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
               ],
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("star: 98", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
-                SizedBox(width: 8,),
-                Text("PR: 100K", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("star: 98", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
+                SizedBox(width: screenWidth * 0.02),
+                Text("PR: 100K", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
               ],
             ),
-            SizedBox(height: 8,),
-            Divider(color: Colors.white,),
-            SizedBox(height: 8,),
-            Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
-                style: TextStyle(color: Colors.white, fontSize: 14, ), textAlign: TextAlign.center),
-            SizedBox(height: 8,),
-            Divider(color: Colors.white,),
-            SizedBox(height: 8,),
+            SizedBox(height: screenWidth * 0.01),
+            Divider(color: Colors.white),
+            SizedBox(height: screenWidth * 0.01),
+            Text(
+              "안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구",
+              style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: screenWidth * 0.01),
+            Divider(color: Colors.white),
+            SizedBox(height: screenWidth * 0.01),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Phone: ", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
-                Text("010-0000-0000", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("Phone: ", style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.035)),
+                Text("010-0000-0000", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
               ],
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("Email: ", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
-                Text("sksk02zja@gmail.com", style: TextStyle(color: Color(0xFF8B8B91), fontSize: 16)),
+                Text("Email: ", style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.035)),
+                Text("sksk02zja@gmail.com", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.035)),
               ],
             ),
           ],
-
-
         ),
       ),
     );
   }
 }
 
-
 Widget _buildRoundedText(String text) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(30),
-      border: Border.all(color: Colors.white), // 테두리 색상 설정
+      border: Border.all(color: Colors.white),
     ),
-    padding: EdgeInsets.fromLTRB(10, 8, 10, 8), // 텍스트와 테두리 간격 설정
+    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
     child: Center(
       child: Text(text, style: TextStyle(color: Colors.white, fontSize: 15)),
     ),
