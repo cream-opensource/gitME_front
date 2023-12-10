@@ -2,25 +2,33 @@ import 'package:flutter/material.dart';
 
 class BusinessCardData3 {
   final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
+  final String birthdate;
+  final String email;
+  final String phone;
   final String introduce;
+  final Map<String, dynamic>? externalLink;
+  final String nickname;
   final String followers;
-  final String stared;
-  final String commit;
+  final String following;
+  final String totalStars;
+  final String totalCommits;
+  final String avatarUrl;
+  final Map<String, dynamic>? languages;
 
   BusinessCardData3({
     required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
+    required this.birthdate,
+    required this.email,
+    required this.phone,
     required this.introduce,
+    required this.externalLink,
+    required this.nickname,
     required this.followers,
-    required this.stared,
-    required this.commit,
+    required this.following,
+    required this.totalStars,
+    required this.totalCommits,
+    required this.avatarUrl,
+    required this.languages,
   });
 }
 
@@ -56,7 +64,7 @@ class BusinessCard3 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(data.name, style: TextStyle(color: Colors.white, fontSize: 22),),
+            Text(data.nickname, style: TextStyle(color: Colors.white, fontSize: 22),),
             Text(data.name, style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),),
             SizedBox(height: 20),
             Text("stack", style: TextStyle(color: Colors.white, fontSize: 17),),
@@ -64,11 +72,9 @@ class BusinessCard3 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildRoundedText("Word1"),
-                SizedBox(width: 5),
-                _buildRoundedText("Word1"),
-                SizedBox(width: 5),
-                _buildRoundedText("Word1"),// Add more Text widgets as needed
+                if (data.languages != null)
+                  for (var entry in data.languages!.entries.take(2))
+                    _buildRoundedText("${entry.key}: ${entry.value}"),
               ],
             ),
             SizedBox(height: 20),
@@ -77,15 +83,15 @@ class BusinessCard3 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildRoundedText(data.commit),
+                _buildRoundedText("Commits: ${data.totalCommits}"),
                 // SizedBox(width: 5),
                 // _buildRoundedText("Star: 17K"),
                 SizedBox(width: 5),
-                _buildRoundedText("PR: 900"),// Add more Text widgets as needed
+                _buildRoundedText("Followers: ${data.followers}"),// Add more Text widgets as needed
               ],
             ),
             SizedBox(height: 20,),
-            Text("안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+            Text(data.externalLink?.values.join(', ') ?? "",
             style: TextStyle(color: Colors.white, fontSize: 16, ), textAlign: TextAlign.center),
 
           ],

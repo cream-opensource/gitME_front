@@ -74,4 +74,23 @@ class UserData with ChangeNotifier {
 
     notifyListeners();
   }
+
+  Map<String, dynamic> getUserData() {
+    return {
+      'userIdx': userIdx,
+      'name': name,
+      'birthDate': birthDate,
+      'email': email,
+      'phone': phone,
+      'introduce': introduce,
+      'externalLink': externalLink,
+      'nickname': nickname,
+      'followers': followers,
+      'following': following,
+      'totalStars': totalStars,
+      'totalCommits': totalCommits,
+      'avatarUrl': avatarUrl,
+      'languages': languages,
+    };
+  }
 }
