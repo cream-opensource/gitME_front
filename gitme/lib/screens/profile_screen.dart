@@ -46,25 +46,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Column(
         children: <Widget>[
-          Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              Image(
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                image: AssetImage('assets/cream.png'),
-              ),
-              Positioned(
-                bottom: 10,
-                child: Image.network(
-                  userData.avatarUrl ?? 'fallback_url_for_empty_avatar',
-                  height: 120,
-                  width: 120,
-                  fit: BoxFit.cover,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(
+                      'jjj.png', // 이미지 경로
+                      width: 50, // 이미지 너비
+                      height: 50, // 이미지 높이
+                    ),
+                    SizedBox(width: 5), // 이미지와 텍스트 사이 간격 조정
+                    Text(
+                      '조재중',
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Color(0xFF676A66),
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextButton(
+                  onPressed: () {
+
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        '수정',
+                        style: TextStyle(
+                          color: Color(0xFF676A66),
+                          fontSize: 13,
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 30.0),
           SizedBox(
