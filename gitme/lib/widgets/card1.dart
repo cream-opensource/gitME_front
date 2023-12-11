@@ -42,7 +42,8 @@ class BusinessCard1 extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: double.infinity,
+      width: screenWidth * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         gradient: LinearGradient(

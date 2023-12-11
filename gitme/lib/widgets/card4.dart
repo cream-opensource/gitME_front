@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class BusinessCardData4 {
   final String name;
@@ -34,6 +35,9 @@ class BusinessCardData4 {
 
 class BusinessCard4 extends StatelessWidget {
   final BusinessCardData4 data;
+  final url = Uri.parse(
+    'https://deku.posstree.com/en/',
+  );
 
   BusinessCard4(this.data, {super.key});
 
@@ -42,7 +46,8 @@ class BusinessCard4 extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: double.infinity,
+      width: screenWidth * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -109,9 +114,16 @@ class BusinessCard4 extends StatelessWidget {
                 child: Row(
                   children: data.externalLink?.entries.map((entry) {
                     return ElevatedButton(
-                      onPressed: () {
-                        // Handle button press
-                        print('Button pressed: ${entry.value}');
+                      onPressed: () async {
+                        final uri = Uri.parse(entry.value);
+                        try {
+                          await launch(
+                            uri.toString(),
+                            forceWebView: true,
+                          );
+                        } catch (e) {
+                          print('Error launching URL: $e');
+                        }
                       },
                       child: Text(entry.key),
                       style: ElevatedButton.styleFrom(
@@ -124,7 +136,7 @@ class BusinessCard4 extends StatelessWidget {
                       ),
                     );
                   }).toList() ?? [],
-                )
+                ),
               ),
             ),
             SizedBox(height: screenWidth * 0.02),
