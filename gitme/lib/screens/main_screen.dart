@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -17,6 +18,7 @@ import 'package:gitme/widgets/main_drawer.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:http/http.dart' as http;
 
 import '../service/business_card_data.dart';
 
@@ -36,6 +38,8 @@ class _MainScreenState extends State<MainScreen> {
   late UserData userData; // UserData 타입의 변수를 선언
   String userName = ""; // nullable로 변경
   Map<int, String> _dynamicLinks = {};
+  List<Widget> items = []; // items 선언
+
 
   bool isLoading = true;
 
@@ -45,6 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     userData = UserData();
     fetchDataFromServer();
     _loadDynamicLink();
+    addCardToServer(2, "#FFFFFF", 1);
   }
 
   Future<void> fetchDataFromServer() async {
@@ -56,10 +61,6 @@ class _MainScreenState extends State<MainScreen> {
       });
     } catch (e) {
       print('error: $e');
-      // } finally {
-      //   setState(() {
-      //     isLoading = false;
-      //   });
     }
   }
 
@@ -117,59 +118,117 @@ class _MainScreenState extends State<MainScreen> {
     return dynamicLink.shortUrl.toString();
   }
 
+  Future<void> addCardToServer(int templateIdx, String color, int sequence) async {
+    final Map<String, dynamic> cardData = {
+      'userIdx': userData.userIdx,
+      'templateIdx': templateIdx,
+      'color': color,
+      'sequence': sequence,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card'),
+        body: json.encode(cardData),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 201) {
+        print('Card added successfully');
+        updateCardsFromServer();
+      } else {
+        print('Failed to add card: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error adding card: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> fetchCardDataList() async {
+    await Future.delayed(Duration(seconds: 1));
+
+    final response = await http.get(Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card/${userData.userIdx}'));
+    if (response.statusCode == 201) {
+      final List<dynamic> data = json.decode(response.body);
+      return List<Map<String, dynamic>>.from(data);
+    } else {
+      throw Exception('Failed to load card data');
+    }
+  }
+
+
+  Future<void> updateCardsFromServer() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final cardInfoList = await fetchCardDataList();
+
+      items = List.generate(cardInfoList.length, (index) {
+        final cardInfo = cardInfoList[index];
+        final cardIndex = cardInfo['templateIdx'];
+
+        return FlipCard(
+          front: getBusinessCardWidget(cardIndex, userData),
+          back: Container(
+            width: MediaQuery.of(context).size.width * 0.8,
+            height: 400,
+            margin: EdgeInsets.only(top: 30),
+            decoration: BoxDecoration(
+              color: Color(0xFFCEF700),
+              borderRadius: BorderRadius.circular(20.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: QrImageView(
+                    data: _dynamicLinks[cardIndex] ?? "",
+                    version: QrVersions.auto,
+                    size: 200.0,
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Scan Me!',
+                  style: TextStyle(
+                    color: Color(0xFF393737),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
+
+      // 화면 갱신 완료
+    } catch (e) {
+      print('에러: $e');
+    } finally {
+      setState(() {
+        isLoading = false; // 로딩 종료
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
       return CircularProgressIndicator();
     }
-    List<Widget> items = List.generate( 4, (index) {
-        return FlipCard(
-            front: getBusinessCardWidget(index + 1, userData),
-            back: Container(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: 400,
-              margin: EdgeInsets.only(top: 30),
-              decoration: BoxDecoration(
-                color: Color(0xFFCEF700),
-                borderRadius: BorderRadius.circular(20.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    blurRadius: 4,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: QrImageView(
-                      data: _dynamicLinks[_current] ?? "",
-                      version: QrVersions.auto,
-                      size: 200.0,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 16), // 텍스트와 QR 코드 사이 간격 조절
-                  Text(
-                    'Scan Me!',
-                    style: TextStyle(
-                      color: Color(0xFF393737),
-                      fontSize: 24,
-                      //fontFamily: 'AbhayaLibre-ExtraBold',
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        );
-      },
-        // AddCard());
-    );
-
     return Scaffold(
       appBar: null,
       body: RepaintBoundary(
