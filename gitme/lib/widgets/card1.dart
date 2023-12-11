@@ -48,8 +48,8 @@ class BusinessCard1 extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFF4E6DE1),
-            Color(0xFF4E6DE1),
+            Color(0xFFE8D589),
+            Color(0xFFE8D589),
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
