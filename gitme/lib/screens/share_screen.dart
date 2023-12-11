@@ -4,6 +4,7 @@ import 'package:gitme/widgets/card2.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
+import '../service/business_card_data.dart';
 import '../widgets/card3.dart';
 import '../widgets/card4.dart';
 import 'main_screen.dart';
@@ -40,8 +41,8 @@ class _SharePageState extends State<ShareScreen> {
           children: [
             Expanded(
               child: Center(
-                child: BusinessCard1(
-                  BusinessCardData1(
+                child: BusinessCard2(
+                  BusinessCardData(
                     name: userData.name ?? "",
                     birthdate: userData.birthDate ?? "",
                     email: userData.email ?? "",
