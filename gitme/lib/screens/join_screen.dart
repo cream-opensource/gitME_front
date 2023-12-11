@@ -29,7 +29,7 @@ class JoinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset : true,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
