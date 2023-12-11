@@ -32,6 +32,7 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : true,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
@@ -89,22 +90,6 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20), // 예시로 간격 추가
-
-            Center(
-              child: Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 5개까지 등록 가능해요",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF8D919F),
-                  fontFamily: 'DarkerGrotesque',
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.8,
-                ),
-                textAlign: TextAlign.center, // 가운데 정렬 추가
-              ),
-            ),
-            SizedBox(height: 20), // 예시로 간격 추가
-            Divider(),
             SizedBox(height: 20), // 예시로 간격 추가
 
             Expanded(
