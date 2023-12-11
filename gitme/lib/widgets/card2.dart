@@ -63,38 +63,38 @@ class BusinessCard2 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/jjj.png',
+            Image.network(
+              data.avatarUrl,
+              height: 120,
+              width: 120,
               fit: BoxFit.cover,
-              width: screenWidth * 0.3,
-              height: screenWidth * 0.3,
             ),
             SizedBox(height: screenWidth * 0.02),
             Text(
-              "jife98",
+              data.nickname,
               style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.04, fontWeight: FontWeight.w500),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("commit: 700", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
+                Text("commit: ${data.totalCommits}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
               ],
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("star: 98", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
+                Text("star: ${data.totalStars}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
                 SizedBox(width: screenWidth * 0.02),
-                Text("PR: 100K", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
+                Text("fllower: ${data.followers}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
               ],
             ),
             SizedBox(height: screenWidth * 0.01),
             Divider(color: Colors.white),
             SizedBox(height: screenWidth * 0.01),
             Text(
-              "안녕하세요 노현이입니다 저는 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구",
+              data.introduce,
               style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
               textAlign: TextAlign.center,
             ),

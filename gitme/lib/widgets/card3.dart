@@ -69,19 +69,16 @@ class BusinessCard3 extends StatelessWidget {
             SizedBox(height: screenWidth * 0.03),
             Text("Stack", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
             SizedBox(height: screenWidth * 0.015),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-//                 if (data.languages != null)
-//                   for (var entry in data.languages!.entries.take(2))
-//                     _buildRoundedText("${entry.key}: ${entry.value}"),
-
-                _buildRoundedText("Spring", screenWidth),
-                SizedBox(width: screenWidth * 0.01),
-                _buildRoundedText("Node.js", screenWidth),
-                SizedBox(width: screenWidth * 0.01),
-                _buildRoundedText("react", screenWidth), // Add more Text widgets as needed
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (data.languages != null)
+                    for (var entry in data.languages!.entries.take(3))
+                      _buildRoundedText("${entry.key}: ${entry.value}", screenWidth),
+                ],
+              ),
             ),
             SizedBox(height: screenWidth * 0.03),
             Text("Info", style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),),
@@ -89,10 +86,8 @@ class BusinessCard3 extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // _buildRoundedText(data.commit, screenWidth),
                 _buildRoundedText("Commits: ${data.totalCommits}", screenWidth),
                 SizedBox(width: screenWidth * 0.01),
-                // _buildRoundedText("Star: 17K"),
                 SizedBox(width: screenWidth * 0.01),
                 _buildRoundedText("Followers: ${data.followers}", screenWidth), // Add more Text widgets as needed
               ],
@@ -100,9 +95,8 @@ class BusinessCard3 extends StatelessWidget {
             SizedBox(height: screenWidth * 0.03),
             Divider(color: Colors.white),
             SizedBox(height: screenWidth * 0.03),
-//                     Text(data.externalLink?.values.join(', ') ?? "",
             Text(
-              "안녕하세요 노현이입니다 어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구",
+              data.introduce,
               style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
               textAlign: TextAlign.center,
             ),

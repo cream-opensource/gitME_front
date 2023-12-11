@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 
 class UserData with ChangeNotifier {
@@ -58,11 +60,15 @@ class UserData with ChangeNotifier {
 
   void setUserData(Map<String, dynamic> userData) {
     userIdx = userData['userIdx'];
-    name = userData['name'];
+    if (userData['name'] != null) {
+      name = utf8.decode(userData['name'].toString().codeUnits);
+    }
     birthDate = userData['birthDate'];
     email = userData['email'];
     phone = userData['phone'];
-    introduce = userData['introduce'];
+    if (userData['introduce'] != null) {
+      introduce = utf8.decode(userData['introduce'].toString().codeUnits);
+    }
     externalLink = Map<String, String>.from(userData['externalLink']);
     nickname = userData['nickname'];
     followers = userData['followers'];

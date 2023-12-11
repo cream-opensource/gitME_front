@@ -70,10 +70,11 @@ class BusinessCard1 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/cat.png',
+            Image.network(
+              data.avatarUrl ?? 'fallback_url_for_empty_avatar',
+              height: 120,
+              width: 120,
               fit: BoxFit.cover,
-              height: screenWidth * 0.3,
             ),
             SizedBox(height: screenWidth * 0.2),
             Container(
