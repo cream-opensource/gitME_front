@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gitme/widgets/card1.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/userData.dart';
 import '../widgets/card3.dart';
+import '../widgets/card4.dart';
 import 'main_screen.dart';
 
 class ShareScreen extends StatefulWidget {
@@ -38,8 +40,8 @@ class _SharePageState extends State<ShareScreen> {
           children: [
             Expanded(
               child: Center(
-                child: BusinessCard3(
-                  BusinessCardData3(
+                child: BusinessCard1(
+                  BusinessCardData1(
                     name: userData.name ?? "",
                     birthdate: userData.birthDate ?? "",
                     email: userData.email ?? "",

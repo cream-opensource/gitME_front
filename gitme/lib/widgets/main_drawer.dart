@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
+import '../provider/userData.dart';
 import '../screens/share_screen.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -35,6 +37,8 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context, listen: false);
+
     return Drawer(
       width: 256,
       child: ListView(
@@ -54,13 +58,13 @@ class MainDrawer extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 10),
                       width: 138,
                       height: 138,
-                      child: Image.asset('assets/jjj.png'),
+                      child: Image.network(userData.avatarUrl ?? 'fallback_url_for_empty_avatar'),
                     )
                   ],
                 ),
                 SizedBox(height: 40),
                 Text(
-                  '조재중',
+                  userData.name ?? '',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 32,
@@ -69,7 +73,7 @@ class MainDrawer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'm-a-king',
+                  userData.nickname ?? '',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 24,

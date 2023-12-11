@@ -18,6 +18,7 @@ import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
+import 'package:gitme/screens/share_screen.dart';
 import 'package:provider/provider.dart';
 
 final storage = FlutterSecureStorage();
@@ -78,7 +79,8 @@ class MyApp extends StatelessWidget {
         LoadingScreen.route: (_) => LoadingScreen(onLoadingComplete: () {}),
         ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
         GitLoadingScreen.route: (_) => GitLoadingScreen(),
-        AfterLanguageScreen.route: (_) => AfterLanguageScreen()
+        AfterLanguageScreen.route: (_) => AfterLanguageScreen(),
+        ShareScreen.route: (_) => ShareScreen(userIdx: "test", cardIdx: "test"),
       },
     );
   }
