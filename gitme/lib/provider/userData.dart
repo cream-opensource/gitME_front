@@ -19,6 +19,7 @@ class UserData with ChangeNotifier {
   int? totalCommits;
   String? avatarUrl;
   Map<String, int>? languages;
+  Map<String, String>? skill;
 
   void setAccessToken(String token) {
     accessToken = token;
@@ -70,6 +71,7 @@ class UserData with ChangeNotifier {
       introduce = utf8.decode(userData['introduce'].toString().codeUnits);
     }
     externalLink = Map<String, String>.from(userData['externalLink']);
+    skill = Map<String, String>.from(userData['externalLink']);
     nickname = userData['nickname'];
     followers = userData['followers'];
     following = userData['following'];
@@ -77,7 +79,7 @@ class UserData with ChangeNotifier {
     totalCommits = userData['totalCommits'];
     avatarUrl = userData['avatarUrl'];
     languages = Map<String, int>.from(userData['languages']);
-
+    skill =  Map<String, String>.from(userData['skill']);
     notifyListeners();
   }
 
