@@ -52,7 +52,7 @@ class _GitHubLoginWebViewState extends State<GitHubLoginWebView> {
       Provider.of<UserData>(context, listen: false).setAccessToken(token);
 
       widget.onLinked();
-      Navigator.pushReplacementNamed(context, 'loadfing-screen');
+      Navigator.pushReplacementNamed(context, 'git-loading-screen');
 
     } catch (e) {
       print('Error while reading WebView contents: $e');
