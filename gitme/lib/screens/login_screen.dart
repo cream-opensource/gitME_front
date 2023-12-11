@@ -9,13 +9,17 @@ class LoginScreen extends StatelessWidget {
   static const buttonTextColor = Colors.black;
   static const logoAsset = 'assets/gitme_logo.png';
   static const kakaoIconAsset = 'assets/kakaoIcon.png';
+  final Function onLoginSuccess;
 
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, required this.onLoginSuccess});
 
   Future<void> openWebView(BuildContext context) async {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => KakaoLoginWebView(kakaoLoginUrl: kakaoLoginUrl),
+        builder: (context) => KakaoLoginWebView(
+          kakaoLoginUrl: kakaoLoginUrl,
+          onLoginSuccess: onLoginSuccess,
+        ),
       ),
     );
   }

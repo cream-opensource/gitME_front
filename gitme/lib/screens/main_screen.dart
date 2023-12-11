@@ -87,7 +87,7 @@ class _MainScreenState extends State<MainScreen> {
   Future<String> createDynamicLink() async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://gitme.page.link',
-      link: Uri.parse('https://gitme.com/card?userIdx=${userData.userIdx}&cardIdx=$_current'),
+      link: Uri.parse('https://gitme.com/card?userIdx=${userData.userIdx}&templateIdx=$_current'),
       androidParameters: AndroidParameters(
         packageName: 'com.example.gitme',
         fallbackUrl: Uri.parse('https://naver.com'),

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
@@ -10,22 +13,16 @@ import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/git_loading_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
 import 'package:gitme/screens/language_screen_after.dart';
-import 'package:gitme/screens/launguage_screen_before.dart';
 import 'package:gitme/screens/loading_screen.dart';
 import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
-import 'package:gitme/screens/share_screen.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final storage = FlutterSecureStorage();
 
-void main() {
-  mainAsync();
-}
-
-void mainAsync() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); // Firebase 초기화
 
@@ -35,30 +32,15 @@ void mainAsync() async {
       child: MyApp(),
     ),
   );
-
-  // 동적 링크 처리
-  handleDynamicLink();
 }
 
-Future<void> handleDynamicLink() async {
-  try {
-    final PendingDynamicLinkData? data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+class AppNavigationState {
+  final bool loggedIn;
+  final bool dynamicLink;
+  final String userIdx;
+  final String templateIdx;
 
-    if (data != null && data.link != null) {
-      final queryParams = data.link.queryParameters;
-      final userIdx = queryParams['userIdx'] ?? '';
-      final cardIdx = queryParams['cardIdx'] ?? '';
-
-      if (userIdx.isNotEmpty && cardIdx.isNotEmpty) {
-        navigatorKey.currentState?.push(MaterialPageRoute(
-            builder: (context) =>
-                DynamicLinkScreen(userIdx: userIdx, cardIdx: cardIdx)));
-      }
-    }
-  } catch (e) {
-    print('Error handling dynamic link: ${e.toString()}');
-  }
+  AppNavigationState({this.loggedIn = false, this.dynamicLink = false, this.userIdx = '', this.templateIdx = ''});
 }
 
 class MyApp extends StatelessWidget {
@@ -67,29 +49,94 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        navigatorKey: navigatorKey,
-        title: 'Drawer without AppBar',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: LoginScreen(),
-        routes: {
-          MainScreen.route: (_) => MainScreen(),
-          LoginScreen.route: (_) => LoginScreen(),
-          CardListScreen.route: (_) => CardListScreen(),
-          ProfileScreen.route: (_) => ProfileScreen(),
-          CardWalletScreen.route: (_) => CardWalletScreen(),
-          CustomScreen.route: (_) => CustomScreen(),
-          JoinScreen.route: (_) => JoinScreen(),
-          QRScanScreen.route: (_) => QRScanScreen(),
-          LoadingScreen.route: (_) => LoadingScreen(),
-          ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
-          BeforeLanguageScreen.route: (_) => BeforeLanguageScreen(),
-          AfterLanguageScreen.route: (_) => AfterLanguageScreen(),
-          GitLoadingScreen.route: (_) => GitLoadingScreen(),
-          ShareScreen.route: (_) => ShareScreen(userIdx: 'test', cardIdx: 'test',),
+      title: 'Drawer without AppBar',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: FutureBuilder(
+        future: _initializeApp(context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else {
+            final state = snapshot.data ?? AppNavigationState();
+            return _navigateBasedOnState(context, state);
+          }
         },
-      );
+      ),
+      routes: {
+        MainScreen.route: (_) => MainScreen(),
+        LoginScreen.route: (_) => LoginScreen(onLoginSuccess: () {}),
+        CardListScreen.route: (_) => CardListScreen(),
+        ProfileScreen.route: (_) => ProfileScreen(),
+        CardWalletScreen.route: (_) => CardWalletScreen(),
+        CustomScreen.route: (_) => CustomScreen(),
+        JoinScreen.route: (_) => JoinScreen(),
+        QRScanScreen.route: (_) => QRScanScreen(),
+        LoadingScreen.route: (_) => LoadingScreen(onLoadingComplete: () {}),
+        ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
+        GitLoadingScreen.route: (_) => GitLoadingScreen(),
+        AfterLanguageScreen.route: (_) => AfterLanguageScreen()
+      },
+    );
+  }
+
+  Future<AppNavigationState> _initializeApp(BuildContext context) async {
+    final token = await storage.read(key: 'login_token');
+    final dynamicLinkData = await FirebaseDynamicLinks.instance.getInitialLink();
+    String userIdx = '';
+    String templateIdx = '';
+
+    if (dynamicLinkData != null) {
+      final queryParams = dynamicLinkData.link.queryParameters;
+      userIdx = queryParams['userIdx'] ?? '';
+      templateIdx = queryParams['templateIdx'] ?? '';
+    }
+
+    if (token != null) {
+      final userId = utf8.decode(base64.decode(token));
+      Provider.of<UserData>(context, listen: false).setKId(int.parse(userId));
+
+      return AppNavigationState(loggedIn: true, dynamicLink: dynamicLinkData != null, userIdx: userIdx, templateIdx: templateIdx);
+    } else {
+      return AppNavigationState(loggedIn: false, dynamicLink: dynamicLinkData != null, userIdx: userIdx, templateIdx: templateIdx);
+    }
+  }
+
+  Widget _navigateBasedOnState(BuildContext context, AppNavigationState state) {
+    if (state.dynamicLink) {
+     if (state.loggedIn) {
+         return _navigateToScreen(context, () => DynamicLinkScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
+     } else {
+       return _loginAndNavigate(context, () => DynamicLinkScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
+     }
+    } else {
+      if (state.loggedIn) {
+        return _navigateToScreen(context, () => MainScreen());
+      } else {
+        return _loginAndNavigate(context, () => MainScreen());
+      }
+    }
+  }
+
+  Widget _navigateToScreen(BuildContext context, Widget Function() screenBuilder) {
+    return LoadingScreen(onLoadingComplete: () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => screenBuilder(),
+      ));
+    });
+  }
+
+  Widget _loginAndNavigate(BuildContext context, Widget Function() screenBuilder) {
+    return LoginScreen(onLoginSuccess: () {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => LoadingScreen(onLoadingComplete: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (_) => screenBuilder(),
+          ));
+        }),
+      ));
+    });
   }
 }

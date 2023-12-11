@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gitme/screens/externallink_screen.dart';
-import 'package:gitme/screens/loading_screen.dart';
-import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/github_button.dart';
-import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
+import '../main.dart';
 import '../provider/userData.dart';
 
 class AfterLanguageScreen extends StatefulWidget {
@@ -125,10 +124,9 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
     );
 
     if (response.statusCode == 201) {
-      Navigator.pushReplacementNamed(
-        context,
-        LoadingScreen.route,
-      );
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (_) => MyApp(),
+      ));
     } else {
       print('요청 실패: ${response.reasonPhrase}');
     }
@@ -143,6 +141,7 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
     print("이름: $userName");
     print("언어: $languages");
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
@@ -155,7 +154,7 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
           },
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(50, 5, 50, 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -222,47 +221,38 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
             ),
             SizedBox(height: 13),
             Divider(),
-            Expanded(
-              child: ListView(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  buildDropdownInput(
-                      "주사용 언어", languageItemList, selectedLanguage,
-                          (String newValue) {
-                        setState(() {
-                          selectedLanguage = newValue;
-                          updateFrameLibDropdownItems(selectedLanguage);
-                        });
-                      }),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  buildDropdownInput("주사용 프레임워크 & 라이브러리", frameLibItemList,
-                      selectedFrameLib, (String newValue) {
-                        setState(() {
-                          selectedFrameLib = newValue;
-                        });
-                      }),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  buildDropdownInput(
-                    "성취도",
-                    achievementList,
-                    achievementDropdownValue,
-                        (String newValue) {
-                      setState(() {
-                        achievementDropdownValue = newValue;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+            buildDropdownInput(
+                "주사용 언어", languageItemList, selectedLanguage,
+                    (String newValue) {
+                  setState(() {
+                    selectedLanguage = newValue;
+                    updateFrameLibDropdownItems(selectedLanguage);
+                  });
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            buildDropdownInput("주사용 프레임워크 & 라이브러리", frameLibItemList,
+                selectedFrameLib, (String newValue) {
+                  setState(() {
+                    selectedFrameLib = newValue;
+                  });
+                }),
+            SizedBox(
+              height: 20,
+            ),
+            buildDropdownInput(
+              "성취도",
+              achievementList,
+              achievementDropdownValue,
+                  (String newValue) {
+                setState(() {
+                  achievementDropdownValue = newValue;
+                });
+              },
+            ),
+            SizedBox(
+              height: 20,
             ),
             SizedBox(height: 20),
             Row(

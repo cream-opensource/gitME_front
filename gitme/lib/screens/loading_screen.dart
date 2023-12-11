@@ -4,8 +4,9 @@ import '../service/apiService.dart';
 
 class LoadingScreen extends StatefulWidget {
   static const route = 'loading-screen';
+  final Function onLoadingComplete;
 
-  const LoadingScreen({super.key});
+    const LoadingScreen({super.key, required this.onLoadingComplete});
 
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
@@ -24,6 +25,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> fetchDataFromServer() async {
     try {
       await serverCommunication.fetchDataFromServer(context);
+      widget.onLoadingComplete();
       print('성공');
     } catch (e) {
       print('error: $e');

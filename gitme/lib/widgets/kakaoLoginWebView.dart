@@ -1,15 +1,23 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../provider/userData.dart';
 
+final storage = FlutterSecureStorage();
+
 class KakaoLoginWebView extends StatefulWidget {
   final String kakaoLoginUrl;
+  final Function onLoginSuccess;
 
-  KakaoLoginWebView({super.key, required this.kakaoLoginUrl});
+  KakaoLoginWebView({
+    super.key,
+    required this.kakaoLoginUrl,
+    required this.onLoginSuccess,
+  });
 
   @override
   _KakaoLoginWebViewState createState() => _KakaoLoginWebViewState();
@@ -57,7 +65,9 @@ class _KakaoLoginWebViewState extends State<KakaoLoginWebView> {
       print('Nickname: $nickname');
 
       Provider.of<UserData>(context, listen: false).setKId(id);
-      Navigator.pushReplacementNamed(context, 'loading-screen');
+      String token = base64.encode(utf8.encode("$id"));
+      await storage.write(key: 'login_token', value: token);
+      widget.onLoginSuccess();
     } catch (e) {
       print('Error while reading WebView contents: $e');
     }
