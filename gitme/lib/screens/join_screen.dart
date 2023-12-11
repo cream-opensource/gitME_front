@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/introduceFormFieldComponent.dart';
@@ -8,7 +9,10 @@ import 'package:gitme/widgets/textFormFieldComponent.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
+import '../main.dart';
 import '../provider/userData.dart';
+
+final storage = FlutterSecureStorage();
 
 class JoinScreen extends StatelessWidget {
   static final route = 'join-screen';
@@ -33,8 +37,11 @@ class JoinScreen extends StatelessWidget {
             width: 20,
             height: 20,
           ),
-          onPressed: () {
-            Navigator.of(context).pushNamed(MainScreen.route);
+          onPressed: () async {
+            await storage.delete(key: 'login_token');
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (_) => MyApp(),
+            ));
           },
         ),
       ),
