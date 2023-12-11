@@ -125,7 +125,7 @@ class _SharePageState extends State<ShareScreen> {
         body: jsonData,
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         _showSnackBar('카드 데이터가 성공적으로 저장되었습니다.');
       } else {
         _showSnackBar('카드 데이터 저장에 실패했습니다.');
