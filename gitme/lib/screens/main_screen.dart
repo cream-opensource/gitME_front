@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   int _current = 0; // 현재 명함 인덱스를 알려주는 변수
   late UserData userData; // UserData 타입의 변수를 선언
   String userName = ""; // nullable로 변경
+  Map<int, String> _dynamicLinks = {};
 
   bool isLoading = true;
 
@@ -41,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     userData = UserData();
     fetchDataFromServer();
+    _loadDynamicLink();
   }
 
   Future<void> fetchDataFromServer() async {
@@ -82,6 +84,13 @@ class _MainScreenState extends State<MainScreen> {
     } catch (e) {
       print('에러: $e');
     }
+  }
+
+  void _loadDynamicLink() async {
+    String link = await createDynamicLink();
+    setState(() {
+      _dynamicLinks[_current] = link;
+    });
   }
 
   Future<String> createDynamicLink() async {
@@ -150,7 +159,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : $_current",
+                  data: _dynamicLinks[_current] ?? "",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -210,7 +219,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : $_current",
+                  data: _dynamicLinks[_current] ?? "",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -271,7 +280,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : $_current",
+                  data: _dynamicLinks[_current] ?? "",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -331,7 +340,7 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               Center(
                 child: QrImageView(
-                  data: "hi im qrcode : $_current",
+                  data: _dynamicLinks[_current] ?? "",
                   version: QrVersions.auto,
                   size: 200.0,
                   backgroundColor: Colors.white,
@@ -377,6 +386,9 @@ class _MainScreenState extends State<MainScreen> {
                   onPageChanged: (index, reason) {
                     setState(() {
                       _current = index;
+                      if (!_dynamicLinks.containsKey(index)) {
+                        _loadDynamicLink();
+                      }
                     });
                   },
                 ),
