@@ -213,6 +213,8 @@ class _MainScreenState extends State<MainScreen> {
         );
       });
 
+      items.add(AddCard());
+
       // 화면 갱신 완료
     } catch (e) {
       print('에러: $e');

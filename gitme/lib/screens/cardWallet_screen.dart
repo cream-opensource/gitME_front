@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:gitme/service/apiService.dart';
+import 'package:provider/provider.dart';
+import '../provider/userData.dart';
 import 'main_screen.dart';
+import 'package:http/http.dart' as http;
 
 class CardWalletScreen extends StatefulWidget { // StatelessWidget에서 StatefulWidget로 변경
   static const route = 'card-wallet-screen';
@@ -128,6 +134,50 @@ class _CardWalletScreenState extends State<CardWalletScreen> { // State 클래�
   ];
   Map<Map<String, dynamic>, int> originalPositions = {}; // 삭제된 항목의 원래 위치를 저장
   List<Map<String, dynamic>> undoList = []; // 삭제된 항목을 임시로 저장할 리스트
+
+  List<Map<String, dynamic>> cardList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCardList();
+  }
+
+  Future<void> fetchCardList() async {
+    final userIdx = Provider.of<UserData>(context, listen: false).userIdx;
+
+    try {
+      final response = await http.get(
+        Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/cardWallet/$userIdx'),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        cardList = List<Map<String, dynamic>>.from(data);
+
+        for (final cardInfo in cardList) {
+          final targetUserIdx = cardInfo['targetUserIdx'];
+          final cardInfoResult = await ServerApiService.getCardInfo(targetUserIdx);
+
+          final name = cardInfoResult['name'];
+          final introduce = cardInfoResult['introduce'];
+
+          cardInfo['name'] = name;
+          cardInfo['introduce'] = introduce;
+        }
+
+        setState(() {});
+        print(cardList);
+
+      } else {
+        throw Exception('Failed to load card list');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
