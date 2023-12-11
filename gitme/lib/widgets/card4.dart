@@ -116,20 +116,24 @@ class BusinessCard4 extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: data.languages?.keys.map((language) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      // Handle button press
-                      print('Button pressed: $language');
-                    },
-                    child: Text(language),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                  return Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                        print('Button pressed: $language');
+                      },
+                      child: Text(language),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFD2AFE3),
+                        onPrimary: Colors.white,
+                        textStyle: TextStyle(fontSize: screenWidth * 0.03),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                        ),
                       ),
+
                     ),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
                   );
                 }).toList() ?? [],
               )

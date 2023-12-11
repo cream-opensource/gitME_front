@@ -18,7 +18,7 @@ class BusinessCard3 extends StatelessWidget {
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
-        color: Color(0xFF7765F9),
+        color: Color(0xFF89C09C),
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
