@@ -292,6 +292,14 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () async {
                 String dynamicLink = await createDynamicLink();
                 print('공유 링크: $dynamicLink');
+
+                // 클립보드에 동적 링크 복사
+                Clipboard.setData(ClipboardData(text: dynamicLink)).then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('링크가 클립보드에 복사되었습니다.'))
+                  );
+                });
+
                 Navigator.of(dialogContext).pop();
               },
               child: Text('공유하기'),
