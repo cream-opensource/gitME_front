@@ -49,7 +49,8 @@ class _MainScreenState extends State<MainScreen> {
     userData = UserData();
     fetchDataFromServer();
     _loadDynamicLink();
-    addCardToServer(4, "#FFFFFF", 1);
+    updateCardsFromServer();
+    addCardToServer();
   }
 
   Future<void> fetchDataFromServer() async {
@@ -117,12 +118,12 @@ class _MainScreenState extends State<MainScreen> {
     return dynamicLink.shortUrl.toString();
   }
 
-  Future<void> addCardToServer(int templateIdx, String color, int sequence) async {
+  Future<void> addCardToServer() async {
     final Map<String, dynamic> cardData = {
       'userIdx': userData.userIdx,
-      'templateIdx': templateIdx,
-      'color': color,
-      'sequence': sequence,
+      'templateIdx': 1,
+      'color': "color",
+      'sequence': 1,
     };
 
     try {
@@ -320,6 +321,7 @@ class _MainScreenState extends State<MainScreen> {
       totalCommits: userData.totalCommits?.toString() ?? "",
       avatarUrl: userData.avatarUrl ?? "",
       languages: userData.languages,
+      skillProficiency: userData.skillProficiency ?? "",
     );
 
     switch (cardIndex) {

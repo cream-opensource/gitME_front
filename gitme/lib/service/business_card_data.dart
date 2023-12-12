@@ -12,6 +12,7 @@ class BusinessCardData {
   final String totalCommits;
   final String avatarUrl;
   final Map<String, dynamic>? languages;
+  final String skillProficiency;
 
   BusinessCardData({
     required this.name,
@@ -27,5 +28,6 @@ class BusinessCardData {
     required this.totalCommits,
     required this.avatarUrl,
     required this.languages,
+    required this.skillProficiency,
   });
 }

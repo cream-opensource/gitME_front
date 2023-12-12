@@ -19,6 +19,8 @@ class UserData with ChangeNotifier {
   int? totalCommits;
   String? avatarUrl;
   Map<String, int>? languages;
+  String? skillProficiency;
+
 
   void setAccessToken(String token) {
     accessToken = token;
@@ -77,6 +79,7 @@ class UserData with ChangeNotifier {
     totalCommits = userData['totalCommits'];
     avatarUrl = userData['avatarUrl'];
     languages = Map<String, int>.from(userData['languages']);
+    skillProficiency = userData['skillProficiency'];
 
     notifyListeners();
   }
@@ -97,6 +100,7 @@ class UserData with ChangeNotifier {
       'totalCommits': totalCommits,
       'avatarUrl': avatarUrl,
       'languages': languages,
+      'skillProficiency' : skillProficiency,
     };
   }
 }
