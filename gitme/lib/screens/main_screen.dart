@@ -48,9 +48,9 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     userData = UserData();
     fetchDataFromServer();
+    addCardToServer();
     _loadDynamicLink();
     updateCardsFromServer();
-    addCardToServer();
   }
 
   Future<void> fetchDataFromServer() async {

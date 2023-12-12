@@ -168,13 +168,13 @@ class JoinScreen extends StatelessWidget {
                             String phone = phoneController.text;
                             String email = emailController.text;
                             String birthdate = birthdateController.text;
-                            String introduce = introduceController.text;
+                            String introduction = introduceController.text;
 
                             print('Name: $name');
                             print('Phone: $phone');
                             print('Email: $email');
                             print('Birthdate: $birthdate');
-                            print('introduce: $introduce');
+                            print('introduction: $introduction');
 
                             // await sendUserDataToServer(context, name, phone, email, birthdate);
                             //
@@ -183,7 +183,7 @@ class JoinScreen extends StatelessWidget {
                             //   MaterialPageRoute(builder: (context) => ExternalLinkScreen(name: name, phone: phone, email: email, birthdate: birthdate, introduce: introduce )),
                             // );
 
-                            userData.setJoinData(name, phone, email, birthdate, introduce);
+                            userData.setJoinData(name, phone, email, birthdate, introduction);
 
                             Navigator.pushReplacementNamed(
                               context,
