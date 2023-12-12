@@ -68,7 +68,7 @@ class BusinessCard3 extends StatelessWidget {
             Divider(color: Colors.white),
             SizedBox(height: screenWidth * 0.03),
             Text(
-              data.introduce,
+              data.introduction ?? "",
               style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03),
               textAlign: TextAlign.center,
             ),

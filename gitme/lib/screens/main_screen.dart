@@ -14,6 +14,7 @@ import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/card4.dart';
 import 'package:gitme/widgets/custom_drawer_btn.dart';
+import 'package:gitme/widgets/custom_loading_indicator.dart';
 import 'package:gitme/widgets/main_drawer.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +41,6 @@ class _MainScreenState extends State<MainScreen> {
   Map<int, String> _dynamicLinks = {};
   List<Widget> items = []; // items 선언
 
-
   bool isLoading = true;
 
   @override
@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     userData = UserData();
     fetchDataFromServer();
     _loadDynamicLink();
-    addCardToServer(2, "#FFFFFF", 1);
+    addCardToServer(4, "#FFFFFF", 1);
   }
 
   Future<void> fetchDataFromServer() async {
@@ -63,7 +63,6 @@ class _MainScreenState extends State<MainScreen> {
       print('error: $e');
     }
   }
-
 
   Future<void> captureAndSave() async {
     try {
@@ -213,12 +212,14 @@ class _MainScreenState extends State<MainScreen> {
         );
       });
 
+      items.add(AddCard());
+
       // 화면 갱신 완료
     } catch (e) {
       print('에러: $e');
     } finally {
       setState(() {
-        isLoading = false; // 로딩 종료
+        isLoading = false;
       });
     }
   }
@@ -227,7 +228,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return CircularProgressIndicator();
+      return CustomLoadingIndicator();
     }
     return Scaffold(
       appBar: null,
@@ -310,7 +311,7 @@ class _MainScreenState extends State<MainScreen> {
       birthdate: userData.birthDate ?? "",
       email: userData.email ?? "",
       phone: userData.phone ?? "",
-      introduce: userData.introduce ?? "",
+      introduction: userData.introduction ?? "",
       externalLink: userData.externalLink,
       nickname: userData.nickname ?? "",
       followers: userData.followers?.toString() ?? "",
