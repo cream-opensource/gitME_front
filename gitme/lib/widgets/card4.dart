@@ -1,31 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class BusinessCardData4 {
-  final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
-  final String introduce;
-  final String followers;
-  final String stared;
-  final String commit;
+import '../service/business_card_data.dart';
 
-  BusinessCardData4({
-    required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
-    required this.introduce,
-    required this.followers,
-    required this.stared,
-    required this.commit,
-  });
-}
 
 class BusinessCard4 extends StatelessWidget {
-  final BusinessCardData4 data;
+  final BusinessCardData data;
+  final url = Uri.parse(
+    'https://deku.posstree.com/en/',
+  );
 
   BusinessCard4(this.data, {super.key});
 
@@ -34,7 +17,8 @@ class BusinessCard4 extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: double.infinity,
+      width: screenWidth * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -67,15 +51,15 @@ class BusinessCard4 extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/jjj.png',
+                Image.network(
+                  data.avatarUrl,
                   fit: BoxFit.cover,
                   width: screenWidth * 0.1,
                   height: screenWidth * 0.1,
                 ),
                 SizedBox(width: screenWidth * 0.02),
                 Text(
-                  "m-a-king",
+                  data.nickname,
                   style: TextStyle(
                     fontSize: screenWidth * 0.08,
                     fontWeight: FontWeight.bold,
@@ -87,7 +71,7 @@ class BusinessCard4 extends StatelessWidget {
             ),
             SizedBox(height: screenWidth * 0.01),
             Text(
-              "멋진 청년.\n휼륭한 웹 개발자가 되기 위한 수련 중.\nI am 조재중이에요 ~",
+              data.introduce,
               style: TextStyle(
                 fontSize: screenWidth * 0.03,
                 color: Colors.white,
@@ -99,10 +83,20 @@ class BusinessCard4 extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("tistory"),
+                  children: data.externalLink?.entries.map((entry) {
+                    return ElevatedButton(
+                      onPressed: () async {
+                        final uri = Uri.parse(entry.value);
+                        try {
+                          await launch(
+                            uri.toString(),
+                            forceWebView: true,
+                          );
+                        } catch (e) {
+                          print('Error launching URL: $e');
+                        }
+                      },
+                      child: Text(entry.key),
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFFD2AFE3),
                         onPrimary: Colors.white,
@@ -111,35 +105,8 @@ class BusinessCard4 extends StatelessWidget {
                           borderRadius: BorderRadius.circular(screenWidth * 0.03),
                         ),
                       ),
-                    ),
-                    SizedBox(width: screenWidth * 0.01),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("notion"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2AFE3),
-                        onPrimary: Colors.white,
-                        textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.01),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text("기타"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2AFE3),
-                        onPrimary: Colors.white,
-                        textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                        ),
-                      ),
-                    ),
-                    // Add more buttons as needed
-                  ],
+                    );
+                  }).toList() ?? [],
                 ),
               ),
             ),
@@ -148,48 +115,28 @@ class BusinessCard4 extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Spring"),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                children: data.languages?.keys.map((language) {
+                  return Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                        print('Button pressed: $language');
+                      },
+                      child: Text(language),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFFD2AFE3),
+                        onPrimary: Colors.white,
+                        textStyle: TextStyle(fontSize: screenWidth * 0.03),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(screenWidth * 0.05),
+                        ),
                       ),
+
                     ),
-                  ),
-                  SizedBox(width: screenWidth * 0.01),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Node.js"),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: screenWidth * 0.01),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Kotlin"),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
-                      onPrimary: Colors.white,
-                      textStyle: TextStyle(fontSize: screenWidth * 0.03),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(screenWidth * 0.05),
-                      ),
-                    ),
-                  ),
-                  // Add more buttons as needed
-                ],
-              ),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
+                  );
+                }).toList() ?? [],
+              )
             ),
             SizedBox(height: screenWidth * 0.008),
             Text("Info", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.03)),
@@ -208,7 +155,7 @@ class BusinessCard4 extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "369",
+                          data.totalCommits,
                           style: TextStyle(
                             fontSize: screenWidth * 0.03,
                           ),
@@ -235,7 +182,7 @@ class BusinessCard4 extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "25",
+                          data.totalStars,
                           style: TextStyle(
                             fontSize: screenWidth * 0.03,
                           ),
@@ -256,13 +203,13 @@ class BusinessCard4 extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          "PR",
+                          "Followers",
                           style: TextStyle(
                             fontSize: screenWidth * 0.02,
                           ),
                         ),
                         Text(
-                          "104",
+                          data.followers,
                           style: TextStyle(
                             fontSize: screenWidth * 0.03,
                           ),

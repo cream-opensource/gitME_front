@@ -1,31 +1,11 @@
 import 'package:flutter/material.dart';
 
-class BusinessCardData1 {
-  final String name;
-  final String jobTitle;
-  final String contactInfo;
-  final String techStack;
-  final String call;
-  final String introduce;
-  final String followers;
-  final String stared;
-  final String commit;
+import '../service/business_card_data.dart';
 
-  BusinessCardData1({
-    required this.name,
-    required this.jobTitle,
-    required this.contactInfo,
-    required this.call,
-    required this.techStack,
-    required this.introduce,
-    required this.followers,
-    required this.stared,
-    required this.commit,
-  });
-}
+
 
 class BusinessCard1 extends StatelessWidget {
-  final BusinessCardData1 data;
+  final BusinessCardData data;
 
   BusinessCard1(this.data, {super.key});
 
@@ -34,13 +14,14 @@ class BusinessCard1 extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      width: double.infinity,
+      width: screenWidth * 0.8,
+      height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFF4E6DE1),
-            Color(0xFF4E6DE1),
+            Color(0xFFE8D589),
+            Color(0xFFE8D589),
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
@@ -62,10 +43,11 @@ class BusinessCard1 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/cat.png',
+            Image.network(
+              data.avatarUrl ?? 'fallback_url_for_empty_avatar',
+              height: 120,
+              width: 120,
               fit: BoxFit.cover,
-              height: screenWidth * 0.3,
             ),
             SizedBox(height: screenWidth * 0.2),
             Container(
@@ -88,7 +70,7 @@ class BusinessCard1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "glidong",
+                      data.nickname,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.08, fontWeight: FontWeight.w800, fontFamily: 'DarkerGrotesque'),
                     ),
                   ],
@@ -143,15 +125,15 @@ class BusinessCard1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end, // 수정된 부분
                   children: [
                     Text(
-                      "홍길동",
+                      data.name,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.06, fontWeight: FontWeight.w700,),
                     ),
                     Text(
-                      "glidong@gmail.com",
+                      data.email,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
                     ),
                     Text(
-                      "010-1234-5678",
+                      data.phone,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
                     ),
                   ],

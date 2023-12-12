@@ -8,7 +8,6 @@ import 'package:gitme/provider/userData.dart';
 import 'package:gitme/screens/cardList_screen.dart';
 import 'package:gitme/screens/cardWallet_screen.dart';
 import 'package:gitme/screens/custom_screen.dart';
-import 'package:gitme/screens/dynamic_link_screen.dart';
 import 'package:gitme/screens/externallink_screen.dart';
 import 'package:gitme/screens/git_loading_screen.dart';
 import 'package:gitme/screens/join_screen.dart';
@@ -18,6 +17,7 @@ import 'package:gitme/screens/login_screen.dart';
 import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/screens/profile_screen.dart';
 import 'package:gitme/screens/qr_scan_screen.dart';
+import 'package:gitme/screens/share_screen.dart';
 import 'package:provider/provider.dart';
 
 final storage = FlutterSecureStorage();
@@ -37,10 +37,10 @@ void main() async {
 class AppNavigationState {
   final bool loggedIn;
   final bool dynamicLink;
-  final String userIdx;
-  final String templateIdx;
+  final int userIdx;
+  final int templateIdx;
 
-  AppNavigationState({this.loggedIn = false, this.dynamicLink = false, this.userIdx = '', this.templateIdx = ''});
+  AppNavigationState({this.loggedIn = false, this.dynamicLink = false, this.userIdx = 0, this.templateIdx = 0});
 }
 
 class MyApp extends StatelessWidget {
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
         LoadingScreen.route: (_) => LoadingScreen(onLoadingComplete: () {}),
         ExternalLinkScreen.route: (_) => ExternalLinkScreen(),
         GitLoadingScreen.route: (_) => GitLoadingScreen(),
-        AfterLanguageScreen.route: (_) => AfterLanguageScreen()
+        AfterLanguageScreen.route: (_) => AfterLanguageScreen(),
       },
     );
   }
@@ -85,13 +85,13 @@ class MyApp extends StatelessWidget {
   Future<AppNavigationState> _initializeApp(BuildContext context) async {
     final token = await storage.read(key: 'login_token');
     final dynamicLinkData = await FirebaseDynamicLinks.instance.getInitialLink();
-    String userIdx = '';
-    String templateIdx = '';
+    int userIdx = 0;
+    int templateIdx = 0;
 
     if (dynamicLinkData != null) {
       final queryParams = dynamicLinkData.link.queryParameters;
-      userIdx = queryParams['userIdx'] ?? '';
-      templateIdx = queryParams['templateIdx'] ?? '';
+      userIdx = int.tryParse(queryParams['userIdx'] ?? '0') ?? 0;
+      templateIdx = int.tryParse(queryParams['templateIdx'] ?? '0') ?? 0;
     }
 
     if (token != null) {
@@ -107,9 +107,9 @@ class MyApp extends StatelessWidget {
   Widget _navigateBasedOnState(BuildContext context, AppNavigationState state) {
     if (state.dynamicLink) {
      if (state.loggedIn) {
-         return _navigateToScreen(context, () => DynamicLinkScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
+       return _navigateToScreen(context, () => ShareScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
      } else {
-       return _loginAndNavigate(context, () => DynamicLinkScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
+       return _loginAndNavigate(context, () => ShareScreen(userIdx: state.userIdx, templateIdx: state.templateIdx));
      }
     } else {
       if (state.loggedIn) {

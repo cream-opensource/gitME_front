@@ -19,6 +19,7 @@ class AfterLanguageScreen extends StatefulWidget {
 class _LanguageScreenState extends State<AfterLanguageScreen> {
   final formKey = GlobalKey<FormState>();
   bool isLinked = false;
+  bool isLoading = false;
 
   String selectedLanguage = 'Java';
   List<String> languageItemList = [
@@ -80,6 +81,10 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
   }
 
   Future<void> sendUserDataToServer(String language, String framework, String achievement) async {
+    setState(() {
+      isLoading = true;
+    });
+
     UserData userData = Provider.of<UserData>(context, listen: false);
     String? accessToken = userData.accessToken;
     String? kakaoId = userData.kakaoId?.toString();
@@ -123,6 +128,10 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
       body: jsonData,
     );
 
+    setState(() {
+      isLoading = false;
+    });
+
     if (response.statusCode == 201) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (_) => MyApp(),
@@ -154,7 +163,9 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
           },
         ),
       ),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(50, 5, 50, 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

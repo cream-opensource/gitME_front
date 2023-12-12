@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:gitme/widgets/main_drawer.dart';
+import 'package:provider/provider.dart';
 
 import '../main.dart';
+import '../provider/userData.dart';
 import 'main_screen.dart';
 
 final storage = FlutterSecureStorage();
@@ -21,6 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = Provider.of<UserData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFF4F4F4),
@@ -95,25 +98,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.person_outline),
-                    title: Text('Hoon'),
+                    title: Text(userData.name ?? ''),
                   ),
                 ),
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.email),
-                    title: Text('your@email.com'),
+                    title: Text(userData.email ?? ''),
                   ),
                 ),
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.phone),
-                    title: Text('000-0000-0000'),
+                    title: Text(userData.phone ?? ''),
                   ),
                 ),
                 Card(
                   child: ListTile(
                     leading: Icon(Icons.favorite),
-                    title: Text('1998.12.11'),
+                    title: Text(userData.birthDate ?? ''),
                   ),
                 ),
                 Card(
