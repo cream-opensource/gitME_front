@@ -52,6 +52,7 @@ class _SharePageState extends State<ShareScreen> {
           totalCommits: cardInfoData['totalCommits']?.toString() ?? "",
           avatarUrl: cardInfoData['avatarUrl'] ?? "",
           languages: Map<String, int>.from(cardInfoData['languages'] ?? {}),
+          skillProficiency: cardInfoData['skillProficiency'] ?? "",
         );
       });
     } catch (e) {

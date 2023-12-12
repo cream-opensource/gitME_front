@@ -1,12 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class UserData with ChangeNotifier {
-
-  List<Map<String, String>> externalLinks = [];
-
   String? accessToken;
   int? userIdx;
   int? kakaoId;
@@ -15,7 +11,7 @@ class UserData with ChangeNotifier {
   String? email;
   String? phone;
   String? introduction;
-  Map<String, String>? externalLink;
+  Map<String, dynamic>? externalLink;
   String? nickname;
   int? followers;
   int? following;
@@ -23,7 +19,8 @@ class UserData with ChangeNotifier {
   int? totalCommits;
   String? avatarUrl;
   Map<String, int>? languages;
-  Map<String, String>? skill;
+  String? skillProficiency;
+
 
   void setAccessToken(String token) {
     accessToken = token;
@@ -50,47 +47,16 @@ class UserData with ChangeNotifier {
   }
 
   void setExternalLinkData(List<Map<String, String>> externalLinkData) {
-    externalLinks = List.from(externalLinkData);
-    notifyListeners();
-  }
-
-  void updateExternalLink(String newKey, String newValue, int index) {
-    if (index >= 0 && index < externalLinks.length) {
-      externalLinks[index] = {newKey: newValue};
-      notifyListeners();
-    }
-  }
-
-  void updateSkill(String key, String value) {
-    if (skill == null) {
-      skill = {};
-    }
-    skill![key] = value;
+    externalLink = Map.fromIterable(
+      externalLinkData,
+      key: (link) => link['webpage'],
+      value: (link) => link['url'],
+    );
     notifyListeners();
   }
 
   void setLanguageData(Map<String, int> languageData) {
     languages = languageData;
-    notifyListeners();
-  }
-
-  void updateIntroduction(String newIntroduction) {
-    introduction = newIntroduction;
-    notifyListeners();
-  }
-
-  void updateEmail(String newEmail) {
-    email = newEmail;
-    notifyListeners();
-  }
-
-  void updateBirthDate(String newBirthDate) {
-    birthDate = newBirthDate;
-    notifyListeners();
-  }
-
-  void updatePhone(String newPhone) {
-    phone = newPhone;
     notifyListeners();
   }
 
@@ -103,10 +69,9 @@ class UserData with ChangeNotifier {
     email = userData['email'];
     phone = userData['phone'];
     if (userData['introduce'] != null) {
-      introduction = utf8.decode(userData['introduce'].toString().codeUnits);
+      introduction = utf8.decode(userData['introduction'].toString().codeUnits);
     }
     externalLink = Map<String, String>.from(userData['externalLink']);
-    skill = Map<String, String>.from(userData['externalLink']);
     nickname = userData['nickname'];
     followers = userData['followers'];
     following = userData['following'];
@@ -114,7 +79,8 @@ class UserData with ChangeNotifier {
     totalCommits = userData['totalCommits'];
     avatarUrl = userData['avatarUrl'];
     languages = Map<String, int>.from(userData['languages']);
-    skill =  Map<String, String>.from(userData['skill']);
+    skillProficiency = userData['skillProficiency'];
+
     notifyListeners();
   }
 
@@ -125,7 +91,7 @@ class UserData with ChangeNotifier {
       'birthDate': birthDate,
       'email': email,
       'phone': phone,
-      'introduce': introduction,
+      'introduction': introduction,
       'externalLink': externalLink,
       'nickname': nickname,
       'followers': followers,
@@ -134,6 +100,7 @@ class UserData with ChangeNotifier {
       'totalCommits': totalCommits,
       'avatarUrl': avatarUrl,
       'languages': languages,
+      'skillProficiency' : skillProficiency,
     };
   }
 }
