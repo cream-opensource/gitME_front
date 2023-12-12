@@ -43,7 +43,7 @@ class _SharePageState extends State<ShareScreen> {
           birthdate: cardInfoData['birthDate'] ?? "",
           email: cardInfoData['email'] ?? "",
           phone: cardInfoData['phone'] ?? "",
-          introduce: cardInfoData['introduce'] != null ? utf8.decode(cardInfoData['introduce'].toString().codeUnits) : "",
+          introduction: cardInfoData['introduction'] != null ? utf8.decode(cardInfoData['introduction'].toString().codeUnits) : "",
           externalLink: Map<String, String>.from(cardInfoData['externalLink'] ?? {}),
           nickname: cardInfoData['nickname'] ?? "",
           followers: cardInfoData['followers']?.toString() ?? "",
