@@ -6,8 +6,9 @@ import '../service/business_card_data.dart';
 
 class BusinessCard1 extends StatelessWidget {
   final BusinessCardData data;
+  final Color primaryColor; // 기본값 설정을 위해 수정
 
-  BusinessCard1(this.data, {super.key});
+  BusinessCard1(this.data, {super.key, this.primaryColor = const Color(0xFFE8D589)});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,8 @@ class BusinessCard1 extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFFE8D589),
-            Color(0xFFE8D589),
+            primaryColor,
+            primaryColor,
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
