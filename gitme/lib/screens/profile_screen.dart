@@ -359,20 +359,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
       final requestBody = {
         'userIdx': userData.userIdx,
+        'kakaoId': userData.kakaoId,
         'name': userData.name,
         'birthDate': userData.birthDate,
         'email': userData.email,
         'phone': userData.phone,
         'introduce': userData.introduction,
         'externalLink': userData.externalLink,
-        'nickname': userData.nickname,
-        'followers': userData.followers,
-        'following': userData.following,
-        'totalStars': userData.totalStars,
-        'totalCommits': userData.totalCommits,
-        'avatarUrl': userData.avatarUrl,
-        'languages': userData.languages,
         'skill': userData.skill,
+        'skillProficiency' : userData.skillProficiency
 
       };
 
