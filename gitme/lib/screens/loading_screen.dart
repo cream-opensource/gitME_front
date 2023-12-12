@@ -40,7 +40,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // 로딩 중인 경우 로딩 화면을 보여줌
-            return CircularProgressIndicator();
+            return RefreshProgressIndicator();
           } else if (snapshot.hasError) {
             // 에러가 발생한 경우 에러 메시지를 보여줄 수 있음
             return Text('Error: ${snapshot.error}');

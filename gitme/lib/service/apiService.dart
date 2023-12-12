@@ -18,6 +18,7 @@ class ServerApiService {
       print('Server Response (sign): ${response.statusCode} - ${response.body}');
 
       if (response.statusCode == 200) {
+        print("여긴아니야!!");
         final Map<String, dynamic> data = jsonDecode(response.body);
         return data['userIdx'];
       } else if (response.statusCode == 404) {
@@ -32,6 +33,7 @@ class ServerApiService {
   }
 
   static Future<Map<String, dynamic>> getCardInfo(int userId) async {
+
     try {
       final response = await http.get(
         Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/cardInfo/$userId'),
@@ -87,3 +89,5 @@ class DataHandler {
     }
   }
 }
+
+
