@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     userData = UserData();
     fetchDataFromServer();
     _loadDynamicLink();
-    addCardToServer(2, "#FFFFFF", 1);
+    addCardToServer(2, "Color(0xff000000)", 1);
     updateCardsFromServer();
   }
 
@@ -151,11 +151,23 @@ class _MainScreenState extends State<MainScreen> {
     final response = await http.get(Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card/${userData.userIdx}'));
     if (response.statusCode == 201) {
       final List<dynamic> data = json.decode(response.body);
-      return List<Map<String, dynamic>>.from(data);
+      return data.map<Map<String, dynamic>>((cardInfo) {
+        String colorString = cardInfo['color'];
+
+        // 'Color(0xff000000)' 형태의 문자열에서 '0xff000000' 부분만 추출합니다.
+        colorString = colorString.split('(')[1].split(')')[0];
+
+        // '0xff000000'에서 '0xff'를 제거하고, 남은 부분을 16진수 정수로 변환합니다.
+        int colorValue = int.parse(colorString.substring(2, 10), radix: 16) + 0xFF000000;
+
+        cardInfo['color'] = Color(colorValue);
+        return cardInfo;
+      }).toList();
     } else {
       throw Exception('Failed to load card data');
     }
   }
+
 
 
   Future<void> updateCardsFromServer() async {
@@ -169,9 +181,10 @@ class _MainScreenState extends State<MainScreen> {
       items = List.generate(cardInfoList.length, (index) {
         final cardInfo = cardInfoList[index];
         final cardIndex = cardInfo['templateIdx'];
+        final Color cardColor = cardInfo['color'];
 
         return FlipCard(
-          front: getBusinessCardWidget(cardIndex, userData),
+          front: getBusinessCardWidget(cardIndex, userData, cardColor),
           back: Container(
             width: MediaQuery.of(context).size.width * 0.8,
             height: 400,
@@ -315,7 +328,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Widget getBusinessCardWidget(int cardIndex, UserData userData) {
+  Widget getBusinessCardWidget(int cardIndex, UserData userData, Color color) {
     final businessCardData = BusinessCardData(
       name: userData.name ?? "",
       birthdate: userData.birthDate ?? "",
@@ -335,13 +348,13 @@ class _MainScreenState extends State<MainScreen> {
 
     switch (cardIndex) {
       case 1:
-        return BusinessCard1(businessCardData);
+        return BusinessCard1(businessCardData, primaryColor: color);
       case 2:
-        return BusinessCard2(businessCardData);
+        return BusinessCard2(businessCardData, primaryColor: color);
       case 3:
-        return BusinessCard3(businessCardData);
+        return BusinessCard3(businessCardData, primaryColor: color);
       case 4:
-        return BusinessCard4(businessCardData);
+        return BusinessCard4(businessCardData, primaryColor: color);
       default:
         throw Exception("Invalid card index");
     }

@@ -10,7 +10,9 @@ class BusinessCard4 extends StatelessWidget {
     'https://deku.posstree.com/en/',
   );
 
-  BusinessCard4(this.data, {super.key});
+  final Color primaryColor; // 기본값 설정을 위해 수정
+
+  BusinessCard4(this.data, {super.key, this.primaryColor = const Color(0xFFE8D589)});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +25,8 @@ class BusinessCard4 extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFFDBC3EA),
-            Color(0xFFDBC3EA),
+            primaryColor,
+            primaryColor,
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
@@ -32,7 +34,7 @@ class BusinessCard4 extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        color: Color(0xFFDBC3EA),
+        color: primaryColor,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
@@ -98,7 +100,7 @@ class BusinessCard4 extends StatelessWidget {
                       },
                       child: Text(entry.key),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2AFE3),
+                        primary: primaryColor,
                         onPrimary: Colors.white,
                         textStyle: TextStyle(fontSize: screenWidth * 0.03),
                         shape: RoundedRectangleBorder(
@@ -124,7 +126,7 @@ class BusinessCard4 extends StatelessWidget {
                       },
                       child: Text(language),
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xFFD2AFE3),
+                        primary: primaryColor,
                         onPrimary: Colors.white,
                         textStyle: TextStyle(fontSize: screenWidth * 0.03),
                         shape: RoundedRectangleBorder(
@@ -163,7 +165,7 @@ class BusinessCard4 extends StatelessWidget {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
+                      primary: primaryColor,
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenWidth * 0.05),
@@ -190,7 +192,7 @@ class BusinessCard4 extends StatelessWidget {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
+                      primary: primaryColor,
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenWidth * 0.05),
@@ -217,7 +219,7 @@ class BusinessCard4 extends StatelessWidget {
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFFD2AFE3),
+                      primary: primaryColor,
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenWidth * 0.05),

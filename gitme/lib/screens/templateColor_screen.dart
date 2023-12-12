@@ -11,7 +11,6 @@ import 'package:gitme/service/business_card_data.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-
 class TemplateColorScreen extends StatefulWidget {
   static const route = 'templateColor-screen';
   final String selectedTemplate;
@@ -40,7 +39,8 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
           content: SingleChildScrollView(
             child: ColorPicker(
               pickerColor: pickerColor,
-              onColorChanged: changeColor, // 색상이 변경될 때마다 호출될 함수
+              onColorChanged: changeColor,
+              // 색상이 변경될 때마다 호출될 함수
               colorPickerWidth: 300.0,
               pickerAreaHeightPercent: 0.7,
               enableAlpha: true,
@@ -84,7 +84,8 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
     }
   }
 
-  Future<void> addCardToServer(int templateIdx, String color, int sequence) async {
+  Future<void> addCardToServer(
+      int templateIdx, String color, int sequence) async {
     final Map<String, dynamic> cardData = {
       'userIdx': userData.userIdx,
       'templateIdx': templateIdx,
@@ -94,7 +95,8 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
 
     try {
       final response = await http.post(
-        Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card'),
+        Uri.parse(
+            'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card'),
         body: json.encode(cardData),
         headers: {'Content-Type': 'application/json'},
       );
@@ -108,8 +110,6 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
       print('Error adding card: $e');
     }
   }
-
-
 
   @override
   void initState() {
@@ -137,20 +137,22 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
     switch (widget.selectedTemplate) {
       case '0':
         return Card(
-            child: BusinessCard1(businessCardData)
-        );
+            child: BusinessCard1(businessCardData, primaryColor: pickerColor));
       case '1':
         return Card(
-            child: BusinessCard2(businessCardData)
-        );
+            child:
+                BusinessCard2(businessCardData, primaryColor: pickerColor) // 여기서도 비슷한 방식으로 색상을 전달할 수 있습니다.
+            );
       case '2':
         return Card(
-            child: BusinessCard3(businessCardData)
-        );
+            child:
+                BusinessCard3(businessCardData, primaryColor: pickerColor) // 여기서도 비슷한 방식으로 색상을 전달할 수 있습니다.
+            );
       case '3':
         return Card(
-            child: BusinessCard4(businessCardData)
-        );
+            child:
+                BusinessCard4(businessCardData, primaryColor: pickerColor) // 여기서도 비슷한 방식으로 색상을 전달할 수 있습니다.
+            );
       default:
         return Center(
           child: Text(
@@ -196,17 +198,20 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
             child: _buildCardWidget(),
           ),
           SizedBox(height: screenWidth * 0.03),
-          Row( // Row 추가
+          Row(
+            // Row 추가
             mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 버튼들을 균등하게 정렬
             children: [
               ElevatedButton(
                 onPressed: () {
                   print(int.parse(widget.selectedTemplate));
-                  addCardToServer(int.parse(widget.selectedTemplate) + 1, pickerColor.toString(), 2);
+                  addCardToServer(int.parse(widget.selectedTemplate) + 1,
+                      pickerColor.toString(), 2);
                   Navigator.pushNamed(context, MainScreen.route);
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF56CC94)), // 버튼 배경색 설정
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Color(0xFF56CC94)), // 버튼 배경색 설정
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
@@ -216,14 +221,19 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
                 child: Container(
                   width: 80,
                   child: Center(
-                    child: Text('추가', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                    child: Text('추가',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        )),
                   ),
                 ),
               ),
               ElevatedButton(
                 onPressed: showColorPicker,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF56CC94)), // 버튼 배경색 설정
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Color(0xFF56CC94)), // 버튼 배경색 설정
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
@@ -233,7 +243,11 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
                 child: Container(
                   width: 80,
                   child: Center(
-                    child: Text('색상 선택', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                    child: Text('색상 선택',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        )),
                   ),
                 ),
               ),
