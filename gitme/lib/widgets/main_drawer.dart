@@ -49,7 +49,7 @@ class MainDrawer extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 33),
+                SizedBox(height: 45),
                 Stack(
                   alignment: Alignment.bottomCenter,
                   children: <Widget>[
@@ -58,11 +58,18 @@ class MainDrawer extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 10),
                       width: 138,
                       height: 138,
-                      child: Image.network(userData.avatarUrl ?? 'fallback_url_for_empty_avatar'),
+                      child: ClipOval(
+                        child: Image.network(
+                          userData.avatarUrl ?? 'fallback_url_for_empty_avatar',
+                          width: 138,
+                          height: 138,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     )
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 20),
                 Text(
                   userData.name ?? '',
                   textAlign: TextAlign.center,
