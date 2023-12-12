@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:gitme/provider/userData.dart';
-import 'package:gitme/widgets/add_card.dart';
 import 'package:gitme/widgets/card1.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
@@ -21,6 +20,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../service/business_card_data.dart';
+import '../widgets/add_card.dart';
 
 class MainScreen extends StatefulWidget {
   static const route = 'main-screen';
@@ -50,6 +50,7 @@ class _MainScreenState extends State<MainScreen> {
     fetchDataFromServer();
     _loadDynamicLink();
     addCardToServer(2, "#FFFFFF", 1);
+    updateCardsFromServer();
   }
 
   Future<void> fetchDataFromServer() async {
@@ -176,7 +177,7 @@ class _MainScreenState extends State<MainScreen> {
             height: 400,
             margin: EdgeInsets.only(top: 30),
             decoration: BoxDecoration(
-              color: Color(0xFFCEF700),
+              color: Color(0xFF56CC94),
               borderRadius: BorderRadius.circular(20.0),
               boxShadow: [
                 BoxShadow(
@@ -190,12 +191,21 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: QrImageView(
-                    data: _dynamicLinks[cardIndex] ?? "",
-                    version: QrVersions.auto,
-                    size: 200.0,
-                    backgroundColor: Colors.white,
+                Container(
+                  width: 220, // 컨테이너의 너비
+                  height: 220, // 컨테이너의 높이
+                  decoration: BoxDecoration(
+                    color: Colors.white, // 흰 배경
+                    borderRadius: BorderRadius.circular(20.0), // 모서리를 둥글게 함
+                    border: Border.all(color: Colors.white, width: 5.0), // 이미지 주위에 흰 테두리 추가
+                  ),
+                  child: Center(
+                    child: QrImageView(
+                      data: _dynamicLinks[cardIndex] ?? "",
+                      version: QrVersions.auto,
+                      size: 200.0,
+                      backgroundColor: Colors.transparent, // 배경이 흰색으로 처리되므로 투명으로 설정
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -212,6 +222,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         );
       });
+      items.add(AddCard());
 
       // 화면 갱신 완료
     } catch (e) {
@@ -320,6 +331,7 @@ class _MainScreenState extends State<MainScreen> {
       avatarUrl: userData.avatarUrl ?? "",
       languages: userData.languages,
     );
+
 
     switch (cardIndex) {
       case 1:

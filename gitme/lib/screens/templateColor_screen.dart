@@ -1,99 +1,155 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gitme/provider/userData.dart';
+import 'package:gitme/screens/main_screen.dart';
 import 'package:gitme/widgets/card1.dart';
 import 'package:gitme/widgets/card2.dart';
 import 'package:gitme/widgets/card3.dart';
 import 'package:gitme/widgets/card4.dart';
+import 'package:gitme/service/business_card_data.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+
 
 class TemplateColorScreen extends StatefulWidget {
   static const route = 'templateColor-screen';
   final String selectedTemplate;
 
-  const TemplateColorScreen({Key? key, required this.selectedTemplate}) : super(key: key);
+  TemplateColorScreen({super.key, required this.selectedTemplate});
 
   @override
   _TemplateColorScreenState createState() => _TemplateColorScreenState();
 }
 
 class _TemplateColorScreenState extends State<TemplateColorScreen> {
+  late BusinessCardData businessCardData;
+  late UserData userData; // UserData 타입의 변수를 선언
+  Color pickerColor = Color(0xFF000000); // 선택한 색상을 저장할 변수
 
-  late UserData userData;
+  void changeColor(Color color) {
+    setState(() => pickerColor = color); // 선택한 색상을 업데이트
+  }
+
+  void showColorPicker() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('색상 선택'),
+          content: SingleChildScrollView(
+            child: ColorPicker(
+              pickerColor: pickerColor,
+              onColorChanged: changeColor, // 색상이 변경될 때마다 호출될 함수
+              colorPickerWidth: 300.0,
+              pickerAreaHeightPercent: 0.7,
+              enableAlpha: true,
+              displayThumbColor: true,
+              showLabel: true,
+              paletteType: PaletteType.hsv,
+              pickerAreaBorderRadius: const BorderRadius.only(
+                topLeft: const Radius.circular(2.0),
+                topRight: const Radius.circular(2.0),
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                //addCardToServer(int.parse(widget.selectedTemplate) + 1, pickerColor.toString(), 2);
+                Navigator.pop(context); // 이전 화면으로 돌아가기
+              },
+              child: Container(
+                width: 80,
+                child: Center(
+                  child: Text(
+                    '완료',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> fetchDataFromServer() async {
+    try {
+      userData = Provider.of<UserData>(context, listen: false);
+      print('성공');
+    } catch (e) {
+      print('error: $e');
+    }
+  }
+
+  Future<void> addCardToServer(int templateIdx, String color, int sequence) async {
+    final Map<String, dynamic> cardData = {
+      'userIdx': userData.userIdx,
+      'templateIdx': templateIdx,
+      'color': color,
+      'sequence': sequence,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/card'),
+        body: json.encode(cardData),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 201) {
+        print('Card added successfully');
+      } else {
+        print('Failed to add card: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error adding card: $e');
+    }
+  }
+
+
 
   @override
   void initState() {
     super.initState();
-    userData = UserData(); // 적절한 초기화 방법에 따라 변경해야 합니다.
+    userData = UserData();
+    fetchDataFromServer();
+    businessCardData = BusinessCardData(
+      name: userData.name ?? "",
+      birthdate: userData.birthDate ?? "",
+      email: userData.email ?? "",
+      phone: userData.phone ?? "",
+      introduce: userData.introduce ?? "",
+      externalLink: userData.externalLink,
+      nickname: userData.nickname ?? "",
+      followers: userData.followers?.toString() ?? "",
+      following: userData.following?.toString() ?? "",
+      totalStars: userData.totalStars?.toString() ?? "",
+      totalCommits: userData.totalCommits?.toString() ?? "",
+      avatarUrl: userData.avatarUrl ?? "",
+      languages: userData.languages,
+    );
   }
 
   Widget _buildCardWidget() {
     switch (widget.selectedTemplate) {
       case '0':
         return Card(
-          child: BusinessCard4(
-            BusinessCardData4(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString(),
-              stared: userData.totalStars.toString(),
-              commit: userData.totalCommits.toString(),
-              introduce: userData.nickname ?? "",
-            ),
-          ),
+            child: BusinessCard1(businessCardData)
         );
       case '1':
         return Card(
-          child: BusinessCard2(
-            BusinessCardData2(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString(),
-              stared: userData.totalStars.toString(),
-              commit: userData.totalCommits.toString(),
-              introduce: userData.nickname ?? "",
-            ),
-          ),
+            child: BusinessCard2(businessCardData)
         );
       case '2':
         return Card(
-          child: BusinessCard3(
-            BusinessCardData3(
-              name: userData.name ?? "",
-              birthdate: userData.birthDate ?? "",
-              email: userData.email ?? "",
-              phone: userData.phone ?? "",
-              introduce: userData.introduce ?? "",
-              externalLink: userData.externalLink,
-              nickname: userData.nickname ?? "",
-              followers: userData.followers?.toString() ?? "",
-              following: userData.following?.toString() ?? "",
-              totalStars: userData.totalStars?.toString() ?? "",
-              totalCommits: userData.totalCommits?.toString() ?? "",
-              avatarUrl: userData.avatarUrl ?? "",
-              languages: userData.languages,
-            ),
-          ),
+            child: BusinessCard3(businessCardData)
         );
       case '3':
         return Card(
-          child: BusinessCard1(
-            BusinessCardData1(
-              name: userData.name ?? "",
-              jobTitle: "Frontend Developer",
-              contactInfo: userData.email ?? "",
-              call: userData.phone ?? "",
-              techStack: userData.languages?['JavaScript'].toString() ?? "",
-              followers: userData.followers.toString(),
-              stared: userData.totalStars.toString(),
-              commit: userData.totalCommits.toString(),
-              introduce: userData.nickname ?? "",
-            ),
-          ),
+            child: BusinessCard4(businessCardData)
         );
       default:
         return Center(
@@ -140,24 +196,48 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
             child: _buildCardWidget(),
           ),
           SizedBox(height: screenWidth * 0.03),
-          ElevatedButton(
-            onPressed: () {
-
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF56CC94)), // 버튼 배경색 설정
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0),
+          Row( // Row 추가
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 버튼들을 균등하게 정렬
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print(int.parse(widget.selectedTemplate));
+                  addCardToServer(int.parse(widget.selectedTemplate) + 1, pickerColor.toString(), 2);
+                  Navigator.pushNamed(context, MainScreen.route);
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF56CC94)), // 버튼 배경색 설정
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  width: 80,
+                  child: Center(
+                    child: Text('추가', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                  ),
                 ),
               ),
-            ),
-            child: Container(
-              width: 80,
-              child: Center(
-                child: Text('추가', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+              ElevatedButton(
+                onPressed: showColorPicker,
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF56CC94)), // 버튼 배경색 설정
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
+                ),
+                child: Container(
+                  width: 80,
+                  child: Center(
+                    child: Text('색상 선택', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,)),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

@@ -13,10 +13,10 @@ class CreateCardScreen extends StatefulWidget {
 
 class _CreateCardScreenState extends State<CreateCardScreen> {
   List<String> cardTemplate = [
-    'assets/template1.jpg',
+    'assets/template4.jpg',
     'assets/template2.jpg',
     'assets/template3.jpg',
-    'assets/template4.jpg',
+    'assets/template1.jpg',
   ];
 
   @override
@@ -61,7 +61,6 @@ class _CreateCardScreenState extends State<CreateCardScreen> {
               children: List.generate(cardTemplate.length, (index) {
                 return GestureDetector(
                   onTap: () {
-                    print("@@@; " + index.toString()); // index 번호 출력
                     Navigator.push(
                       context,
                       MaterialPageRoute(

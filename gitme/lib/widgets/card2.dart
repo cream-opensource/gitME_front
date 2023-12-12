@@ -35,11 +35,14 @@ class BusinessCard2 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              data.avatarUrl,
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100), // 모서리를 둥글게 하는 정도를 조절합니다
+              child: Image.network(
+                data.avatarUrl ?? 'fallback_url_for_empty_avatar',
+                height: 130,
+                width: 130,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: screenWidth * 0.02),
             Text(
