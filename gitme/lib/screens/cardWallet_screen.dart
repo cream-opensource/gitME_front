@@ -294,6 +294,7 @@ class _CardWalletScreenState extends State<CardWalletScreen> {
                                   totalCommits: tableList[index]['totalCommits']?.toString() ?? "",
                                   avatarUrl: tableList[index]['avatarUrl'] ?? "",
                                   languages: Map<String, int>.from(tableList[index]['languages'] ?? {}),
+                                  skillProficiency: tableList[index]['skillProficiency'] ?? "",
                                 );
 
                                 return Dialog(
