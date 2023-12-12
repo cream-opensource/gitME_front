@@ -6,6 +6,7 @@ import '../service/business_card_data.dart';
 
 class BusinessCard3 extends StatelessWidget {
   final BusinessCardData data;
+  final Color primaryColor; // 기본값 설정을 위해 수정
 
   BusinessCard3(this.data, {super.key});
 
@@ -18,7 +19,7 @@ class BusinessCard3 extends StatelessWidget {
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
-        color: Color(0xFF89C09C),
+        color: primaryColor,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
