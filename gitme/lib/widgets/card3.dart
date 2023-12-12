@@ -8,7 +8,7 @@ class BusinessCard3 extends StatelessWidget {
   final BusinessCardData data;
   final Color primaryColor; // 기본값 설정을 위해 수정
 
-  BusinessCard3(this.data, {super.key});
+  BusinessCard3(this.data, {super.key, this.primaryColor = const Color(0xFFE8D589)});
 
   @override
   Widget build(BuildContext context) {
