@@ -119,12 +119,12 @@ class _MainScreenState extends State<MainScreen> {
     return dynamicLink.shortUrl.toString();
   }
 
-  Future<void> addCardToServer() async {
+  Future<void> addCardToServer(int templateIdx, String color, int sequence) async {
     final Map<String, dynamic> cardData = {
       'userIdx': userData.userIdx,
-      'templateIdx': 1,
-      'color': "color",
-      'sequence': 1,
+      'templateIdx': templateIdx,
+      'color': color,
+      'sequence': sequence,
     };
 
     try {
@@ -237,8 +237,6 @@ class _MainScreenState extends State<MainScreen> {
       });
       items.add(AddCard());
 
-      items.add(AddCard());
-
       // 화면 갱신 완료
     } catch (e) {
       print('에러: $e');
@@ -347,7 +345,6 @@ class _MainScreenState extends State<MainScreen> {
       languages: userData.languages,
       skillProficiency: userData.skillProficiency ?? "",
     );
-
 
     switch (cardIndex) {
       case 1:

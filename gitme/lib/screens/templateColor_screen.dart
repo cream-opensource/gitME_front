@@ -121,7 +121,7 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
       birthdate: userData.birthDate ?? "",
       email: userData.email ?? "",
       phone: userData.phone ?? "",
-      introduce: userData.introduce ?? "",
+      introduction: userData.introduction ?? "",
       externalLink: userData.externalLink,
       nickname: userData.nickname ?? "",
       followers: userData.followers?.toString() ?? "",
@@ -130,6 +130,7 @@ class _TemplateColorScreenState extends State<TemplateColorScreen> {
       totalCommits: userData.totalCommits?.toString() ?? "",
       avatarUrl: userData.avatarUrl ?? "",
       languages: userData.languages,
+      skillProficiency: userData.skillProficiency ?? "",
     );
   }
 

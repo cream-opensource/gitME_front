@@ -41,12 +41,12 @@ class UserData with ChangeNotifier {
     notifyListeners();
   }
 
-  void setJoinData(String name, String phone, String email, String birthdate, String introduce) {
+  void setJoinData(String name, String phone, String email, String birthdate, String introduction) {
     this.name = name;
     this.phone = phone;
     this.email = email;
     this.birthDate = birthdate;
-    this.introduction = introduce;
+    this.introduction = introduction;
 
     notifyListeners();
   }
