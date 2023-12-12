@@ -14,7 +14,7 @@ class UserData with ChangeNotifier {
   String? birthDate;
   String? email;
   String? phone;
-  String? introduce;
+  String? introduction;
   Map<String, String>? externalLink;
   String? nickname;
   int? followers;
@@ -44,7 +44,7 @@ class UserData with ChangeNotifier {
     this.phone = phone;
     this.email = email;
     this.birthDate = birthdate;
-    this.introduce = introduce;
+    this.introduction = introduce;
 
     notifyListeners();
   }
@@ -75,7 +75,7 @@ class UserData with ChangeNotifier {
   }
 
   void updateIntroduction(String newIntroduction) {
-    introduce = newIntroduction;
+    introduction = newIntroduction;
     notifyListeners();
   }
 
@@ -103,7 +103,7 @@ class UserData with ChangeNotifier {
     email = userData['email'];
     phone = userData['phone'];
     if (userData['introduce'] != null) {
-      introduce = utf8.decode(userData['introduce'].toString().codeUnits);
+      introduction = utf8.decode(userData['introduce'].toString().codeUnits);
     }
     externalLink = Map<String, String>.from(userData['externalLink']);
     skill = Map<String, String>.from(userData['externalLink']);
@@ -125,7 +125,7 @@ class UserData with ChangeNotifier {
       'birthDate': birthDate,
       'email': email,
       'phone': phone,
-      'introduce': introduce,
+      'introduce': introduction,
       'externalLink': externalLink,
       'nickname': nickname,
       'followers': followers,

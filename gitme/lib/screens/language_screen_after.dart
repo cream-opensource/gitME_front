@@ -92,7 +92,7 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
     String? phone = userData.phone;
     String? email = userData.email;
     String? birthdate = userData.birthDate;
-    String? introduce = userData.introduce;
+    String? introduce = userData.introduction;
 
 
     Map<String, dynamic>? externalLink = userData.externalLink;

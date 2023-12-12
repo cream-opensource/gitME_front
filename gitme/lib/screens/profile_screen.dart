@@ -169,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     children: [
                       buildSkillWidget(isEditing, userData.skill, Icon(Icons.settings), Provider.of<UserData>(context, listen: false).updateSkill),
-                      buildUserWidget(isEditing, userData.introduce, Icon(Icons.person), Provider.of<UserData>(context, listen: false).updateIntroduction),
+                      buildUserWidget(isEditing, userData.introduction, Icon(Icons.person), Provider.of<UserData>(context, listen: false).updateIntroduction),
                       buildUserWidget(isEditing, userData.email, Icon(Icons.email), Provider.of<UserData>(context, listen: false).updateEmail),
                       buildUserWidget(isEditing, userData.birthDate, Icon(Icons.cake_outlined), Provider.of<UserData>(context, listen: false).updateBirthDate),
                       buildUserWidget(isEditing, userData.phone, Icon(Icons.call), Provider.of<UserData>(context, listen: false).updatePhone),
@@ -363,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'birthDate': userData.birthDate,
         'email': userData.email,
         'phone': userData.phone,
-        'introduce': userData.introduce,
+        'introduce': userData.introduction,
         'externalLink': userData.externalLink,
         'nickname': userData.nickname,
         'followers': userData.followers,

@@ -71,7 +71,7 @@ class BusinessCard4 extends StatelessWidget {
             ),
             SizedBox(height: screenWidth * 0.01),
             Text(
-              data.introduce,
+              data.introduction ?? "",
               style: TextStyle(
                 fontSize: screenWidth * 0.03,
                 color: Colors.white,
