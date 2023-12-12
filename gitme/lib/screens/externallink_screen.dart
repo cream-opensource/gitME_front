@@ -90,22 +90,23 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20), // 예시로 간격 추가
-            Center(
-              child: Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 5개까지 등록 가능해요",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF8D919F),
-                  fontFamily: 'DarkerGrotesque',
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.8,
-                ),
-                textAlign: TextAlign.center, // 가운데 정렬 추가
-              ),
-            ),
+
             Expanded(
               child: ListView(
                 children: [
+                  Center(
+                    child: Text("외부 링크는\n내가 소개하고 싶은 웹페이지예요!\n최대 5개까지 등록 가능해요",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black54,
+                        fontFamily: 'DarkerGrotesque',
+                        fontWeight: FontWeight.w800,
+                        letterSpacing: -0.8,
+                      ),
+                      textAlign: TextAlign.center, // 가운데 정렬 추가
+                    ),
+                  ),
+                  SizedBox(height: 10,),
                   Column(
                     children: webpageInputs,
                   ),
@@ -213,24 +214,22 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
   }
 
   Widget buildWebpageInput(int index) {
+    // 웹페이지 종류 입력을 위한 TextEditingController
+    TextEditingController typeController = TextEditingController();
+    // URL 입력을 위한 TextEditingController
     TextEditingController urlController = TextEditingController();
+
+    // 컨트롤러 목록에 추가
     urlControllers.add(urlController);
     dropdownValuesList.add([]);
-    String dropdownValue = dropdownValuesList[index].isNotEmpty
-        ? dropdownValuesList[index].first
-        : itemList.first; // 기본값 설정
 
     return Container(
       key: UniqueKey(),
       width: double.infinity,
       child: Column(
         children: [
-          buildDropdownInput(index, dropdownValue, (String newValue) {
-            setState(() {
-              dropdownValuesList[index] = [newValue];
-            });
-          }),
-          buildUrlInput(urlController),
+          buildTextInput("웹페이지 종류", typeController), // 웹페이지 종류 입력 필드
+          buildTextInput("주소 URL", urlController), // URL 입력 필드
           SizedBox(height: 20),
           Divider(),
         ],
@@ -238,59 +237,34 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
     );
   }
 
-  Widget buildDropdownInput(int index, String value, Function(String) onChanged) {
-    return Form(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "* 웹페이지  ",
-            style: TextStyle(
-              fontSize: 16,
-              color: Color(0xFF8D919F),
-              fontFamily: 'DarkerGrotesque',
-              fontWeight: FontWeight.w800,
-              letterSpacing: -0.8,
-            ),
+  Widget buildTextInput(String labelText, TextEditingController controller) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "* $labelText  ",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black54,
+            fontFamily: 'DarkerGrotesque',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -0.8,
           ),
-          SizedBox(width: 10),
-          Expanded(
-            child: Container(
-              child: DropdownButton<String>(
-                key: UniqueKey(),
-                value: value,
-                menuMaxHeight: 300,
-                items: itemList.map((itemText) {
-                  return DropdownMenuItem(
-                    key: ValueKey<String>(itemText),
-                    value: itemText,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      child: Text(
-                        itemText,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (itemText) {
-                  print('Dropdown onChanged called with: $itemText');
-                  onChanged(itemText!);
-                },
-                icon: Icon(Icons.arrow_drop_down, color: Colors.black),
-                iconSize: 24,
-                isExpanded: true,
-                elevation: 16,
-                style: TextStyle(color: Colors.black),
-                underline: Container(),
+        ),
+        SizedBox(width: 10),
+        Expanded(
+          child: Container(
+            child: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -303,7 +277,7 @@ class _ExternalLinkScreenState extends State<ExternalLinkScreen> {
           "* 주소 URL  ",
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFF8D919F),
+            color: Colors.black54,
             fontFamily: 'DarkerGrotesque',
             fontWeight: FontWeight.w800,
             letterSpacing: -0.8,

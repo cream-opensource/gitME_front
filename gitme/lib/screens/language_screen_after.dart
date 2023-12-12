@@ -145,13 +145,14 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
 
 
   @override
+  @override
   Widget build(BuildContext context) {
     String? userName = Provider.of<UserData>(context).name;
     Map<String, int>? languages = Provider.of<UserData>(context).languages;
     print("이름: $userName");
     print("언어: $languages");
     return Scaffold(
-      resizeToAvoidBottomInset : false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Image.asset(
@@ -205,63 +206,75 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
             SizedBox(height: 20),
             GitHubButton(isButtonEnabled: false),
             SizedBox(height: 20),
-            Center(
-              child: Text(
-                "$userName 님의 github 내 사용 언어",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xFF8D919F),
-                  fontFamily: 'DarkerGrotesque',
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: -0.8,
+            Column(
+              children: [
+                Center(
+                  child: Text(
+                    "$userName 님의 github 내 사용 언어",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                      fontFamily: 'DarkerGrotesque',
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -0.8,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(height: 20),
-            Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 5.0,
-              runSpacing: 10.0,
-              children: languages != null
-                  ? languages.keys.map((languageName) {
-                int languageValue = languages[languageName] ?? 0;
-                return IntrinsicWidth(
-                  child: _buildRoundedText("$languageName: $languageValue"),
-                );
-              }).toList()
-                  : [],
-            ),
-            SizedBox(height: 13),
-            Divider(),
-            buildDropdownInput(
-                "주사용 언어", languageItemList, selectedLanguage,
-                    (String newValue) {
-                  setState(() {
-                    selectedLanguage = newValue;
-                    updateFrameLibDropdownItems(selectedLanguage);
-                  });
-                }),
-            SizedBox(
-              height: 20,
-            ),
-            buildDropdownInput("주사용 프레임워크 & 라이브러리", frameLibItemList,
-                selectedFrameLib, (String newValue) {
-                  setState(() {
-                    selectedFrameLib = newValue;
-                  });
-                }),
-            SizedBox(
-              height: 20,
-            ),
-            buildDropdownInput(
-              "성취도",
-              achievementList,
-              achievementDropdownValue,
-                  (String newValue) {
-                setState(() {
-                  achievementDropdownValue = newValue;
-                });
-              },
+                SizedBox(height: 20),
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  spacing: 5.0,
+                  runSpacing: 10.0,
+                  children: languages != null
+                      ? languages.keys.map((languageName) {
+                    int languageValue = languages[languageName] ?? 0;
+                    return IntrinsicWidth(
+                      child: _buildRoundedText(
+                          "$languageName: $languageValue"),
+                    );
+                  }).toList()
+                      : [],
+                ),
+                SizedBox(height: 13),
+                Divider(),
+                buildDropdownInput(
+                  "주사용 언어",
+                  languageItemList,
+                  selectedLanguage,
+                      (String newValue) {
+                    setState(() {
+                      selectedLanguage = newValue;
+                      updateFrameLibDropdownItems(selectedLanguage);
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                buildDropdownInput(
+                  "주사용 프레임워크 & 라이브러리",
+                  frameLibItemList,
+                  selectedFrameLib,
+                      (String newValue) {
+                    setState(() {
+                      selectedFrameLib = newValue;
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                buildDropdownInput(
+                  "성취도",
+                  achievementList,
+                  achievementDropdownValue,
+                      (String newValue) {
+                    setState(() {
+                      achievementDropdownValue = newValue;
+                    });
+                  },
+                ),
+              ],
             ),
             SizedBox(
               height: 20,
@@ -321,7 +334,7 @@ class _LanguageScreenState extends State<AfterLanguageScreen> {
           "* " + key + "  ",
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFF8D919F),
+            color: Colors.black54,
             fontFamily: 'DarkerGrotesque',
             fontWeight: FontWeight.w800,
             letterSpacing: -0.8,
