@@ -1,8 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class UserData with ChangeNotifier {
+
+  List<Map<String, String>> externalLinks = [];
+
   String? accessToken;
   int? userIdx;
   int? kakaoId;
@@ -11,7 +15,7 @@ class UserData with ChangeNotifier {
   String? email;
   String? phone;
   String? introduce;
-  Map<String, dynamic>? externalLink;
+  Map<String, String>? externalLink;
   String? nickname;
   int? followers;
   int? following;
@@ -46,16 +50,47 @@ class UserData with ChangeNotifier {
   }
 
   void setExternalLinkData(List<Map<String, String>> externalLinkData) {
-    externalLink = Map.fromIterable(
-      externalLinkData,
-      key: (link) => link['webpage'],
-      value: (link) => link['url'],
-    );
+    externalLinks = List.from(externalLinkData);
+    notifyListeners();
+  }
+
+  void updateExternalLink(String newKey, String newValue, int index) {
+    if (index >= 0 && index < externalLinks.length) {
+      externalLinks[index] = {newKey: newValue};
+      notifyListeners();
+    }
+  }
+
+  void updateSkill(String key, String value) {
+    if (skill == null) {
+      skill = {};
+    }
+    skill![key] = value;
     notifyListeners();
   }
 
   void setLanguageData(Map<String, int> languageData) {
     languages = languageData;
+    notifyListeners();
+  }
+
+  void updateIntroduction(String newIntroduction) {
+    introduce = newIntroduction;
+    notifyListeners();
+  }
+
+  void updateEmail(String newEmail) {
+    email = newEmail;
+    notifyListeners();
+  }
+
+  void updateBirthDate(String newBirthDate) {
+    birthDate = newBirthDate;
+    notifyListeners();
+  }
+
+  void updatePhone(String newPhone) {
+    phone = newPhone;
     notifyListeners();
   }
 
