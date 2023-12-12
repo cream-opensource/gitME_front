@@ -6,8 +6,9 @@ import '../service/business_card_data.dart';
 
 class BusinessCard1 extends StatelessWidget {
   final BusinessCardData data;
+  final Color primaryColor; // 기본값 설정을 위해 수정
 
-  BusinessCard1(this.data, {super.key});
+  BusinessCard1(this.data, {super.key, this.primaryColor = const Color(0xFFE8D589)});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,8 @@ class BusinessCard1 extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xFFE8D589),
-            Color(0xFFE8D589),
+            primaryColor,
+            primaryColor,
             Color(0xFFFFFFFF),
             Color(0xFFFFFFFF),
           ],
@@ -38,27 +39,31 @@ class BusinessCard1 extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
+      child:
+      Padding(
         padding: EdgeInsets.all(screenWidth * 0.08),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              data.avatarUrl ?? 'fallback_url_for_empty_avatar',
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10), // 모서리를 둥글게 하는 정도를 조절합니다
+              child: Image.network(
+                data.avatarUrl ?? 'fallback_url_for_empty_avatar',
+                height: 110,
+                width: 110,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: screenWidth * 0.2),
-            Container(
-              width: screenWidth * 0.2,
-              height: screenWidth * 0.04,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                image: DecorationImage(
-                  image: AssetImage('assets/mark2.png'),
-                  fit: BoxFit.cover,
-                ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (data.languages != null)
+                    for (var entry in data.languages!.entries.take(3))
+                      _buildRoundedText("${entry.key}: ${entry.value}", screenWidth),
+                ],
               ),
             ),
             Row(
@@ -76,45 +81,6 @@ class BusinessCard1 extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: screenWidth * 0.1,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                        width: screenWidth * 0.1,
-                        height: screenWidth * 0.1,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/notion.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-                      },
-                      child: Container(
-                        width: screenWidth * 0.12,
-                        height: screenWidth * 0.12,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/tistory.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
             SizedBox(height: screenWidth * 0.04),
@@ -128,6 +94,7 @@ class BusinessCard1 extends StatelessWidget {
                       data.name,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.06, fontWeight: FontWeight.w700,),
                     ),
+                    SizedBox(height: screenWidth * 0.01),
                     Text(
                       data.email,
                       style: TextStyle(color: Colors.black, fontSize: screenWidth * 0.03,),
@@ -143,134 +110,22 @@ class BusinessCard1 extends StatelessWidget {
           ],
         ),
       ),
-
-
-
-
-
-
-
-
-
-
-      // child: Padding(
-      //   padding: EdgeInsets.all(screenWidth * 0.08),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       SizedBox(height: 20),
-      //       Align(
-      //         alignment: Alignment.center,
-      //         child: Container(
-      //           width: screenWidth * 0.5,
-      //           height: screenWidth * 0.25,
-      //           decoration: BoxDecoration(
-      //             shape: BoxShape.rectangle,
-      //             borderRadius: BorderRadius.circular(5),
-      //             image: DecorationImage(
-      //               image: AssetImage('assets/jjj.png'),
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       SizedBox(height: screenWidth * 0.2),
-      //       Row(
-      //         children: [
-      //           SizedBox(width: screenWidth * 0.02),
-      //           Container(
-      //             width: screenWidth * 0.2,
-      //             height: screenWidth * 0.04,
-      //             decoration: BoxDecoration(
-      //               shape: BoxShape.rectangle,
-      //               image: DecorationImage(
-      //                 image: AssetImage('assets/mark2.png'),
-      //                 fit: BoxFit.cover,
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //       Row(
-      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //         children: [
-      //           SizedBox(width: screenWidth * 0.01),
-      //           Expanded(
-      //             child: Text(
-      //               data.introduce,
-      //               style: TextStyle(
-      //                 fontSize: screenWidth * 0.06,
-      //                 fontWeight: FontWeight.bold,
-      //               ),
-      //             ),
-      //           ),
-      //           SizedBox(width: screenWidth * 0.1),
-      //           InkWell(
-      //             onTap: () {
-      //               // 첫 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-      //             },
-      //             child: Container(
-      //               width: screenWidth * 0.06,
-      //               height: screenWidth * 0.06,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.rectangle,
-      //                 image: DecorationImage(
-      //                   image: AssetImage('assets/tistory.png'),
-      //                   fit: BoxFit.cover,
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //           InkWell(
-      //             onTap: () {
-      //               // 두 번째 버튼 클릭 시 동작할 내용을 추가하세요.
-      //             },
-      //             child: Container(
-      //               width: screenWidth * 0.05,
-      //               height: screenWidth * 0.05,
-      //               decoration: BoxDecoration(
-      //                 shape: BoxShape.rectangle,
-      //                 image: DecorationImage(
-      //                   image: AssetImage('assets/notion.png'),
-      //                   fit: BoxFit.cover,
-      //                 ),
-      //               ),
-      //             ),
-      //           ),
-      //           SizedBox(width: screenWidth * 0.01),
-      //         ],
-      //       ),
-      //       SizedBox(height: screenWidth * 0.05),
-      //       Align(
-      //         alignment: Alignment.centerRight,
-      //         child: Text(
-      //           // data.name,
-      //           "홍길동",
-      //           style: TextStyle(
-      //             fontSize: screenWidth * 0.06,
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //         ),
-      //       ),
-      //       Align(
-      //         alignment: Alignment.centerRight,
-      //         child: Text(
-      //           // data.contactInfo,
-      //           "frontEnd",
-      //           style: TextStyle(fontSize: screenWidth * 0.025),
-      //         ),
-      //       ),
-      //       Align(
-      //         alignment: Alignment.centerRight,
-      //         child: Text(
-      //           //data.call,
-      //           "010-1234-5678",
-      //           style: TextStyle(fontSize: screenWidth * 0.025),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
 
+Widget _buildRoundedText(String text, double screenWidth) {
+  return Padding(
+    child: Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(color: Colors.white),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02, vertical: screenWidth * 0.016),
+      child: Center(
+        child: Text(text, style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.03)),
+      ),
+    ),
+    padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
+  );
+}

@@ -7,8 +7,10 @@ import '../service/business_card_data.dart';
 
 class BusinessCard2 extends StatelessWidget {
   final BusinessCardData data;
+  final Color primaryColor; // 기본값 설정을 위해 수정
 
-  BusinessCard2(this.data, {super.key});
+  BusinessCard2(this.data, {super.key, this.primaryColor = const Color(0xFFE8D589)});
+
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class BusinessCard2 extends StatelessWidget {
       height: 400,
       margin: EdgeInsets.only(top: 30),
       decoration: BoxDecoration(
-        color: Color(0xFF9BB7FF),
+        color: primaryColor,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
@@ -35,11 +37,14 @@ class BusinessCard2 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              data.avatarUrl,
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100), // 모서리를 둥글게 하는 정도를 조절합니다
+              child: Image.network(
+                data.avatarUrl ?? 'fallback_url_for_empty_avatar',
+                height: 130,
+                width: 130,
+                fit: BoxFit.cover,
+              ),
             ),
             SizedBox(height: screenWidth * 0.02),
             Text(
@@ -59,7 +64,7 @@ class BusinessCard2 extends StatelessWidget {
               children: [
                 Text("star: ${data.totalStars}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
                 SizedBox(width: screenWidth * 0.02),
-                Text("fllower: ${data.followers}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
+                Text("follower: ${data.followers}", style: TextStyle(color: Color(0xFF8B8B91), fontSize: screenWidth * 0.04)),
               ],
             ),
             SizedBox(height: screenWidth * 0.01),
