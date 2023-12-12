@@ -135,7 +135,7 @@ class UserData with ChangeNotifier {
       'birthDate': birthDate,
       'email': email,
       'phone': phone,
-      'introduce': introduction,
+      'introduction': introduction,
       'externalLink': externalLink,
       'nickname': nickname,
       'followers': followers,

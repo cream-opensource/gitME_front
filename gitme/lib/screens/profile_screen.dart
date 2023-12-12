@@ -108,35 +108,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   );
                                 },
                               ),
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    'assets/git_icon.png',
-                                    width: screenWidth * 0.035,
-                                    height: screenWidth * 0.035,
+                              TextButton(
+                                onPressed: () {
+                                  _reroadGitData();
+                                },
+                                child: Text(
+                                'github 갱신',style: TextStyle(
+                                  fontSize: screenWidth * 0.03,
+                                  color: Colors.white
+                                 ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(0xFFBDBDBD),
+                                  padding: EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(25),
                                   ),
-                                  SizedBox(
-                                    width: screenWidth * 0.012,
-                                  ),
-                                  Consumer<UserData>(
-                                    builder: (context, userData, child) {
-                                      return Text(
-                                        userData.nickname ?? '',
-                                        style: TextStyle(
-                                            fontSize: screenWidth * 0.035,
-                                            fontWeight: FontWeight.w500),
-                                      );
-                                    },
-                                  ),
-                                ],
+                                  fixedSize: Size(screenWidth * 0.3, screenWidth * 0.1), // Set the fixed size
+                                ),
                               ),
                               TextButton(
                                 onPressed: () {
-                                  // '내 정보 수정하기' 버튼을 누를 때 편집 모드 토글
                                   setState(() {
                                     isEditing = !isEditing;
-
-                                    // 수정 완료 버튼을 눌렀을 때 API 호출
                                     if (!isEditing) {
                                       _saveChanges();
                                     }
@@ -345,13 +339,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Future<void> _logout() async {
-    await storage.delete(key: 'login_token');
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => MyApp(),
-    ));
-  }
-
   void _saveChanges() async {
     try {
       final userData = Provider.of<UserData>(context, listen: false);
@@ -368,6 +355,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
         'externalLink': userData.externalLink,
         'skill': userData.skill,
         'skillProficiency' : userData.skillProficiency
+
+      };
+
+      // 바디 데이터 출력
+      print('Request Body: $requestBody');
+
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        print('Server response: ${response.body}');
+        final decodedData = jsonDecode(response.body);
+        print('Decoded data: $decodedData');
+      } else {
+        print('Failed to update user data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error while updating user data: $e');
+    }
+  }
+
+  void _reroadGitData() async {
+    try {
+      final userData = Provider.of<UserData>(context, listen: false);
+      final apiUrl = 'https://port-0-gitme-server-1igmo82clotquec0.sel5.cloudtype.app/githubData';
+
+      final requestBody = {
+        'userIdx': userData.userIdx,
 
       };
 
