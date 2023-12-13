@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
     userData = UserData();
     fetchDataFromServer();
     _loadDynamicLink();
-    addCardToServer(2, "Color(0xff89c09c)", 1);
+    addCardToServer(2, "Color(0xFF9BB7FF)", 1);
     updateCardsFromServer();
 
   }
