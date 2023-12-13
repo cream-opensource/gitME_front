@@ -54,17 +54,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FutureBuilder(
-        future: _initializeApp(context),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else {
-            final state = snapshot.data ?? AppNavigationState();
-            return _navigateBasedOnState(context, state);
-          }
-        },
-      ),
+      // home: FutureBuilder(
+      //   future: _initializeApp(context),
+      //   builder: (context, snapshot) {
+      //     if (snapshot.connectionState == ConnectionState.waiting) {
+      //       return CircularProgressIndicator();
+      //     } else {
+      //       final state = snapshot.data ?? AppNavigationState();
+      //       return _navigateBasedOnState(context, state);
+      //     }
+      //   },
+      // ),
+      home: ExternalLinkScreen(),
       routes: {
         MainScreen.route: (_) => MainScreen(),
         LoginScreen.route: (_) => LoginScreen(onLoginSuccess: () {}),
